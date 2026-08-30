@@ -1,0 +1,11 @@
+{
+  "name": "LaTeX Environment",
+  "image": "qmcgaw/latexdevcontainer:latest-full",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "james-yu.latex-workshop"
+      ]
+    }
+  }
+}
