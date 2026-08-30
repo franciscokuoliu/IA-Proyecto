@@ -11,41 +11,36 @@
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{Conference Paper Title*\\
-{\footnotesize \textsuperscript{*}Note: Sub-titles are not captured in Xplore and
-should not be used}
-\thanks{Identify applicable funding agency here. If none, delete this.}
+\title{A Comparative Evaluation of Encoder and Decoder Language Models with Parameter-Efficient Fine-Tuning (PEFT/LoRA) for Multi-Class Text Emotion Recognition
 }
 
-\author{\IEEEauthorblockN{1\textsuperscript{st} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address or ORCID}
+\author{\IEEEauthorblockN{Francisco Kuo Liu}
+\IEEEauthorblockA{\textit{School of Computer Engineering} \\
+\textit{Instituto Tecnológico de Costa Rica}\\
+Cartago, Costa Rica \\
+fkuo@estudiantec.cr}
 \and
-\IEEEauthorblockN{2\textsuperscript{nd} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address or ORCID}
+\IEEEauthorblockN{Jimmy Feng Liu}
+\IEEEauthorblockA{\textit{School of Computer Engineering} \\
+\textit{Instituto Tecnológico de Costa Rica}\\
+Cartago, Costa Rica \\
+jfeng@estudiantec.cr}
 \and
-\IEEEauthorblockN{3\textsuperscript{rd} Given Name Surname}
-\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
-\textit{name of organization (of Aff.)}\\
-City, Country \\
-email address or ORCID}
+\IEEEauthorblockN{Danielo Wu Zhong}
+\IEEEauthorblockA{\textit{School of Computer Engineering} \\
+\textit{Instituto Tecnológico de Costa Rica}\\
+Cartago, Costa Rica \\
+dwu@estudiantec.cr}
 }
 
 \maketitle
 
 \begin{abstract}
-This document is a model and instructions for \LaTeX.
-This and the IEEEtran.cls file define the components of your paper [title, text, heads, etc.]. *CRITICAL: Do Not Use Symbols, Special Characters, Footnotes, 
-or Math in Paper Title or Abstract.
+Text-based emotion recognition presents a fundamental challenge in Natural Language Processing (NLP) due to severe class imbalance, contextual ambiguity, and informal language in short digital texts. Although Encoder-based architectures and recurrent neural networks have traditionally served as baseline solutions, the emergence of generative Large Language Models (LLMs) offers new opportunities to capture complex affective nuances. However, full fine-tuning of these models remains computationally prohibitive. In this work, we propose an empirical evaluation comparing traditional Encoder models (BiLSTM, BERT) against modern intermediate-scale Decoder architectures (Qwen, Gemma, DeepSeek) using Parameter-Efficient Fine-Tuning (PEFT/LoRA). Experiments are conducted on the CARER / Kaggle Emotion dataset, evaluating classification performance through the Macro-F1 metric under controlled hardware constraints.
 \end{abstract}
 
 \begin{IEEEkeywords}
-component, formatting, style, styling, insert
+Text Emotion Recognition, Large Language Models, LoRA, PEFT, Macro-F1, Multi-class Classification.
 \end{IEEEkeywords}
 
 \section{Introduction}
