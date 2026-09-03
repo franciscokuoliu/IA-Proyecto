@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1788108499.36703 "/workspaces/IA-Proyecto/IA-Proyecto-Etapa1/IA-Proyecto-Etapa1.tex" "IA-Proyecto-Etapa1.pdf" "IA-Proyecto-Etapa1" 1788108500.3747 0
+["pdflatex"] 1788405338.97478 "/workspaces/IA-Proyecto/IA-Proyecto-Etapa1/IA-Proyecto-Etapa1.tex" "IA-Proyecto-Etapa1.pdf" "IA-Proyecto-Etapa1" 1788405339.87896 0
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/courier/pcrr7t.tfm" 1136768653 960 379cc0019370a9e0208a0a3f949f847a ""
@@ -77,9 +77,9 @@
   "/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1773764976 5571915 c7549c520e326cef0faccb09c1e29464 ""
   "/usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1773765084 3636709 4f546f516b2d3fcfee4e3b2e996205a3 ""
   "/usr/local/texlive/2026/texmf.cnf" 1773764972 455 5b996dcaa0eb4ef14a83b026bc0a008c ""
-  "/workspaces/IA-Proyecto/IA-Proyecto-Etapa1/IA-Proyecto-Etapa1.tex" 1788108494.73214 15284 ff9a0f9302deed5b640c01eb876ef912 ""
-  "IA-Proyecto-Etapa1.aux" 1788108500.25663 2427 0a2ab2d7966f744280103ad0cd1a11b9 "pdflatex"
-  "IA-Proyecto-Etapa1.tex" 1788108494.73214 15284 ff9a0f9302deed5b640c01eb876ef912 ""
+  "/workspaces/IA-Proyecto/IA-Proyecto-Etapa1/IA-Proyecto-Etapa1.tex" 1788405336.53202 18021 090f08cbdc0adeb64c35074072d2256a ""
+  "IA-Proyecto-Etapa1.aux" 1788405339.74795 2427 bac038cd588c5cb03b3f206b7b513fc3 "pdflatex"
+  "IA-Proyecto-Etapa1.tex" 1788405336.53202 18021 090f08cbdc0adeb64c35074072d2256a ""
   "IEEEtran.cls" 1787886344.24863 281957 5b2e4fa15b0f7eabb840ebf67df4c0f7 ""
   "fig1.png" 1787886344.27404 4535 3b4c70b1b9361fad686e8d234c8fe506 ""
   (generated)

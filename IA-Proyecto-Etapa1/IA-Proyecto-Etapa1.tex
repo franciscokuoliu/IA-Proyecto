@@ -11,7 +11,8 @@
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-\title{A Comparative Evaluation of Encoder and Decoder Language Models with Parameter-Efficient Fine-Tuning (PEFT/LoRA) for Multi-Class Text Emotion Recognition
+\title{A Comparative Evaluation of Encoder and Decoder Language Models with Parameter-Efficient Fine-Tuning (PEFT/LoRA) 
+for Multi-Class Text Emotion Recognition
 }
 
 \author{\IEEEauthorblockN{Francisco Kuo Liu}
@@ -36,7 +37,13 @@ dwu@estudiantec.cr}
 \maketitle
 
 \begin{abstract}
-Text-based emotion recognition presents a fundamental challenge in Natural Language Processing (NLP) due to severe class imbalance, contextual ambiguity, and informal language in short digital texts. Although Encoder-based architectures and recurrent neural networks have traditionally served as baseline solutions, the emergence of generative Large Language Models (LLMs) offers new opportunities to capture complex affective nuances. However, full fine-tuning of these models remains computationally prohibitive. In this work, we propose an empirical evaluation comparing traditional Encoder models (BiLSTM, BERT) against modern intermediate-scale Decoder architectures (Qwen, Gemma, DeepSeek) using Parameter-Efficient Fine-Tuning (PEFT/LoRA). Experiments are conducted on the CARER / Kaggle Emotion dataset, evaluating classification performance through the Macro-F1 metric under controlled hardware constraints.
+Text-based emotion recognition remains a challenge in Natural Language Processing (NLP) due to severe class imbalance, 
+contextual ambiguity, and informal language in short digital texts. While traditional encoder-based architectures and recurrent neural 
+networks have served as standard baselines, modern generative Large Language Models (LLMs) offer promising capabilities for capturing
+subtle affective nuances. However, full fine-tuning of these models remains computationally prohibitive. 
+In this work, we present an empirical evaluation comparing traditional encoder models (BiLSTM, BERT) against intermediate-scale 
+decoder architectures (Qwen, Gemma, DeepSeek) using Parameter-Efficient Fine-Tuning (PEFT/LoRA). Experiments on the 
+CARER / Kaggle Emotion dataset demonstrate the trade-offs in classification performance, measure via Macro-F1, under controlled hardware constraints. 
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -44,8 +51,31 @@ Text Emotion Recognition, Large Language Models, LoRA, PEFT, Macro-F1, Multi-cla
 \end{IEEEkeywords}
 
 \section{Introduction}
-This document is a model and instructions for \LaTeX.
-Please observe the conference page limits. 
+Text-based emotion recognition is central to applications ranging from conversational agents to consumer feedback analysis and mental health monitoring. 
+However, reliably detecting fine-grained emotional states in brief, informal digital texts remains difficult due to contextual ambiguity and severe 
+class imbalance. While recurrent models like BiLSTM and encoder-based architectures like BERT have long served as primary baselines, generative 
+Large Language Models (LLMs) have demonstrated strong potential in capturing complex semantic variations through advanced pre-training. Despite this 
+potential, the massive parameter size of modern decoders makes full fine-tuning computationally unfeasible for resource-constrained environments, 
+highlighting the need for efficient adaptation techniques.
+
+Parameter-Efficient Fine-Tuning (PEFT) methods, particularly Low-Rank Adaptation (LoRA), address these hardware bottlenecks by freezing the 
+pre-trained base model and updating only a small subset of low-rank adapter weights. Although decoders such as Qwen, Gemma, and DeepSeek excel 
+in general language tasks, their performance when adapted via LoRA for specialized downstream classification under high class imbalance is not 
+yet fully understood. Existing benchmarks often focus on broad sentiment analysis or general classification, relying on overall accuracy—a metric 
+that frequently masks poor performance on minority emotional classes. Furthermore, direct comparisons between fully fine-tuned lightweight encoders 
+and LoRA-adapted intermediate decoders under identical hardware constraints remain scarce in current literature.
+
+To address these gaps, this work evaluates the trade-offs between legacy encoder baselines and modern intermediate-scale decoders on the highly 
+imbalanced CARER emotion dataset. 
+
+Our main contributions are as follows:
+\begin{itemize}
+    \item \textbf{Cross-Architecture Benchmark:} We provide a systematic empirical comparison between state-of-the-art intermediate decoders (Qwen, Gemma, DeepSeek) and established encoder baselines (BiLSTM, BERT) for multi-class emotion classification.
+    \item \textbf{Efficiency \& Optimization Analysis:} We evaluate the operational trade-offs of PEFT/LoRA across decoder architectures, focusing on memory footprint, parameter count, and convergence rates under strict hardware limitations.
+    \item \textbf{Imbalance-Aware Evaluation:} We analyze model resilience to severe class imbalance on the CARER dataset, prioritizing Macro-F1 metrics to ensure fair assessment across underrepresented emotion classes.
+    \item \textbf{Practical Deployment Guidelines:} We outline concrete performance-versus-compute trade-offs to offer actionable decision frameworks for researchers and practitioners choosing between compact encoders and LoRA-adapted decoders.
+\end{itemize}
+
 
 \section{Ease of Use}
 
