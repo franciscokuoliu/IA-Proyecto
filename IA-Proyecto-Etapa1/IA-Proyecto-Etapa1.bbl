@@ -20,6 +20,9 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
+\bibitem{murthy_emotion_detection}
+A.~R.~Murthy and K.~M.~Anil Kumar, ``A review of different approaches for detecting emotion from text,'' \emph{IOP Conference Series: Materials Science and Engineering}, vol.~1110, no.~1, p.~012009, Mar.~2021, doi: 10.1088/1757-899X/1110/1/012009.
+
 \bibitem{bert_rnn_gru_sentiment}
 A.~Authors, ``A comparative exploration of bert, rnn, and gru for sentiment classification,'' \emph{ArXiv Preprint}, 2023.
 

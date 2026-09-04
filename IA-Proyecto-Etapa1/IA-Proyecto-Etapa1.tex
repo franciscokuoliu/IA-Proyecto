@@ -77,11 +77,22 @@ Our main contributions are as follows:
 \end{itemize}
 
 The remainder of this survey is structured as follows: Section~\ref{sec:ejeA} reviews the evolution and current approaches in text-based emotion recognition. Section~\ref{sec:ejeB} analyzes parameter-efficient adaptation methods across Encoder and Decoder architectures. Section~\ref{sec:ejeC} examines the benchmark dataset characteristics and evaluation protocols. Section~\ref{sec:methodology} outlines our proposed experimental setup and methodology for future empirical training. Section~\ref{sec:discussion} discusses preliminary trade-offs and future research directions, and Section~\ref{sec:conclusion} concludes the paper.
-
 \section{Domain Analysis \& Evolution of Text Emotion Recognition}
 \label{sec:ejeA}
-
 \subsection{Dominant Traditional Approaches}
+Text-based emotion recognition has evolved through a rapid progression of computational methodologies, which are designed to address the challenges related to semantic ambiguity and unstructured language.
+Some of these computational approaches have relied on multiple computational paradigms to interpret a text and determine which emotions are shown. These foundational techniques can be broadly categorized into keyword-based, corpus-based, ruled-based, tradicional machine learning and deep learning.
+\begin{itemize}
+    \item \textbf{Keyword-Based Approaches}: Identify explicit emotional terms using lexical databases (such as WordNet-Affect or SentiWordNet) and apply linguistic rules to assess sentiment intensity \cite{7}.
+    
+    \item \textbf{Corpus-Based Approaches}: Induce domain-specific word-emotion lexicons using statistical methods and generative models across annotated or weakly-labeled text datasets \cite{7}.
+    
+    \item \textbf{Rule-Based Approaches}: Apply expert heuristic rules, Part-of-Speech tagging, and phrasal patterns to infer emotional states based on predefined linguistic structure \cite{7}.
+    
+    \item \textbf{Traditional Machine Learning Approaches}: Utilize supervised algorithms, such as, Support Vector Machines (SVM), Na\"ive Bayes, Decision Trees, and $K$-Nearest Neighbors—that rely on manual feature engineering to classify text into emotional categories \cite{7}.
+    
+    \item \textbf{Deep Learning Approaches}: Employ neural network architectures, such as, Recurrent Neural Networks (RNNs/LSTMs), Convolutional Neural Networks (CNNs), and Transformer-based models (e.g., BERT), to automatically learn hierarchical representations and capture complex contextual semantics directly from raw text[1].
+\end{itemize}
 
 \subsection{The Shift to Generative Decoders}
 
