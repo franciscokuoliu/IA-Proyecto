@@ -7,6 +7,7 @@
 \usepackage{graphicx}
 \usepackage{textcomp}
 \usepackage{xcolor}
+\usepackage{booktabs}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
@@ -61,7 +62,7 @@ highlighting the need for efficient adaptation techniques.
 Parameter-Efficient Fine-Tuning (PEFT) methods, particularly Low-Rank Adaptation (LoRA), address these hardware bottlenecks by freezing the 
 pre-trained base model and updating only a small subset of low-rank adapter weights. Although decoders such as Qwen, Gemma, and DeepSeek excel 
 in general language tasks, their performance when adapted via LoRA for specialized downstream classification under high class imbalance is not 
-yet fully understood. Existing benchmarks often focus on broad sentiment analysis or general classification, relying on overall accuracy—a metric 
+yet fully understood. Existing benchmarks often focus on broad sentiment analysis or general classification, relying on overall accuracy, a metric 
 that frequently masks poor performance on minority emotional classes. Furthermore, direct comparisons between fully fine-tuned lightweight encoders 
 and LoRA-adapted intermediate decoders under identical hardware constraints remain scarce in current literature.
 
@@ -96,6 +97,48 @@ Some of these computational approaches have relied on multiple computational par
 
 \subsection{The Shift to Generative Decoders}
 
+The rise of generative Large Language Models (LLMs) has fundamentally changed how we approach text classification in NLP \cite{chakriswaran2019emotion}. 
+Traditionally, affective computing tasks relied on discriminative models like BERT or GRU variants that learn a direct mapping function $f(X) \to Y$ 
+from input text $X$ to a predefined set of labels $Y$ \cite{zhang2024comparative}. In contrast, autoregressive decoder architectures treat classification 
+as a conditional text generation problem. They model the probability of generating a target class token $y$ given a prompt sequence $X$:
+
+\begin{equation}
+    P(y \mid X) = \prod_{i=1}^{N} P(w_i \mid w_{1}, \dots, w_{i-1}, X)
+\end{equation}
+
+\noindent This shift offers significant benefits, especially when it comes to leveraging broad contextual knowledge and picking up on subtle 
+emotional tone that standard encoder representations often miss \cite{saravia2018carer}.
+
+\subsubsection{Zero-Shot and Few-Shot Prompting Paradigms}
+A key feature of generative decoders is their ability to handle downstream classification without updating model weights, 
+relying instead on in-context learning (ICL) \cite{cheng2026personality}. In a zero-shot setup, the model gets an instruction 
+template describing the task along with the input text, using its pre-trained knowledge to output the predicted label. 
+Few-shot prompting builds on this by adding $k$ example pairs directly into the prompt context:
+
+\begin{equation}
+    \text{Prompt} = \{ (X_1, Y_1), (X_2, Y_2), \dots, (X_k, Y_k), X_{\text{test}} \}
+\end{equation}
+
+While zero-shot and few-shot setups avoid task-specific training costs, their reliability for fine-grained emotion tasks varies greatly. 
+Zero-shot decoders are notoriously sensitive to how prompts are written, how context examples are ordered, and how subtle affective 
+context is presented. Furthermore, without parameter adaptation for a specific domain, zero-shot LLMs often struggle with subtle emotion boundaries.
+
+\subsubsection{Supervised Fine-Tuning versus In-Context Learning}
+To address the instability of in-context learning, supervised fine-tuning (SFT) adjusts the model's output probabilities to align 
+directly with task-specific labels. In multi-class emotion recognition, SFT restricts the output space to valid emotion categories 
+while teaching the model to handle informal digital slang and implicit emotional cues \cite{kratzwald2018deep}.
+
+However, choosing between prompting and full fine-tuning presents clear trade-offs:
+
+\begin{itemize}
+    \item \textbf{In-Context Learning (Zero/Few-Shot):} Keeps base weights frozen and avoids training costs, but can struggle with subtle emotional nuances.
+    \item \textbf{Full Supervised Fine-Tuning (SFT):} Delivers strong task alignment across imbalanced emotion classes, but requires updating billions of parameters ($>10^9$), creating massive computational and memory bottlenecks during backpropagation.
+\end{itemize}
+
+This balance demonstrates why intermediate approaches are necessary. Generative decoders provide strong semantic understanding, 
+but using them effectively for emotion classification requires parameter-efficient strategies, such as Low-Rank Adaptation (LoRA), 
+that deliver SFT performance without excessive computational demands \cite{nwaiwu2025peft}.
+
 \subsection{Established Standards and Open Challenges}
 Sentiment analysis and emotion recognition overlap significantly in computational linguistics, but they present very different levels of 
 complexity. Distinguishing basic sentiment classification from fine-grained emotion recognition makes it easier to pinpoint the key 
@@ -104,16 +147,16 @@ challenges facing modern NLP.
 \subsubsection{Established Baselines in Binary Sentiment Analysis}
 Binary sentiment classification, which sorts text into simple positive or negative categories, is a well-established task. 
 Earlier studies applying fine-tuned Encoders like BERT alongside GRU variants reached near-peak performance on benchmarks such as 
-SST-2 and IMDb \cite{bert_rnn_gru_sentiment}. Because these datasets rely on balanced classes and explicit sentiment words, 
+SST-2 and IMDb \cite{zhang2024comparative}. Because these datasets rely on balanced classes and explicit sentiment words, 
 standard supervised models handle well-structured text with high reliability.
 
 \subsubsection{Open Challenge 1: Fine-Grained Multi-Class Emotion Mapping}
 Moving beyond binary sentiment requires mapping text to specific psychological states, such as Ekman's six core emotions: 
-anger, fear, joy, love, sadness, and surprise \cite{chakriswaran2019emotion}. The primary difficulty here is overlapping 
+anger, fear, joy, love, sadness, and surprise. The primary difficulty here is overlapping 
 class boundaries. Distinct emotions like fear and surprise frequently share identical keywords, meaning the model must rely 
 on broader context rather than individual terms to tell them apart \cite{kratzwald2018deep}. Modern decoder architectures 
 capture these subtle contextual shifts well, but mapping their outputs into discrete emotion categories without misclassifications 
-remains difficult \cite{personality_aware_erc}.
+remains difficult \cite{cheng2026personality}.
 
 \subsubsection{Open Challenge 2: Extreme Class Imbalance in Affective Corpora}
 A major bottleneck in emotion datasets like the CARER benchmark is severe class imbalance \cite{saravia2018carer}. 
@@ -121,7 +164,7 @@ Everyday language features common emotions like joy or sadness far more often th
 Standard cross-entropy loss naturally focuses on majority-class errors, which leads to high overall accuracy but poor performance 
 on minority categories. While sampling methods and weighted losses help traditional encoders, managing severe imbalance within 
 Parameter-Efficient Fine-Tuning (PEFT) frameworks, where base weights remain frozen, is still an ongoing challenge for Macro-F1 
-optimization \cite{nwaiwu2025peft, deepfake_detection_lora}.
+optimization \cite{nwaiwu2025peft}.
 
 \subsubsection{Open Challenge 3: Ambiguity in Digital Text}
 Short online texts introduce noise that degrades classification accuracy. The main causes of ambiguity include:
@@ -152,6 +195,40 @@ strict memory limits remains a major objective for practical emotion recognition
 \subsection{Corpus Characteristics and Domain Scope}
 
 \subsection{Reported Metrics and Published Baselines}
+
+\begin{table*}[t]
+\centering
+\caption{Comparative Summary of Existing Approaches in Affective Computing and PEFT Architectures}
+\label{tab:literature_comparison}
+\small
+\begin{tabular}{p{2.5cm} c p{2.8cm} p{2.5cm} p{2.0cm} p{2.5cm} p{3.2cm}}
+\toprule
+\textbf{Reference} & \textbf{Year} & \textbf{Technique} & \textbf{Dataset / Environment} & \textbf{Primary Metric} & \textbf{Reported Result} & \textbf{Identified Limitation} \\
+\midrule
+
+Saravia et al. \cite{saravia2018carer} & 2018 & BiLSTM + Contextual Word Embeddings & CARER (Emotion Benchmark) & Macro-F1 & 0.647 (Benchmark Baseline) & Limited long-range semantic capacity; struggles with severe class imbalance. \\
+\addlinespace
+
+Kratzwald et al. \cite{kratzwald2018deep} & 2018 & Deep Learning (BiLSTM / CNN) & Financial \& Customer Reviews & Classification Accuracy & 82.4\% Accuracy & High dependence on task-specific fine-tuning; poor zero-shot generalization. \\
+\addlinespace
+
+Chakriswaran et al. \cite{chakriswaran2019emotion} & 2019 & Lexicon-Based \& Deep Learning Survey & Multimodal / Microblogs & Accuracy / F1-Score & Qualitative SOTA Overview & Highlights systemic issues with informal slang, sarcasm, and class skew. \\
+\addlinespace
+
+Zhang \cite{zhang2024comparative} & 2024 & BERT, RNN, GRU Full Fine-Tuning & Standard Sentiment Corpora & Accuracy / Macro-F1 & BERT outperforms RNN/GRU ($>90\%$) & Full fine-tuning requires substantial memory; limited to fixed context lengths. \\
+\addlinespace
+
+Nwaiwu \cite{nwaiwu2025peft} & 2025 & LoRA, $(IA)^3$, ReFT Evaluation & Low-Resource Text Benchmarks & Macro-F1 / Memory Footprint & LoRA achieves $\sim 98\%$ of full fine-tuning & Performance varies significantly across adapter target modules and target tasks. \\
+\addlinespace
+
+Mohammed \& Kora \cite{mohammed2026deepfake} & 2026 & LLMs + LoRA (PEFT) & Text-Based Deepfake Corpora & Detection Accuracy / F1 & High parameter efficiency ($>92\%$) & Performance drops under extreme quantization or overly restricted rank ($r$). \\
+\addlinespace
+
+Cheng et al. \cite{cheng2026personality} & 2026 & LLMs In-Context Learning / SFT & Conversational Emotion Datasets & Macro-F1 & Improved multi-turn emotion tracking & Highly sensitive to prompt context; expensive inference latency for broad LLMs. \\
+
+\bottomrule
+\end{tabular}
+\end{table*}
 
 \subsection{Known Dataset Limitations and Biases}
 

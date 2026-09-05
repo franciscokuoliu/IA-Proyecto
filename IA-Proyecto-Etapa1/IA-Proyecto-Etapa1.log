@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.17)  4 SEP 2026 23:10
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.17)  5 SEP 2026 01:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -230,40 +230,59 @@ Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1369.
 Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1370.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1371.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
+) (/usr/local/texlive/2026/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen183
+\lightrulewidth=\dimen184
+\cmidrulewidth=\dimen185
+\belowrulesep=\dimen186
+\belowbottomsep=\dimen187
+\aboverulesep=\dimen188
+\abovetopsep=\dimen189
+\cmidrulesep=\dimen190
+\cmidrulekern=\dimen191
+\defaultaddspace=\dimen192
+\@cmidla=\count306
+\@cmidlb=\count307
+\@aboverulesep=\dimen193
+\@belowrulesep=\dimen194
+\@thisruleclass=\count308
+\@lastruleclass=\count309
+\@thisrulewidth=\dimen195
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count306
+\l__color_backend_stack_int=\count310
 ) (./IA-Proyecto-Etapa1.aux)
 \openout1 = `IA-Proyecto-Etapa1.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
-LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
 
 -- Lines per column: 56 (exact).
 (/usr/local/texlive/2026/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count307
-\scratchdimen=\dimen183
+\scratchcounter=\count311
+\scratchdimen=\dimen196
 \scratchbox=\box57
-\nofMPsegments=\count308
-\nofMParguments=\count309
+\nofMPsegments=\count312
+\nofMParguments=\count313
 \everyMPshowfont=\toks24
-\MPscratchCnt=\count310
-\MPscratchDim=\dimen184
-\MPnumerator=\count311
-\makeMPintoPDFobject=\count312
+\MPscratchCnt=\count314
+\MPscratchDim=\dimen197
+\MPnumerator=\count315
+\makeMPintoPDFobject=\count316
 \everyMPtoPDFconversion=\toks25
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -271,11 +290,11 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (/usr/local/texlive/2026/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-LaTeX Font Info:    Trying to load font information for U+msa on input line 73.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 74.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 73.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 74.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1{/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/base/8r.enc}
@@ -283,36 +302,206 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 ]
 
-LaTeX Warning: Citation `7' on page 2 undefined on input line 86.
+LaTeX Warning: Citation `7' on page 2 undefined on input line 87.
 
 
-LaTeX Warning: Citation `7' on page 2 undefined on input line 88.
+LaTeX Warning: Citation `7' on page 2 undefined on input line 89.
 
 
-Underfull \hbox (badness 3919) in paragraph at lines 88--89
+Underfull \hbox (badness 3919) in paragraph at lines 89--90
 []\OT1/ptm/b/n/10 Corpus-Based Ap-proaches\OT1/ptm/m/n/10 : In-duce domain-specific
  []
 
 
-LaTeX Warning: Citation `7' on page 2 undefined on input line 90.
+LaTeX Warning: Citation `7' on page 2 undefined on input line 91.
 
 
-LaTeX Warning: Citation `7' on page 2 undefined on input line 92.
+LaTeX Warning: Citation `7' on page 2 undefined on input line 93.
 
 
-Underfull \hbox (badness 4001) in paragraph at lines 94--95
+Underfull \hbox (badness 4001) in paragraph at lines 95--96
 []\OT1/ptm/b/n/10 Deep Learn-ing Ap-proaches\OT1/ptm/m/n/10 : Em-ploy neu-ral net-
  []
 
 
-Underfull \hbox (badness 1728) in paragraph at lines 94--95
+Underfull \hbox (badness 1728) in paragraph at lines 95--96
 \OT1/ptm/m/n/10 work ar-chi-tec-tures, such as, Re-cur-rent Neu-ral Net-
  []
 
-(./IA-Proyecto-Etapa1.bbl
+[2]
+Underfull \hbox (badness 1681) in paragraph at lines 209--209
+[]\OT1/ptm/m/n/9 BiLSTM + Con-tex-
+ []
+
+
+Underfull \hbox (badness 7925) in paragraph at lines 209--209
+\OT1/ptm/m/n/9 tual Word Em-bed-
+ []
+
+
+Underfull \hbox (badness 2556) in paragraph at lines 209--209
+[]\OT1/ptm/m/n/9 CARER (Emo-tion
+ []
+
+
+Underfull \hbox (badness 1383) in paragraph at lines 209--209
+[]\OT1/ptm/m/n/9 0.647 (Bench-mark
+ []
+
+
+Underfull \hbox (badness 1571) in paragraph at lines 209--210
+[]\OT1/ptm/m/n/9 Limited long-range se-
+ []
+
+
+Underfull \hbox (badness 1571) in paragraph at lines 209--210
+\OT1/ptm/m/n/9 man-tic ca-pac-ity; strug-
+ []
+
+
+Underfull \hbox (badness 1983) in paragraph at lines 209--210
+\OT1/ptm/m/n/9 gles with se-vere class
+ []
+
+
+Underfull \hbox (badness 1997) in paragraph at lines 212--212
+[]\OT1/ptm/m/n/9 Financial & Cus-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 212--212
+[]\OT1/ptm/m/n/9 Classification
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 212--213
+[]\OT1/ptm/m/n/9 High de-pen-dence on
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 212--213
+\OT1/ptm/m/n/9 task-specific fine-
+ []
+
+
+Underfull \hbox (badness 4024) in paragraph at lines 212--213
+\OT1/ptm/m/n/9 tuning; poor zero-shot
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
+[]\OT1/ptm/m/n/9 Lexicon-Based &
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
+\OT1/ptm/m/n/9 Deep Learn-ing
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 215--215
+[]\OT1/ptm/m/n/9 Qualitative SOTA
+ []
+
+
+Underfull \hbox (badness 4254) in paragraph at lines 218--218
+[]\OT1/ptm/m/n/9 BERT, RNN, GRU
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 218--218
+[]\OT1/ptm/m/n/9 Accuracy /
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 218--218
+\OT1/ptm/m/n/9 RNN/GRU
+ []
+
+
+Underfull \hbox (badness 7221) in paragraph at lines 218--219
+\OT1/ptm/m/n/9 ited to fixed con-text
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 221--221
+[]\OT1/ptm/m/n/9 Macro-F1
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 221--221
+\OT1/ptm/m/n/9 / Mem-ory
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 224--224
+[]\OT1/ptm/m/n/9 Mohammed &
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 224--224
+[]\OT1/ptm/m/n/9 LLMs + LoRA
+ []
+
+
+Underfull \hbox (badness 5939) in paragraph at lines 224--224
+[]\OT1/ptm/m/n/9 Text-Based Deep-
+ []
+
+
+Underfull \hbox (badness 5954) in paragraph at lines 224--224
+[]\OT1/ptm/m/n/9 Detection Ac-
+ []
+
+
+Underfull \hbox (badness 1577) in paragraph at lines 224--225
+[]\OT1/ptm/m/n/9 Performance drops un-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 227--227
+[]\OT1/ptm/m/n/9 LLMs In-Context
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 227--227
+[]\OT1/ptm/m/n/9 Conversational
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 227--227
+[]\OT1/ptm/m/n/9 Improved multi-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 227--227
+\OT1/ptm/m/n/9 turn emo-tion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 227--228
+[]\OT1/ptm/m/n/9 Highly sen-si-tive to
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 227--228
+\OT1/ptm/m/n/9 prompt con-text;
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 227--228
+\OT1/ptm/m/n/9 ex-pen-sive in-fer-ence
+ []
+
+
+Overfull \hbox (27.01768pt too wide) in paragraph at lines 204--231
+ [][] 
+ []
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [2])
+ (./IA-Proyecto-Etapa1.bbl)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -324,9 +513,7 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[3
-
-] (./IA-Proyecto-Etapa1.aux)
+[3] [4] (./IA-Proyecto-Etapa1.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -337,18 +524,18 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 4180 strings out of 467525
- 65407 string characters out of 5418988
- 490994 words of memory out of 5000000
- 33060 multiletter control sequences out of 15000+600000
- 661030 words of font info for 98 fonts, out of 8000000 for 9000
+ 4282 strings out of 467525
+ 66994 string characters out of 5418988
+ 498871 words of memory out of 5000000
+ 33148 multiletter control sequences out of 15000+600000
+ 668012 words of font info for 114 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,8n,65p,719b,287s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on IA-Proyecto-Etapa1.pdf (3 pages, 90963 bytes).
+ 57i,11n,65p,719b,287s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on IA-Proyecto-Etapa1.pdf (4 pages, 177297 bytes).
 PDF statistics:
- 45 PDF objects out of 1000 (max. 8388607)
- 27 compressed objects within 1 object stream
+ 93 PDF objects out of 1000 (max. 8388607)
+ 56 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

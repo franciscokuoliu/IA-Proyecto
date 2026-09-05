@@ -20,28 +20,37 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
-\bibitem{murthy_emotion_detection}
-A.~R.~Murthy and K.~M.~Anil Kumar, ``A review of different approaches for detecting emotion from text,'' \emph{IOP Conference Series: Materials Science and Engineering}, vol.~1110, no.~1, p.~012009, Mar.~2021, doi: 10.1088/1757-899X/1110/1/012009.
-
-\bibitem{bert_rnn_gru_sentiment}
-A.~Authors, ``A comparative exploration of bert, rnn, and gru for sentiment classification,'' \emph{ArXiv Preprint}, 2023.
-
 \bibitem{chakriswaran2019emotion}
-P.~Chakriswaran, D.~R. Vincent, K.~Srinivasan, V.~Sharma, C.-Y. Chang, and D.~G. Reina, ``Emotion ai-driven sentiment analysis: A survey, future research directions, and open issues,'' \emph{Applied Sciences}, vol.~9, no.~24, p. 5462, 2019.
+\BIBentryALTinterwordspacing
+P.~Chakriswaran, D.~R. Vincent, K.~Srinivasan, V.~Sharma, C.-Y. Chang, and D.~G. Reina, ``Emotion ai-driven sentiment analysis: A survey, future research directions, and open issues,'' \emph{Applied Sciences}, vol.~9, no.~24, p. 5462, 2019. [Online]. Available: \url{https://www.mdpi.com/2076-3417/9/24/5462}
+\BIBentrySTDinterwordspacing
 
-\bibitem{kratzwald2018deep}
-B.~Kratzwald, S.~Ilic, M.~Kraus, S.~Feuerriegel, and H.~Prendinger, ``Deep learning for affective computing: Text-based emotion recognition in decision support,'' \emph{Decision Support Systems}, vol. 115, pp. 24--35, 2018.
-
-\bibitem{personality_aware_erc}
-A.~Authors, ``Personality-aware emotion recognition in conversation with large language models,'' \emph{ArXiv Preprint}, 2024.
+\bibitem{zhang2024comparative}
+\BIBentryALTinterwordspacing
+C.~Zhang, ``A comparative exploration of bert, rnn, and gru for sentiment classification,'' \emph{Highlights in Science, Engineering and Technology}, vol. 120, pp. 54--58, Dec. 2024. [Online]. Available: \url{https://drpress.org/ojs/index.php/HSET/article/view/28777}
+\BIBentrySTDinterwordspacing
 
 \bibitem{saravia2018carer}
-E.~Saravia, H.-C.~T. Liu, Y.-H. Huang, J.-L. Yang, and Y.-S. Chen, ``Carer: Contextualized affect representations for emotion recognition,'' \emph{Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing}, pp. 3687--3697, 2018.
+\BIBentryALTinterwordspacing
+E.~Saravia, H.-C.~T. Liu, Y.-H. Huang, J.~Wu, and Y.-S. Chen, ``{CARER}: Contextualized affect representations for emotion recognition,'' in \emph{Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing}, E.~Riloff, D.~Chiang, J.~Hockenmaier, and J.~Tsujii, Eds.\hskip 1em plus 0.5em minus 0.4em\relax Brussels, Belgium: Association for Computational Linguistics, Oct.-Nov. 2018, pp. 3687--3697. [Online]. Available: \url{https://aclanthology.org/D18-1404/}
+\BIBentrySTDinterwordspacing
+
+\bibitem{cheng2026personality}
+\BIBentryALTinterwordspacing
+Y.~Cheng, H.~Chen, X.~Guo, B.~Ding, and Z.~Pei, ``Personality-aware emotion recognition in conversation with large language models,'' \emph{Pattern Recognition}, vol. 178, p. 113460, 2026. [Online]. Available: \url{https://www.sciencedirect.com/science/article/pii/S0300312026004267}
+\BIBentrySTDinterwordspacing
+
+\bibitem{kratzwald2018deep}
+\BIBentryALTinterwordspacing
+B.~Kratzwald, S.~Ili{\'c}, M.~Kraus, S.~Feuerriegel, and H.~Prendinger, ``Deep learning for affective computing: Text-based emotion recognition in decision support,'' \emph{Decision Support Systems}, vol. 115, pp. 24--35, 2018. [Online]. Available: \url{https://www.sciencedirect.com/science/article/pii/S0167923618301519}
+\BIBentrySTDinterwordspacing
 
 \bibitem{nwaiwu2025peft}
-S.~Nwaiwu, ``Parameter-efficient fine-tuning for low-resource text classification: A comparative study of lora, ia3, and reft,'' \emph{Frontiers in Big Data}, vol.~8, 2025.
+\BIBentryALTinterwordspacing
+S.~Nwaiwu, ``Parameter-efficient fine-tuning for low-resource text classification: a comparative study of lora, ia3, and reft,'' \emph{Frontiers in Big Data}, vol.~8, 2025. [Online]. Available: \url{https://www.frontiersin.org/journals/big-data/articles/10.3389/fdata.2025.1677331}
+\BIBentrySTDinterwordspacing
 
-\bibitem{deepfake_detection_lora}
-A.~Authors, ``Enhancing text-based deepfake detection: A comprehensive evaluation of lora fine-tuned large language models,'' \emph{ArXiv Preprint}, 2024.
+\bibitem{mohammed2026deepfake}
+A.~Mohammed and R.~Kora, ``Enhancing text-based deepfake detection: A comprehensive evaluation of lora fine-tuned large language models,'' \emph{IEEE Access}, vol.~14, pp. 44\,709--44\,727, 2026.
 
 \end{thebibliography}
