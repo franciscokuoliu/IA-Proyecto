@@ -61,13 +61,13 @@ Y.~Liu, X.~Xu, E.~Nie, Z.~Wang, S.~Feng, D.~Wang, Q.~Li, and H.~Schuetze, ``Look
 \bibitem{mohammed2026deepfake}
 A.~Mohammed and R.~Kora, ``Enhancing text-based deepfake detection: A comprehensive evaluation of lora fine-tuned large language models,'' \emph{IEEE Access}, vol.~14, pp. 44\,709--44\,727, 2026.
 
+\bibitem{luo23_interspeech}
+J.~Luo, H.~Phan, and J.~Reiss, ``{Fine-tuned RoBERTa Model with a CNN-LSTM Network for Conversational Emotion Recognition},'' in \emph{{Interspeech 2023}}, 2023, pp. 2413--2417.
+
 \bibitem{Jayanthi_Kavitha_2026}
 \BIBentryALTinterwordspacing
 K.~Jayanthi and D.~Kavitha, ``A unified hybrid framework for fine-grained emotion classification: Machine learning–deep learning synergy for robust performance,'' \emph{International Journal of Artificial Intelligence and Machine Learning}, vol.~6, no.~2s, p. 650–660, May 2026. [Online]. Available: \url{https://www.svedbergopen.com/index.php/ijaiml/article/view/245}
 \BIBentrySTDinterwordspacing
-
-\bibitem{luo23_interspeech}
-J.~Luo, H.~Phan, and J.~Reiss, ``{Fine-tuned RoBERTa Model with a CNN-LSTM Network for Conversational Emotion Recognition},'' in \emph{{Interspeech 2023}}, 2023, pp. 2413--2417.
 
 \bibitem{10.1145/3603287.3651183}
 \BIBentryALTinterwordspacing

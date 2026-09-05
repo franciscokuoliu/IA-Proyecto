@@ -222,6 +222,29 @@ Despite the empirical edge held by FFT in highly complex or adversarial environm
 
 \subsection{Mechanics of Low-Rank Adaptation (LoRA)}
 
+Low-Rank Adaptation formalizes the reparameterization strategy introduced in Section~\ref{sec:ejeB}.A by constraining the weight update $\Delta W$ of a pre-trained matrix $W_0 \in \mathbb{R}^{d \times k}$ to a low-rank decomposition. Instead of learning a dense update matrix with $d \times k$ free parameters, LoRA expresses $\Delta W$ as the product of two much smaller matrices:
+
+\begin{equation}
+    \Delta W = BA, \quad B \in \mathbb{R}^{d \times r},\ A \in \mathbb{R}^{r \times k},\ r \ll \min(d, k)
+\end{equation}
+
+During the forward pass, the frozen base projection and the trainable low-rank branch are combined additively, scaled by a constant factor:
+
+\begin{equation}
+    h = W_0 x + \frac{\alpha}{r} B A x
+\end{equation}
+
+\noindent where $\alpha$ is a fixed scaling hyperparameter. Normalizing by $r$ keeps the effective magnitude of the update stable when the rank is changed, avoiding the need to re-tune the learning rate every time $r$ is adjusted \cite{nwaiwu2025peft}.
+
+\subsubsection{Initialization Scheme}
+To guarantee that adaptation begins from the exact pre-trained behavior of the base model, LoRA follows an asymmetric initialization: matrix $A$ is initialized from a random Gaussian distribution, while matrix $B$ is initialized to zero. Consequently, $\Delta W = BA = 0$ at the start of training, and the model's output is identical to the unadapted base model before any gradient step is taken.
+
+\subsubsection{Target Module Selection}
+LoRA adapters are not injected into every weight matrix of a Transformer block; instead, they are selectively applied to the linear projections most responsible for task-specific behavior. As detailed later in Table~\ref{tab:peft_config}, this work targets the attention projections $W_q, W_k, W_v, W_o$ across all decoder architectures, extending to the feed-forward projections ($W_{\text{gate}}, W_{\text{up}}, W_{\text{down}}$) for DeepSeek-R1-Distill-Qwen-1.5B specifically. This selective targeting keeps the trainable parameter count within $1$--$1.5\%$ of the base decoder size \cite{nwaiwu2025peft, mohammed2026deepfake}.
+
+\subsubsection{Why a Low-Rank Update Suffices}
+The effectiveness of this constrained parameterization rests on the intrinsic-rank hypothesis: adapting a large pre-trained model to a related downstream task does not require exploring its full parameter space, but only a low-dimensional subspace of it \cite{liu-etal-2026-look}. LoRA operationalizes this hypothesis directly, rather than leaving it as an implicit property of the optimization trajectory, which is precisely the restricted solution space discussed in Section~\ref{sec:ejeB}.A.
+
 \subsection{Comparative Methodologies: LoRA vs. QLoRA vs. Full Fine-Tuning}
 
 \subsection{Theoretical Limitations and Underlying Assumptions}
