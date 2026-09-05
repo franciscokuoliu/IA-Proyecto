@@ -20,6 +20,9 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
+\bibitem{murthy2021review}
+A.~Murthy and A.~Kumar~K.M, ``A review of different approaches for detecting emotion from text,'' \emph{IOP Conference Series: Materials Science and Engineering}, vol. 1110, p. 012009, 03 2021.
+
 \bibitem{chakriswaran2019emotion}
 \BIBentryALTinterwordspacing
 P.~Chakriswaran, D.~R. Vincent, K.~Srinivasan, V.~Sharma, C.-Y. Chang, and D.~G. Reina, ``Emotion ai-driven sentiment analysis: A survey, future research directions, and open issues,'' \emph{Applied Sciences}, vol.~9, no.~24, p. 5462, 2019. [Online]. Available: \url{https://www.mdpi.com/2076-3417/9/24/5462}
@@ -48,6 +51,11 @@ B.~Kratzwald, S.~Ili{\'c}, M.~Kraus, S.~Feuerriegel, and H.~Prendinger, ``Deep l
 \bibitem{nwaiwu2025peft}
 \BIBentryALTinterwordspacing
 S.~Nwaiwu, ``Parameter-efficient fine-tuning for low-resource text classification: a comparative study of lora, ia3, and reft,'' \emph{Frontiers in Big Data}, vol.~8, 2025. [Online]. Available: \url{https://www.frontiersin.org/journals/big-data/articles/10.3389/fdata.2025.1677331}
+\BIBentrySTDinterwordspacing
+
+\bibitem{liu-etal-2026-look}
+\BIBentryALTinterwordspacing
+Y.~Liu, X.~Xu, E.~Nie, Z.~Wang, S.~Feng, D.~Wang, Q.~Li, and H.~Schuetze, ``Look within or beyond? a theoretical comparison between parameter-efficient and full fine-tuning,'' in \emph{Proceedings of the 64th Annual Meeting of the {A}ssociation for {C}omputational {L}inguistics (Volume 1: Long Papers)}, M.~Liakata, V.~P. Moreira, J.~Zhang, and D.~Jurgens, Eds.\hskip 1em plus 0.5em minus 0.4em\relax San Diego, California, United States: Association for Computational Linguistics, Jul. 2026, pp. 47\,800--47\,820. [Online]. Available: \url{https://aclanthology.org/2026.acl-long.2208/}
 \BIBentrySTDinterwordspacing
 
 \bibitem{mohammed2026deepfake}

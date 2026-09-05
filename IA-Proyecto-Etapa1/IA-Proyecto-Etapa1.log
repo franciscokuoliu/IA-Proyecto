@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.17)  5 SEP 2026 01:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.17)  5 SEP 2026 07:53
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -301,22 +301,9 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 
 ]
-
-LaTeX Warning: Citation `7' on page 2 undefined on input line 87.
-
-
-LaTeX Warning: Citation `7' on page 2 undefined on input line 89.
-
-
 Underfull \hbox (badness 3919) in paragraph at lines 89--90
 []\OT1/ptm/b/n/10 Corpus-Based Ap-proaches\OT1/ptm/m/n/10 : In-duce domain-specific
  []
-
-
-LaTeX Warning: Citation `7' on page 2 undefined on input line 91.
-
-
-LaTeX Warning: Citation `7' on page 2 undefined on input line 93.
 
 
 Underfull \hbox (badness 4001) in paragraph at lines 95--96
@@ -329,179 +316,181 @@ Underfull \hbox (badness 1728) in paragraph at lines 95--96
  []
 
 [2]
-Underfull \hbox (badness 1681) in paragraph at lines 209--209
+Underfull \hbox (badness 10000) in paragraph at lines 194--195
+[]\OT1/ptm/b/n/10 Addition-Based: \OT1/ptm/m/n/10 In-tro-duces lightweight, train-able
+ []
+
+
+Underfull \hbox (badness 1681) in paragraph at lines 238--238
 []\OT1/ptm/m/n/9 BiLSTM + Con-tex-
  []
 
 
-Underfull \hbox (badness 7925) in paragraph at lines 209--209
+Underfull \hbox (badness 7925) in paragraph at lines 238--238
 \OT1/ptm/m/n/9 tual Word Em-bed-
  []
 
 
-Underfull \hbox (badness 2556) in paragraph at lines 209--209
+Underfull \hbox (badness 2556) in paragraph at lines 238--238
 []\OT1/ptm/m/n/9 CARER (Emo-tion
  []
 
 
-Underfull \hbox (badness 1383) in paragraph at lines 209--209
+Underfull \hbox (badness 1383) in paragraph at lines 238--238
 []\OT1/ptm/m/n/9 0.647 (Bench-mark
  []
 
 
-Underfull \hbox (badness 1571) in paragraph at lines 209--210
+Underfull \hbox (badness 1571) in paragraph at lines 238--239
 []\OT1/ptm/m/n/9 Limited long-range se-
  []
 
 
-Underfull \hbox (badness 1571) in paragraph at lines 209--210
+Underfull \hbox (badness 1571) in paragraph at lines 238--239
 \OT1/ptm/m/n/9 man-tic ca-pac-ity; strug-
  []
 
 
-Underfull \hbox (badness 1983) in paragraph at lines 209--210
+Underfull \hbox (badness 1983) in paragraph at lines 238--239
 \OT1/ptm/m/n/9 gles with se-vere class
  []
 
 
-Underfull \hbox (badness 1997) in paragraph at lines 212--212
+Underfull \hbox (badness 1997) in paragraph at lines 241--241
 []\OT1/ptm/m/n/9 Financial & Cus-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 212--212
+Underfull \hbox (badness 10000) in paragraph at lines 241--241
 []\OT1/ptm/m/n/9 Classification
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 212--213
+Underfull \hbox (badness 10000) in paragraph at lines 241--242
 []\OT1/ptm/m/n/9 High de-pen-dence on
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 212--213
+Underfull \hbox (badness 10000) in paragraph at lines 241--242
 \OT1/ptm/m/n/9 task-specific fine-
  []
 
 
-Underfull \hbox (badness 4024) in paragraph at lines 212--213
+Underfull \hbox (badness 4024) in paragraph at lines 241--242
 \OT1/ptm/m/n/9 tuning; poor zero-shot
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 215--215
+Underfull \hbox (badness 10000) in paragraph at lines 244--244
 []\OT1/ptm/m/n/9 Lexicon-Based &
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 215--215
+Underfull \hbox (badness 10000) in paragraph at lines 244--244
 \OT1/ptm/m/n/9 Deep Learn-ing
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 215--215
+Underfull \hbox (badness 10000) in paragraph at lines 244--244
 []\OT1/ptm/m/n/9 Qualitative SOTA
  []
 
 
-Underfull \hbox (badness 4254) in paragraph at lines 218--218
+Underfull \hbox (badness 4254) in paragraph at lines 247--247
 []\OT1/ptm/m/n/9 BERT, RNN, GRU
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 218--218
+Underfull \hbox (badness 10000) in paragraph at lines 247--247
 []\OT1/ptm/m/n/9 Accuracy /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 218--218
+Underfull \hbox (badness 10000) in paragraph at lines 247--247
 \OT1/ptm/m/n/9 RNN/GRU
  []
 
 
-Underfull \hbox (badness 7221) in paragraph at lines 218--219
+Underfull \hbox (badness 7221) in paragraph at lines 247--248
 \OT1/ptm/m/n/9 ited to fixed con-text
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 221--221
+Underfull \hbox (badness 10000) in paragraph at lines 250--250
 []\OT1/ptm/m/n/9 Macro-F1
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 221--221
+Underfull \hbox (badness 10000) in paragraph at lines 250--250
 \OT1/ptm/m/n/9 / Mem-ory
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 224--224
+Underfull \hbox (badness 10000) in paragraph at lines 253--253
 []\OT1/ptm/m/n/9 Mohammed &
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 224--224
+Underfull \hbox (badness 10000) in paragraph at lines 253--253
 []\OT1/ptm/m/n/9 LLMs + LoRA
  []
 
 
-Underfull \hbox (badness 5939) in paragraph at lines 224--224
+Underfull \hbox (badness 5939) in paragraph at lines 253--253
 []\OT1/ptm/m/n/9 Text-Based Deep-
  []
 
 
-Underfull \hbox (badness 5954) in paragraph at lines 224--224
+Underfull \hbox (badness 5954) in paragraph at lines 253--253
 []\OT1/ptm/m/n/9 Detection Ac-
  []
 
 
-Underfull \hbox (badness 1577) in paragraph at lines 224--225
+Underfull \hbox (badness 1577) in paragraph at lines 253--254
 []\OT1/ptm/m/n/9 Performance drops un-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 227--227
+Underfull \hbox (badness 10000) in paragraph at lines 256--256
 []\OT1/ptm/m/n/9 LLMs In-Context
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 227--227
+Underfull \hbox (badness 10000) in paragraph at lines 256--256
 []\OT1/ptm/m/n/9 Conversational
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 227--227
+Underfull \hbox (badness 10000) in paragraph at lines 256--256
 []\OT1/ptm/m/n/9 Improved multi-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 227--227
+Underfull \hbox (badness 10000) in paragraph at lines 256--256
 \OT1/ptm/m/n/9 turn emo-tion
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 227--228
+Underfull \hbox (badness 10000) in paragraph at lines 256--257
 []\OT1/ptm/m/n/9 Highly sen-si-tive to
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 227--228
+Underfull \hbox (badness 10000) in paragraph at lines 256--257
 \OT1/ptm/m/n/9 prompt con-text;
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 227--228
+Underfull \hbox (badness 10000) in paragraph at lines 256--257
 \OT1/ptm/m/n/9 ex-pen-sive in-fer-ence
  []
 
 
-Overfull \hbox (27.01768pt too wide) in paragraph at lines 204--231
+Overfull \hbox (27.01768pt too wide) in paragraph at lines 233--260
  [][] 
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- (./IA-Proyecto-Etapa1.bbl)
+[3] (./IA-Proyecto-Etapa1.bbl)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -513,29 +502,27 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[3] [4] (./IA-Proyecto-Etapa1.aux)
+[4
+
+] [5] (./IA-Proyecto-Etapa1.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
  ) 
 Here is how much of TeX's memory you used:
- 4282 strings out of 467525
- 66994 string characters out of 5418988
- 498871 words of memory out of 5000000
- 33148 multiletter control sequences out of 15000+600000
+ 4283 strings out of 467525
+ 67029 string characters out of 5418988
+ 500760 words of memory out of 5000000
+ 33149 multiletter control sequences out of 15000+600000
  668012 words of font info for 114 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,11n,65p,719b,287s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on IA-Proyecto-Etapa1.pdf (4 pages, 177297 bytes).
+Output written on IA-Proyecto-Etapa1.pdf (5 pages, 180637 bytes).
 PDF statistics:
- 93 PDF objects out of 1000 (max. 8388607)
- 56 compressed objects within 1 object stream
+ 96 PDF objects out of 1000 (max. 8388607)
+ 58 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,13 +1,13 @@
 # Fdb version 4
-["bibtex IA-Proyecto-Etapa1"] 1788571033.87578 "IA-Proyecto-Etapa1.aux" "IA-Proyecto-Etapa1.bbl" "IA-Proyecto-Etapa1" 1788571037.00385 0
-  "./references.bib" 1788569051.98615 3373 e40962af2590396297e26e94d527bbd5 ""
+["bibtex IA-Proyecto-Etapa1"] 1788594256.84651 "IA-Proyecto-Etapa1.aux" "IA-Proyecto-Etapa1.bbl" "IA-Proyecto-Etapa1" 1788594800.12056 0
+  "./references.bib" 1788589791.90544 5817 5133937a53399cc40db2b0d77bd6a087 ""
   "/usr/local/texlive/2026/texmf-dist/bibtex/bst/ieeetran/IEEEtran.bst" 1440712899 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "IA-Proyecto-Etapa1.aux" 1788571036.45809 5386 6777016d5d12a415bd2df304c784be1a "pdflatex"
+  "IA-Proyecto-Etapa1.aux" 1788594798.84648 5928 184620205cfcd74a8db967b61301ee27 "pdflatex"
   (generated)
   "IA-Proyecto-Etapa1.bbl"
   "IA-Proyecto-Etapa1.blg"
   (rewritten before read)
-["pdflatex"] 1788571034.19392 "/workspaces/IA-Proyecto/IA-Proyecto-Etapa1/IA-Proyecto-Etapa1.tex" "IA-Proyecto-Etapa1.pdf" "IA-Proyecto-Etapa1" 1788571037.01453 0
+["pdflatex"] 1788594795.5522 "/workspaces/IA-Proyecto/IA-Proyecto-Etapa1/IA-Proyecto-Etapa1.tex" "IA-Proyecto-Etapa1.pdf" "IA-Proyecto-Etapa1" 1788594800.16092 0
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/times/ptmb7t.tfm" 1136768653 2172 fd0c924230362ff848a33632ed45dc23 ""
@@ -85,11 +85,11 @@
   "/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1773764976 5571915 c7549c520e326cef0faccb09c1e29464 ""
   "/usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1773765084 3636709 4f546f516b2d3fcfee4e3b2e996205a3 ""
   "/usr/local/texlive/2026/texmf.cnf" 1773764972 455 5b996dcaa0eb4ef14a83b026bc0a008c ""
-  "/workspaces/IA-Proyecto/IA-Proyecto-Etapa1/IA-Proyecto-Etapa1.tex" 1788571028.94174 18089 951b1cce5d5a40180b1506526bedc7d5 ""
-  "IA-Proyecto-Etapa1.aux" 1788571036.45809 5386 6777016d5d12a415bd2df304c784be1a "pdflatex"
-  "IA-Proyecto-Etapa1.bbl" 1788571034.15147 3589 2e8213a4b46d6b0f155ac58685c038da "bibtex IA-Proyecto-Etapa1"
-  "IA-Proyecto-Etapa1.tex" 1788571028.94174 18089 951b1cce5d5a40180b1506526bedc7d5 ""
-  "IEEEtran.cls" 1787886344.24863 281957 5b2e4fa15b0f7eabb840ebf67df4c0f7 ""
+  "/workspaces/IA-Proyecto/IA-Proyecto-Etapa1/IA-Proyecto-Etapa1.tex" 1788594791.2874 21498 759b3010dd675226311151d6727186d6 ""
+  "IA-Proyecto-Etapa1.aux" 1788594798.84648 5928 184620205cfcd74a8db967b61301ee27 "pdflatex"
+  "IA-Proyecto-Etapa1.bbl" 1788594256.55206 4487 8318b00938c9c4d2c9dfbb176f5b541c "bibtex IA-Proyecto-Etapa1"
+  "IA-Proyecto-Etapa1.tex" 1788594791.2874 21498 759b3010dd675226311151d6727186d6 ""
+  "IEEEtran.cls" 1788214886.81565 288304 b67b6fc6c2abb39f9b461923f5199343 ""
   (generated)
   "IA-Proyecto-Etapa1.aux"
   "IA-Proyecto-Etapa1.log"

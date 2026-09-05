@@ -84,13 +84,13 @@ The remainder of this survey is structured as follows: Section~\ref{sec:ejeA} re
 Text-based emotion recognition has evolved through a rapid progression of computational methodologies, which are designed to address the challenges related to semantic ambiguity and unstructured language.
 Some of these computational approaches have relied on multiple computational paradigms to interpret a text and determine which emotions are shown. These foundational techniques can be broadly categorized into keyword-based, corpus-based, ruled-based, tradicional machine learning and deep learning.
 \begin{itemize}
-    \item \textbf{Keyword-Based Approaches}: Identify explicit emotional terms using lexical databases (such as WordNet-Affect or SentiWordNet) and apply linguistic rules to assess sentiment intensity \cite{7}.
+    \item \textbf{Keyword-Based Approaches}: Identify explicit emotional terms using lexical databases (such as WordNet-Affect or SentiWordNet) and apply linguistic rules to assess sentiment intensity \cite{murthy2021review}.
     
-    \item \textbf{Corpus-Based Approaches}: Induce domain-specific word-emotion lexicons using statistical methods and generative models across annotated or weakly-labeled text datasets \cite{7}.
+    \item \textbf{Corpus-Based Approaches}: Induce domain-specific word-emotion lexicons using statistical methods and generative models across annotated or weakly-labeled text datasets \cite{murthy2021review}.
     
-    \item \textbf{Rule-Based Approaches}: Apply expert heuristic rules, Part-of-Speech tagging, and phrasal patterns to infer emotional states based on predefined linguistic structure \cite{7}.
+    \item \textbf{Rule-Based Approaches}: Apply expert heuristic rules, Part-of-Speech tagging, and phrasal patterns to infer emotional states based on predefined linguistic structure \cite{murthy2021review}.
     
-    \item \textbf{Traditional Machine Learning Approaches}: Utilize supervised algorithms, such as, Support Vector Machines (SVM), Na\"ive Bayes, Decision Trees, and $K$-Nearest Neighbors—that rely on manual feature engineering to classify text into emotional categories \cite{7}.
+    \item \textbf{Traditional Machine Learning Approaches}: Utilize supervised algorithms, such as, Support Vector Machines (SVM), Na\"ive Bayes, Decision Trees, and $K$-Nearest Neighbors—that rely on manual feature engineering to classify text into emotional categories \cite{murthy2021review}.
     
     \item \textbf{Deep Learning Approaches}: Employ neural network architectures, such as, Recurrent Neural Networks (RNNs/LSTMs), Convolutional Neural Networks (CNNs), and Transformer-based models (e.g., BERT), to automatically learn hierarchical representations and capture complex contextual semantics directly from raw text[1].
 \end{itemize}
@@ -182,6 +182,35 @@ strict memory limits remains a major objective for practical emotion recognition
 \label{sec:ejeB}
 
 \subsection{Full Fine-Tuning vs. PEFT Paradigms}
+For a long time, Full Parameter Fine-Tuning (FFT) has been the 
+predominant choice for fine-tuning models due to its excellent 
+performance. Nevertheless, with the arrival of Large Language Models, 
+the GPU memory requirements for FFT have increased exponentially 
+\cite{liu-etal-2026-look}. 
+Therefore, other approaches to solve this problem have emerged, known as Parameter-Efficient Fine-Tuning (PEFT) methods. These PEFT methods were created to reduce the number of parameters needed for fine-tuning while maintaining a performance level similar to FFT \cite{liu-etal-2026-look}.
+
+Unlike FFT, which relies on updating the full set of parameters for fine-tuning purposes, PEFT implements a different approach based on updating only a small fraction of the model's parameters. This can be achieved by:
+\begin{itemize}
+    \item \textbf{Addition-Based:} Introduces lightweight, trainable adapter layers or prompt tokens into the architecture while freezing base weights \cite{liu-etal-2026-look}.
+    \item \textbf{Selection-Based:} Selects and updates only a specific subset of existing parameters \cite{liu-etal-2026-look}.
+    \item \textbf{Reparameterization-Based:} Exploits low-rank matrix decompositions to parameterize weight updates, as seen in LoRA \cite{liu-etal-2026-look}.
+\end{itemize}
+PEFT paradigms offer greater computational efficiency compared to FFTs, though it is important to recognize that they also entail certain drawbacks \cite{liu-etal-2026-look}. In terms of Instruction-Following performance and Adversarial Robustness, FFTs perform better under complex circumstances, as PEFT capabilities rely on simple tasks where a reduced parameter count still captures enough label information \cite{liu-etal-2026-look}.
+
+Specifically, empirical results from other studies demonstrate that FFT consistently outperforms popular PEFT methods across instruction-following benchmarks on various model scales \cite{liu-etal-2026-look}:
+\begin{itemize}
+    \item \textbf{TinyLLaMA:} FFT achieves an average MT-Bench score of 2.68, compared to LoRA (2.05) and Prefix-Tuning (1.81) \cite{liu-etal-2026-look}.
+    \item \textbf{Mistral-7B:} FFT reaches an average score of 4.96, outperforming LoRA (4.74) and Prefix-Tuning (4.67) \cite{liu-etal-2026-look}.
+    \item \textbf{LLaMA2-7B:} FFT maintains its advantage with an average score of 5.26, whereas LoRA and Prefix-Tuning obtain 4.91 and 4.82, respectively \cite{liu-etal-2026-look}.
+\end{itemize}
+
+Furthermore, evaluation on the AdvGLUE benchmark reveals that while PEFT methods match or slightly edge out FFT on clean datasets, FFT exhibits superior robustness against adversarial perturbations \cite{liu-etal-2026-look}:
+\begin{itemize}
+    \item \textbf{RoBERTa-base (Adversarial Noise):} Under adversarial attacks, FFT retains an average robustness score of 36.58, significantly outperforming LoRA (30.89) and BitFit (28.21) \cite{liu-etal-2026-look}.
+    \item \textbf{RoBERTa-large (Adversarial Noise):} FFT achieves the highest overall robustness score of 55.44, compared to LoRA's 53.96 \cite{liu-etal-2026-look}.
+\end{itemize}
+Considering the nature of this study, it is justifiable the usage of PEFT as a Fine-Tuning method, considering that emotion recognition is a simple task, which does not requires a the complexity that FFTs can manage.
+
 
 \subsection{Mechanics of Low-Rank Adaptation (LoRA)}
 
