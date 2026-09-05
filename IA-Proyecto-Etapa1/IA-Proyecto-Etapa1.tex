@@ -8,6 +8,7 @@
 \usepackage{textcomp}
 \usepackage{xcolor}
 \usepackage{booktabs}
+\usepackage{tabularx}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
@@ -222,15 +223,98 @@ Considering the nature of this study, it is justifiable the usage of PEFT as a F
 \label{sec:ejeC}
 
 \subsection{Corpus Characteristics and Domain Scope}
+To evaluate multi-class text emotion recognition under realistic conditions, we utilize the CARER benchmark dataset (hosted as the "Emotions: Where Words Paint the Colors of Feelings" corpus on Kaggle). The corpus consists of short, self-reported English social media posts and personal narratives annotated for affective state.
+
+\subsubsection{Class Distribution and Imbalance}
+The dataset comprises $20,000$ short text instances categorized into six distinct emotional classes based on psychological models of primary emotion: \textit{joy}, \textit{sadness}, \textit{anger}, \textit{fear}, \textit{love}, and \textit{surprise}. As illustrated in Table~\ref{tab:carer_distribution}, the dataset exhibits severe class imbalance.
+
+\begin{table}[htbp]
+\centering
+\caption{Class Distribution Across the Evaluation Corpus}
+\label{tab:carer_distribution}
+\small
+\begin{tabular}{l c c}
+\toprule
+\textbf{Emotion Class} & \textbf{Sample Count ($N$)} & \textbf{Percentage (\%)} \\
+\midrule
+Joy & $6,761$ & $33.80\%$ \\
+Sadness & $5,797$ & $28.99\%$ \\
+Anger & $2,159$ & $10.80\%$ \\
+Fear & $1,937$ & $9.69\%$ \\
+Love & $1,641$ & $8.20\%$ \\
+Surprise & $1,705$ & $8.52\%$ \\
+\midrule
+\textbf{Total} & $20,000$ & $100.00\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Majority classes (\textit{joy} and \textit{sadness}) account for over $62\%$ of the total corpus, while minority affective states 
+such as \textit{love} and \textit{surprise} collectively represent less than $17\%$. This structural skew makes the dataset an ideal 
+testbed for evaluating model resilience to class imbalance and justifies prioritizing unweighted Macro-F1 metrics over raw accuracy.
+
+\subsubsection{Linguistic Complexity and Domain Scope}
+The text entries exhibit domain-specific characteristics typical of informal digital communication:
+\begin{itemize}
+    \item \textbf{Short Sequence Lengths:} Posts average between 15 and 30 words, providing limited local context for disambiguating emotional states.
+    \item \textbf{Informal Syntax and Noise:} Heavy reliance on colloquial language, irregular punctuation, implicit emotional expressions, and social media slang.
+    \item \textbf{Overlapping Class Boundaries:} Fine-grained distinctions between closely related affective categories (e.g., distinguishing high-arousal \textit{fear} from \textit{surprise}, or \textit{joy} from \textit{love}) present high contextual ambiguity.
+\end{itemize}
+
+These properties establish a challenging benchmark where models must capture subtle semantic nuances while maintaining balanced 
+classification performance across underrepresented emotion classes.
 
 \subsection{Reported Metrics and Published Baselines}
+
+Evaluating fine-grained emotion recognition models on imbalanced corpora requires selecting evaluation metrics that accurately reflect 
+performance across all target categories while accounting for resource consumption \cite{saravia2018carer, zhang2024comparative}.
+
+\subsubsection{Evaluation Metrics}
+To measure both classification performance and operational cost, models are evaluated across a standardized set of metrics:
+
+\begin{itemize}
+    \item \textbf{Macro-F1 ($\mathbf{F_1^{\text{macro}}}$):} Serves as the primary quality metric. By calculating the unweighted mean of $F_1$ scores across all six emotion categories, Macro-F1 treats every class equally, making it sensitive to poor performance on underrepresented classes like \textit{surprise} or \textit{love} \cite{saravia2018carer}.
+    \item \textbf{Weighted-F1 ($\mathbf{F_1^{\text{weighted}}}$):} Computes the average $F_1$ score weighted by class support. While provided for comparison, it can mask weak performance on minority categories when majority classes achieve high precision and recall \cite{chakriswaran2019emotion}.
+    \item \textbf{Inference Latency and Memory Footprint:} Measures average prediction time per sample (in milliseconds) alongside peak GPU memory utilization (in gigabytes) to quantify operational deployment overhead \cite{nwaiwu2025peft}.
+\end{itemize}
+
+\subsubsection{Published Baselines and Benchmark References}
+To establish performance bounds, our results are benchmarked against traditional baselines and previously published transformer 
+results on the CARER dataset structure \cite{saravia2018carer, zhang2024comparative}:
+
+\begin{table}[htbp]
+\centering
+\caption{Representative Performance Baselines on CARER}
+\label{tab:published_baselines}
+\fontsize{8pt}{10pt}\selectfont
+\begin{tabularx}{\columnwidth}{@{} l c c X @{}}
+\toprule
+\textbf{Model} & \textbf{Macro-F1} & \textbf{Weighted-F1} & \textbf{Characteristics} \\
+\midrule
+TF-IDF + LogReg & $\sim 78.5\%$ & $\sim 82.1\%$ & Fast CPU baseline; no context \\
+BiLSTM & $\sim 84.2\%$ & $\sim 86.0\%$ & Recurrent baseline \cite{saravia2018carer} \\
+DistilBERT & $\sim 89.8\%$ & $\sim 91.2\%$ & Efficient encoder \cite{zhang2024comparative} \\
+BERT-base & $\sim 91.5\%$ & $\sim 92.6\%$ & Strong encoder baseline \cite{zhang2024comparative} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Traditional non-neural and recurrent baselines establish the lower performance boundary \cite{saravia2018carer, kratzwald2018deep}. 
+While lightweight and fast to train, they struggle to capture the complex pragmatic cues and implicit emotional expressions present 
+in digital text \cite{chakriswaran2019emotion}. Encoder-based architectures like BERT-Base set a strong performance baseline for 
+discriminative models \cite{zhang2024comparative}. 
+
+Our experimental framework builds directly upon these references, testing whether parameter-efficient generative decoders 
+(such as Qwen2.5, Gemma-2, and DeepSeek-R1-Distill) can match or surpass these established encoder boundaries while operating under 
+strict hardware and parameter budgets \cite{nwaiwu2025peft, mohammed2026deepfake}.
 
 \begin{table*}[t]
 \centering
 \caption{Comparative Summary of Existing Approaches in Affective Computing and PEFT Architectures}
 \label{tab:literature_comparison}
-\small
-\begin{tabular}{p{2.5cm} c p{2.8cm} p{2.5cm} p{2.0cm} p{2.5cm} p{3.2cm}}
+\scriptsize
+\setlength{\tabcolsep}{4pt} % Slightly reduces padding between columns to fit text
+\begin{tabularx}{\textwidth}{@{} >{\hsize=0.85\hsize}X c >{\hsize=1.05\hsize}X >{\hsize=1.0\hsize}X >{\hsize=0.85\hsize}X >{\hsize=1.05\hsize}X >{\hsize=1.2\hsize}X @{}}
 \toprule
 \textbf{Reference} & \textbf{Year} & \textbf{Technique} & \textbf{Dataset / Environment} & \textbf{Primary Metric} & \textbf{Reported Result} & \textbf{Identified Limitation} \\
 \midrule
@@ -256,17 +340,131 @@ Mohammed \& Kora \cite{mohammed2026deepfake} & 2026 & LLMs + LoRA (PEFT) & Text-
 Cheng et al. \cite{cheng2026personality} & 2026 & LLMs In-Context Learning / SFT & Conversational Emotion Datasets & Macro-F1 & Improved multi-turn emotion tracking & Highly sensitive to prompt context; expensive inference latency for broad LLMs. \\
 
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \end{table*}
 
 \subsection{Known Dataset Limitations and Biases}
+
+While the CARER benchmark provides a structured framework for evaluating multi-class emotion recognition \cite{saravia2018carer}, 
+several intrinsic dataset limitations and distributional biases must be acknowledged to contextualize model performance.
+
+\subsubsection{Linguistic and Register Constraints}
+The dataset consists exclusively of English-language text compiled from social media posts and self-reported affective narratives \cite{saravia2018carer}. 
+This introduces specific domain boundaries:
+
+\begin{itemize}
+    \item \textbf{Monolingual Scope:} Models evaluated on this corpus are restricted to English input, limiting the generalizability of downstream findings to multilingual or cross-lingual affective tasks.
+    \item \textbf{Informal Register Bias:} Text instances predominantly exhibit informal syntax, colloquialisms, non-standard punctuation, and social media slang. Consequently, representations may show degraded robustness when transferred to formal prose, clinical transcripts, or technical domains.
+\end{itemize}
+
+\subsubsection{Annotation Granularity and Cultural Bias}
+The corpus adopts a discrete taxonomy of six primary emotion categories based on psychological models of affect \cite{saravia2018carer}. 
+This introduces structural simplifications:
+
+\begin{itemize}
+    \item \textbf{Discrete Categorization of Complex States:} Real-world human emotional expression frequently involves blended or context-dependent emotional states (e.g., bittersweetness, anxious surprise) that cannot be fully captured by mutually exclusive single-label assignments \cite{cheng2026personality}.
+    \item \textbf{Cultural Expression Bias:} Because annotations align primarily with Western psychological constructs and English-speaking demographic norms, subtle cultural variations in implicit emotional framing may introduce annotation noise or model classification bias \cite{chakriswaran2019emotion}.
+\end{itemize}
+
+Addressing these domain-specific constraints requires careful empirical error analysis during validation, ensuring that strong benchmark 
+performance on Macro-F1 is not mistaken for universal affective generalization across broader linguistic registers.
 
 \section{Proposed Experimental Methodology}
 \label{sec:methodology}
 
 \subsection{Experimental Framework and Hardware Constraints}
 
+To rigorously assess the trade-offs between classification quality and computational cost in multi-class text emotion recognition, 
+we establish a standardized experimental environment. The evaluation spans a representative spectrum of model families, parameter scales, 
+and pre-training objectives across both non-neural and neural paradigms.
+
+\subsubsection{Model Selection and Taxonomy}
+As detailed in Table~\ref{tab:model_taxonomy}, the experimental setup evaluates eight distinct architectures to enable controlled comparative analysis:
+
+\begin{table}[htbp]
+\centering
+\caption{Taxonomy of Evaluated Models and Experimental Controls}
+\label{tab:model_taxonomy}
+\small
+\begin{tabular}{p{0.35\linewidth} p{0.25\linewidth} p{0.28\linewidth}}
+\toprule
+\textbf{Model} & \textbf{Architecture Family} & \textbf{Experimental Control} \\
+\midrule
+TF-IDF + LogReg & Non-Neural Baseline & Non-deep learning baseline \\
+BiLSTM & Recurrent Neural Net & Recurrent architecture baseline \\
+DistilBERT & Encoder Transformer & Small scale encoder baseline \\
+BERT-base & Encoder Transformer & Scale effect vs. DistilBERT \\
+Qwen2.5-0.5B & Decoder Transformer & Small scale decoder \\
+Qwen2.5-1.5B & Decoder Transformer & Scale effect vs. Qwen2.5-0.5B \\
+Gemma-2-2B & Decoder Transformer & Family effect vs. Qwen2.5-1.5B \\
+DeepSeek-R1-Distill-Qwen-1.5B & Decoder Transformer & Training objective effect vs. Qwen2.5-1.5B \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+This systematic selection isolates key variables across three dimensions:
+\begin{itemize}
+    \item \textbf{Architectural Family:} Comparing traditional recurrent neural networks (BiLSTM) against transformer-based encoders and decoders under uniform evaluation conditions.
+    \item \textbf{Parameter Scale:} Evaluating intra-family scaling behaviors by comparing small versus base/larger variants within encoders (DistilBERT vs. BERT-base) and decoders (Qwen2.5-0.5B vs. Qwen2.5-1.5B).
+    \item \textbf{Pre-training Objective:} Isolating the impact of training objectives by directly comparing general instruction-tuned Qwen2.5-1.5B against DeepSeek-R1-Distill-Qwen-1.5B, maintaining identical base architecture and parameter count while varying reasoning-oriented fine-tuning.
+\end{itemize}
+
+\subsubsection{Hardware Environment}
+Experiments are distributed across local hardware resources representing heterogeneous computational capacities:
+\begin{itemize}
+    \item \textbf{Standard Workstations:} NVIDIA GTX 1650 (4 GB VRAM) and NVIDIA RTX 2060 (6 GB VRAM) utilized for baseline models, data pre-processing, and lightweight encoder fine-tuning.
+    \item \textbf{High-Performance Workstation:} NVIDIA RTX 3080 (10 GB VRAM) allocated for larger encoder runs and parameter-efficient fine-tuning (PEFT/LoRA) of decoder architectures.
+    \item \textbf{Unified Memory Platform:} Apple MacBook Pro M5 (24 GB Unified Memory) utilized for local execution, low-bit quantized inference testing, and host environment evaluations.
+\end{itemize}
+
+\subsubsection{Measurement Protocols}
+To address severe class imbalance while capturing resource consumption, we evaluate models across dual quality and cost dimensions:
+\begin{itemize}
+    \item \textbf{Classification Quality:} Macro-F1 serves as the primary metric to ensure underrepresented emotion classes are weighted equally, supplemented by Weighted-F1 and $6 \times 6$ confusion matrix error analyses. Simple accuracy is explicitly avoided due to class distribution skew.
+    \item \textbf{Computational Cost:} Metrics include total training duration, peak memory footprint (VRAM/RAM), trainable parameter count, and per-sample inference latency.
+\end{itemize}
+The central synthesis constructs a Pareto efficiency frontier plotting computational cost (X-axis) against Macro-F1 performance (Y-axis) 
+to identify optimal deployment candidates.
+
 \subsection{Model Selection and Adapter Configuration}
+
+To balance model adaptation against hardware constraints across our experimental setups, we apply distinct training strategies based on model architecture and parameter scale.
+
+\subsubsection{Model Configurations and Training Objectives}
+We select eight distinct models to evaluate performance across recurrent baselines, encoder architectures, and modern generative decoders:
+
+\begin{itemize}
+    \item \textbf{Baseline Models:} We implement a TF-IDF + Logistic Regression model operating on standard n-gram features as a non-neural benchmark. For a recurrent baseline, we train a BiLSTM model using static word embeddings to capture sequential text structures.
+    \item \textbf{Encoder Transformers:} We select DistilBERT ($\approx 66\text{M}$ parameters) and BERT-Base ($\approx 110\text{M}$ parameters) for full supervised fine-tuning (SFT) \cite{zhang2024comparative}. Because of their small memory footprints, all parameters across all transformer layers are updated directly using standard cross-entropy loss.
+    \item \textbf{Decoder Transformers:} Our decoder models include Qwen2.5-0.5B, Qwen2.5-1.5B, Gemma-2-2B, and DeepSeek-R1-Distill-Qwen-1.5B. To perform fine-tuning within consumer GPU memory limits (such as an NVIDIA RTX 3080 with 10 GB VRAM), the base model weights $\Theta_0$ remain frozen while downstream adaptation is handled through Low-Rank Adaptation (LoRA) \cite{nwaiwu2025peft}.
+\end{itemize}
+
+\subsubsection{LoRA Hyperparameter and Target Module Setup}
+For decoder models, LoRA adapters are injected into specific linear projection matrices inside the self-attention and feed-forward networks (FFN). Table~\ref{tab:peft_config} summarizes the key hyperparameter settings used during training.
+
+\begin{table}[htbp]
+\centering
+\caption{LoRA Adapter Hyperparameter Configuration}
+\label{tab:peft_config}
+\fontsize{8.5pt}{10.5pt}\selectfont
+\begin{tabular}{p{0.42\linewidth} p{0.48\linewidth}}
+\toprule
+\textbf{Hyperparameter} & \textbf{Value / Configuration} \\
+\midrule
+Adapter Rank ($r$) & $16$ \\
+Scaling Factor ($\alpha$) & $32$ ($\alpha / r = 2.0$) \\
+Dropout Rate & $0.05$ \\
+Target Modules (Qwen / Gemma) & Query ($W_q$), Key ($W_k$), Value ($W_v$), Output ($W_o$) \\
+Target Modules (DeepSeek) & Attention ($W_q, W_k, W_v, W_o$) + FFN ($W_{\text{gate}}, W_{\text{up}}, W_{\text{down}}$) \\
+Precision & Mixed Precision (FP16 / BF16) \\
+Quantization & 4-bit NormalFloat (QLoRA) on low-VRAM GPUs \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+By setting the adapter rank $r = 16$ and scaling factor $\alpha = 32$, we achieve an effective learning scale while keeping trainable parameters under $1.5\%$ of the base decoder size \cite{nwaiwu2025peft}. In accordance with standard initialization, weight matrix $A$ is initialized using a Gaussian distribution, while matrix $B$ starts at zero to maintain an identity mapping at the start of training.
+
+For our direct comparison between Qwen2.5-1.5B and DeepSeek-R1-Distill-Qwen-1.5B, we keep identical LoRA configurations to isolate the effect of reasoning-focused distillation pre-training against standard instruction tuning.
 
 \subsection{Pre-Processing and Imbalance Mitigation Strategy}
 

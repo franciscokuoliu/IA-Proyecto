@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.17)  5 SEP 2026 07:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.17)  5 SEP 2026 18:20
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -249,248 +249,308 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@thisruleclass=\count308
 \@lastruleclass=\count309
 \@thisrulewidth=\dimen195
+) (/usr/local/texlive/2026/texmf-dist/tex/latex/tools/tabularx.sty
+Package: tabularx 2023/12/11 v2.12a `tabularx' package (DPC)
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/tools/array.sty
+Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
+\col@sep=\dimen196
+\ar@mcellbox=\box57
+\extrarowheight=\dimen197
+\NC@list=\toks24
+\extratabsurround=\skip57
+\backup@length=\skip58
+\ar@cellbox=\box58
+)
+\TX@col@width=\dimen198
+\TX@old@table=\dimen199
+\TX@old@col=\dimen256
+\TX@target=\dimen257
+\TX@delta=\dimen258
+\TX@cols=\count310
+\TX@ftn=\toks25
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count310
+\l__color_backend_stack_int=\count311
 ) (./IA-Proyecto-Etapa1.aux)
 \openout1 = `IA-Proyecto-Etapa1.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 14.
+LaTeX Font Info:    ... okay on input line 14.
 
 -- Lines per column: 56 (exact).
 (/usr/local/texlive/2026/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count311
-\scratchdimen=\dimen196
-\scratchbox=\box57
-\nofMPsegments=\count312
-\nofMParguments=\count313
-\everyMPshowfont=\toks24
-\MPscratchCnt=\count314
-\MPscratchDim=\dimen197
-\MPnumerator=\count315
-\makeMPintoPDFobject=\count316
-\everyMPtoPDFconversion=\toks25
+\scratchcounter=\count312
+\scratchdimen=\dimen259
+\scratchbox=\box59
+\nofMPsegments=\count313
+\nofMParguments=\count314
+\everyMPshowfont=\toks26
+\MPscratchCnt=\count315
+\MPscratchDim=\dimen260
+\MPnumerator=\count316
+\makeMPintoPDFobject=\count317
+\everyMPtoPDFconversion=\toks27
 ) (/usr/local/texlive/2026/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-LaTeX Font Info:    Trying to load font information for U+msa on input line 74.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 75.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 74.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 75.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1{/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 
 ]
-Underfull \hbox (badness 3919) in paragraph at lines 89--90
+Underfull \hbox (badness 3919) in paragraph at lines 90--91
 []\OT1/ptm/b/n/10 Corpus-Based Ap-proaches\OT1/ptm/m/n/10 : In-duce domain-specific
  []
 
 
-Underfull \hbox (badness 4001) in paragraph at lines 95--96
+Underfull \hbox (badness 4001) in paragraph at lines 96--97
 []\OT1/ptm/b/n/10 Deep Learn-ing Ap-proaches\OT1/ptm/m/n/10 : Em-ploy neu-ral net-
  []
 
 
-Underfull \hbox (badness 1728) in paragraph at lines 95--96
+Underfull \hbox (badness 1728) in paragraph at lines 96--97
 \OT1/ptm/m/n/10 work ar-chi-tec-tures, such as, Re-cur-rent Neu-ral Net-
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 194--195
+Underfull \hbox (badness 10000) in paragraph at lines 195--196
 []\OT1/ptm/b/n/10 Addition-Based: \OT1/ptm/m/n/10 In-tro-duces lightweight, train-able
  []
 
-
-Underfull \hbox (badness 1681) in paragraph at lines 238--238
-[]\OT1/ptm/m/n/9 BiLSTM + Con-tex-
+[3]
+Underfull \hbox (badness 10000) in paragraph at lines 343--343
+[]|\OT1/ptm/m/n/7 BiLSTM + Con-tex-tual
  []
 
 
-Underfull \hbox (badness 7925) in paragraph at lines 238--238
-\OT1/ptm/m/n/9 tual Word Em-bed-
+Underfull \hbox (badness 6078) in paragraph at lines 343--343
+[]|\OT1/ptm/m/n/7 0.647 (Bench-mark Base-
  []
 
 
-Underfull \hbox (badness 2556) in paragraph at lines 238--238
-[]\OT1/ptm/m/n/9 CARER (Emo-tion
+Underfull \hbox (badness 2384) in paragraph at lines 343--343
+\OT1/ptm/m/n/7 pac-ity; strug-gles with se-vere
  []
 
 
-Underfull \hbox (badness 1383) in paragraph at lines 238--238
-[]\OT1/ptm/m/n/9 0.647 (Bench-mark
+Underfull \hbox (badness 10000) in paragraph at lines 343--343
+[]|\OT1/ptm/m/n/7 Classification
  []
 
 
-Underfull \hbox (badness 1571) in paragraph at lines 238--239
-[]\OT1/ptm/m/n/9 Limited long-range se-
+Underfull \hbox (badness 10000) in paragraph at lines 343--343
+[]|\OT1/ptm/m/n/7 High de-pen-dence on task-
  []
 
 
-Underfull \hbox (badness 1571) in paragraph at lines 238--239
-\OT1/ptm/m/n/9 man-tic ca-pac-ity; strug-
+Underfull \hbox (badness 10000) in paragraph at lines 343--343
+\OT1/ptm/m/n/7 specific fine-tuning; poor
  []
 
 
-Underfull \hbox (badness 1983) in paragraph at lines 238--239
-\OT1/ptm/m/n/9 gles with se-vere class
+Underfull \hbox (badness 10000) in paragraph at lines 343--343
+[]|\OT1/ptm/m/n/7 Lexicon-Based & Deep
  []
 
 
-Underfull \hbox (badness 1997) in paragraph at lines 241--241
-[]\OT1/ptm/m/n/9 Financial & Cus-
+Underfull \hbox (badness 1895) in paragraph at lines 343--343
+\OT1/ptm/m/n/7 in-for-mal slang, sar-casm, and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 241--241
-[]\OT1/ptm/m/n/9 Classification
+Underfull \hbox (badness 4353) in paragraph at lines 343--343
+[]|\OT1/ptm/m/n/7 BERT, RNN, GRU Full
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 241--242
-[]\OT1/ptm/m/n/9 High de-pen-dence on
+Underfull \hbox (badness 10000) in paragraph at lines 343--343
+[]|\OT1/ptm/m/n/7 BERT out-per-forms
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 241--242
-\OT1/ptm/m/n/9 task-specific fine-
+Underfull \hbox (badness 6493) in paragraph at lines 343--343
+\OT1/ptm/m/n/7 stan-tial mem-ory; lim-ited to
  []
 
 
-Underfull \hbox (badness 4024) in paragraph at lines 241--242
-\OT1/ptm/m/n/9 tuning; poor zero-shot
+Underfull \hbox (badness 10000) in paragraph at lines 343--343
+[]|\OT1/ptm/m/n/7 Low-Resource Text
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 244--244
-[]\OT1/ptm/m/n/9 Lexicon-Based &
+Underfull \hbox (badness 1668) in paragraph at lines 343--343
+[]|\OT1/ptm/m/n/7 Macro-F1 / Mem-ory
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 244--244
-\OT1/ptm/m/n/9 Deep Learn-ing
+Underfull \hbox (badness 2809) in paragraph at lines 343--343
+[]|\OT1/ptm/m/n/7 Mohammed & Kora
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 244--244
-[]\OT1/ptm/m/n/9 Qualitative SOTA
+Underfull \hbox (badness 1552) in paragraph at lines 343--343
+[]|\OT1/ptm/m/n/7 High pa-ram-e-ter ef-fi-ciency
  []
 
 
-Underfull \hbox (badness 4254) in paragraph at lines 247--247
-[]\OT1/ptm/m/n/9 BERT, RNN, GRU
+Underfull \hbox (badness 10000) in paragraph at lines 343--343
+[]|\OT1/ptm/m/n/7 Conversational Emo-tion
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 247--247
-[]\OT1/ptm/m/n/9 Accuracy /
+Underfull \hbox (badness 3260) in paragraph at lines 343--343
+\OT1/ptm/m/n/7 text; ex-pen-sive in-fer-ence la-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 247--247
-\OT1/ptm/m/n/9 RNN/GRU
+Underfull \hbox (badness 10000) in alignment at lines 343--343
+[][][][][][][] 
+ []
+
+[4]
+Underfull \hbox (badness 1354) in paragraph at lines 366--367
+\OT1/ptm/m/n/10 English-speaking de-mo-graphic norms, sub-tle cul-tural
  []
 
 
-Underfull \hbox (badness 7221) in paragraph at lines 247--248
-\OT1/ptm/m/n/9 ited to fixed con-text
+Underfull \hbox (badness 10000) in paragraph at lines 391--391
+[]|\OT1/ptm/b/n/9 Architecture
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 250--250
-[]\OT1/ptm/m/n/9 Macro-F1
+Underfull \hbox (badness 10000) in paragraph at lines 391--392
+[]|\OT1/ptm/b/n/9 Experimental
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 250--250
-\OT1/ptm/m/n/9 / Mem-ory
+Underfull \hbox (badness 10000) in paragraph at lines 393--393
+[]|\OT1/ptm/m/n/9 Non-Neural
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 253--253
-[]\OT1/ptm/m/n/9 Mohammed &
+Underfull \hbox (badness 10000) in paragraph at lines 395--395
+[]|\OT1/ptm/m/n/9 Encoder
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 253--253
-[]\OT1/ptm/m/n/9 LLMs + LoRA
+Underfull \hbox (badness 10000) in paragraph at lines 395--396
+[]|\OT1/ptm/m/n/9 Small scale
  []
 
 
-Underfull \hbox (badness 5939) in paragraph at lines 253--253
-[]\OT1/ptm/m/n/9 Text-Based Deep-
+Underfull \hbox (badness 10000) in paragraph at lines 396--396
+[]|\OT1/ptm/m/n/9 Encoder
  []
 
 
-Underfull \hbox (badness 5954) in paragraph at lines 253--253
-[]\OT1/ptm/m/n/9 Detection Ac-
+Underfull \hbox (badness 10000) in paragraph at lines 396--397
+[]|\OT1/ptm/m/n/9 Scale ef-fect vs.
  []
 
 
-Underfull \hbox (badness 1577) in paragraph at lines 253--254
-[]\OT1/ptm/m/n/9 Performance drops un-
+Underfull \hbox (badness 10000) in paragraph at lines 397--397
+[]|\OT1/ptm/m/n/9 Decoder
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 256--256
-[]\OT1/ptm/m/n/9 LLMs In-Context
+Underfull \hbox (badness 10000) in paragraph at lines 397--398
+[]|\OT1/ptm/m/n/9 Small scale
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 256--256
-[]\OT1/ptm/m/n/9 Conversational
+Underfull \hbox (badness 10000) in paragraph at lines 398--398
+[]|\OT1/ptm/m/n/9 Decoder
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 256--256
-[]\OT1/ptm/m/n/9 Improved multi-
+Underfull \hbox (badness 10000) in paragraph at lines 398--399
+[]|\OT1/ptm/m/n/9 Scale ef-fect vs.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 256--256
-\OT1/ptm/m/n/9 turn emo-tion
+Underfull \hbox (badness 10000) in paragraph at lines 399--399
+[]|\OT1/ptm/m/n/9 Decoder
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 256--257
-[]\OT1/ptm/m/n/9 Highly sen-si-tive to
+Underfull \hbox (badness 2980) in paragraph at lines 399--400
+[]|\OT1/ptm/m/n/9 Family ef-fect vs.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 256--257
-\OT1/ptm/m/n/9 prompt con-text;
+Underfull \hbox (badness 10000) in paragraph at lines 400--400
+[]|\OT1/ptm/m/n/9 DeepSeek-R1-Distill-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 256--257
-\OT1/ptm/m/n/9 ex-pen-sive in-fer-ence
+Underfull \hbox (badness 10000) in paragraph at lines 400--400
+[]|\OT1/ptm/m/n/9 Decoder
  []
 
 
-Overfull \hbox (27.01768pt too wide) in paragraph at lines 233--260
+Underfull \hbox (badness 2790) in paragraph at lines 400--401
+[]|\OT1/ptm/m/n/9 Training ob-jec-tive
+ []
+
+
+Overfull \hbox (5.76123pt too wide) in paragraph at lines 389--403
  [][] 
  []
 
-[3] (./IA-Proyecto-Etapa1.bbl)
+[5]
+Underfull \hbox (badness 5592) in paragraph at lines 439--440
+[]\OT1/ptm/b/n/10 Decoder Trans-form-ers: \OT1/ptm/m/n/10 Our de-coder mod-els in-
+ []
+
+
+Underfull \hbox (badness 1776) in paragraph at lines 439--440
+\OT1/ptm/m/n/10 within con-sumer GPU mem-ory lim-its (such as an
+ []
+
+LaTeX Font Info:    Calculating math sizes for size <8.5> on input line 450.
+
+Underfull \hbox (badness 10000) in paragraph at lines 457--457
+[]|\OT1/ptm/m/n/8.5 Target Mod-ules (Qwen /
+ []
+
+
+Underfull \hbox (badness 4168) in paragraph at lines 457--458
+[]|\OT1/ptm/m/n/8.5 Query ($\OML/cmm/m/it/8 W[]$\OT1/ptm/m/n/8.5 ), Key ($\OML/cmm/m/it/8 W[]$\OT1/ptm/m/n/8.5 ), Value
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 458--459
+[]|\OT1/ptm/m/n/8.5 Attention ($\OML/cmm/m/it/8 W[]; W[]; W[]; W[]$\OT1/ptm/m/n/8.5 ) +
+ []
+
+
+Underfull \hbox (badness 4429) in paragraph at lines 460--461
+[]|\OT1/ptm/m/n/8.5 4-bit Nor-malFloat (QLoRA) on
+ []
+
+(./IA-Proyecto-Etapa1.bbl [6])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -502,27 +562,27 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[4
+[7
 
-] [5] (./IA-Proyecto-Etapa1.aux)
+] (./IA-Proyecto-Etapa1.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 4283 strings out of 467525
- 67029 string characters out of 5418988
- 500760 words of memory out of 5000000
- 33149 multiletter control sequences out of 15000+600000
- 668012 words of font info for 114 fonts, out of 8000000 for 9000
+ 4476 strings out of 467525
+ 69919 string characters out of 5418988
+ 506693 words of memory out of 5000000
+ 33321 multiletter control sequences out of 15000+600000
+ 680851 words of font info for 144 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,11n,65p,719b,287s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on IA-Proyecto-Etapa1.pdf (5 pages, 180637 bytes).
+ 57i,15n,65p,719b,317s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on IA-Proyecto-Etapa1.pdf (7 pages, 245112 bytes).
 PDF statistics:
- 96 PDF objects out of 1000 (max. 8388607)
- 58 compressed objects within 1 object stream
+ 129 PDF objects out of 1000 (max. 8388607)
+ 79 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
