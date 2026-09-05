@@ -93,7 +93,7 @@ Some of these computational approaches have relied on multiple computational par
     
     \item \textbf{Traditional Machine Learning Approaches}: Utilize supervised algorithms, such as, Support Vector Machines (SVM), Na\"ive Bayes, Decision Trees, and $K$-Nearest Neighbors—that rely on manual feature engineering to classify text into emotional categories \cite{murthy2021review}.
     
-    \item \textbf{Deep Learning Approaches}: Employ neural network architectures, such as, Recurrent Neural Networks (RNNs/LSTMs), Convolutional Neural Networks (CNNs), and Transformer-based models (e.g., BERT), to automatically learn hierarchical representations and capture complex contextual semantics directly from raw text[1].
+    \item \textbf{Deep Learning Approaches}: Employ neural network architectures, such as, Recurrent Neural Networks (RNNs/LSTMs), Convolutional Neural Networks (CNNs), and Transformer-based models (e.g., BERT), to automatically learn hierarchical representations and capture complex contextual semantics directly from raw text [1].
 \end{itemize}
 
 \subsection{The Shift to Generative Decoders}
@@ -183,35 +183,42 @@ strict memory limits remains a major objective for practical emotion recognition
 \label{sec:ejeB}
 
 \subsection{Full Fine-Tuning vs. PEFT Paradigms}
-For a long time, Full Parameter Fine-Tuning (FFT) has been the 
-predominant choice for fine-tuning models due to its excellent 
-performance. Nevertheless, with the arrival of Large Language Models, 
-the GPU memory requirements for FFT have increased exponentially 
-\cite{liu-etal-2026-look}. 
-Therefore, other approaches to solve this problem have emerged, known as Parameter-Efficient Fine-Tuning (PEFT) methods. These PEFT methods were created to reduce the number of parameters needed for fine-tuning while maintaining a performance level similar to FFT \cite{liu-etal-2026-look}.
+Supervised Fine-Tuning (SFT) has historically served as the standard paradigm for adapting pre-trained language models to downstream tasks. In full parameter fine-tuning (FFT), every weight matrix $\Theta$ across all model layers is updated via backpropagation. For compact encoder architectures such as DistilBERT ($\approx 66\text{M}$ parameters) and BERT-Base ($\approx 110\text{M}$ parameters), full parameter updates are computationally lightweight, requiring under $2\text{ GB}$ of VRAM during training \cite{zhang2024comparative}. Consequently, FFT remains a highly effective baseline for standard encoder-based classification tasks.
 
-Unlike FFT, which relies on updating the full set of parameters for fine-tuning purposes, PEFT implements a different approach based on updating only a small fraction of the model's parameters. This can be achieved by:
-\begin{itemize}
-    \item \textbf{Addition-Based:} Introduces lightweight, trainable adapter layers or prompt tokens into the architecture while freezing base weights \cite{liu-etal-2026-look}.
-    \item \textbf{Selection-Based:} Selects and updates only a specific subset of existing parameters \cite{liu-etal-2026-look}.
-    \item \textbf{Reparameterization-Based:} Exploits low-rank matrix decompositions to parameterize weight updates, as seen in LoRA \cite{liu-etal-2026-look}.
-\end{itemize}
-PEFT paradigms offer greater computational efficiency compared to FFTs, though it is important to recognize that they also entail certain drawbacks \cite{liu-etal-2026-look}. In terms of Instruction-Following performance and Adversarial Robustness, FFTs perform better under complex circumstances, as PEFT capabilities rely on simple tasks where a reduced parameter count still captures enough label information \cite{liu-etal-2026-look}.
+However, as model scales transition toward intermediate and large-scale generative decoders (e.g., Qwen-2.5-1.5B/7B, Gemma-2-2B/9B, and DeepSeek-R1-Distill-1.5B/7B), full parameter updates become computationally prohibitive \cite{liu-etal-2026-look}. In 16-bit floating-point precision (FP16/BF16), storing a 7-billion parameter model consumes approximately $14\text{ GB}$ of static memory. During full fine-tuning, the memory footprint scales drastically when factoring in first- and second-order optimizer states (such as AdamW tracking momentum and variance for every weight), gradient buffers, and activation caching:
+\begin{equation}
+\text{Memory}{\text{FFT}} \approx \Theta{\text{weights}} + \Theta_{\text{gradients}} + \Theta_{\text{optimizer states}} + \text{Activations}
+\end{equation}
+This memory requirement easily exceeds $80\text{ GB}$ of peak VRAM for a 7B model, far surpassing the memory limits of standard consumer GPUs or single-workstation academic environments \cite{nwaiwu2025peft}.
 
-Specifically, empirical results from other studies demonstrate that FFT consistently outperforms popular PEFT methods across instruction-following benchmarks on various model scales \cite{liu-etal-2026-look}:
+To mitigate these memory bottlenecks, Parameter-Efficient Fine-Tuning (PEFT) freezes the pre-trained base parameters $\Theta_0$ and restricts gradient updates to a small set of auxiliary parameters $\Phi$, where $|\Phi| \ll |\Theta_0|$ (typically $< 1.5\%$ of the base parameter count) \cite{nwaiwu2025peft, mohammed2026deepfake}. 
+
+\subsubsection{Taxonomy of Parameter-Efficient Adaptation}
+PEFT strategies can be broadly categorized into three core architectural paradigms based on how auxiliary parameters are integrated into the network \cite{liu-etal-2026-look}:
 \begin{itemize}
-    \item \textbf{TinyLLaMA:} FFT achieves an average MT-Bench score of 2.68, compared to LoRA (2.05) and Prefix-Tuning (1.81) \cite{liu-etal-2026-look}.
-    \item \textbf{Mistral-7B:} FFT reaches an average score of 4.96, outperforming LoRA (4.74) and Prefix-Tuning (4.67) \cite{liu-etal-2026-look}.
-    \item \textbf{LLaMA2-7B:} FFT maintains its advantage with an average score of 5.26, whereas LoRA and Prefix-Tuning obtain 4.91 and 4.82, respectively \cite{liu-etal-2026-look}.
+    \item \textbf{Addition-Based Methods:} Introduce lightweight, trainable structural modules (such as sequential or parallel adapter layers) or continuous soft prompt tokens directly into the model architecture while keeping base weights entirely frozen \cite{liu-etal-2026-look}.
+    \item \textbf{Selection-Based Methods:} Freeze the vast majority of original weights and selectively unfreeze a small, highly targeted sub-network or specific parameter subsets (e.g., bias vectors in BitFit) for gradient updates \cite{liu-etal-2026-look}.
+    \item \textbf{Reparameterization-Based Methods:} Exploit the intrinsic low-rank properties of weight updates during adaptation. By parameterizing weight shifts $\Delta W$ through low-rank matrix factorizations ($W = W_0 + B A$), methods like Low-Rank Adaptation (LoRA) enable efficient adaptation without altering base model inference latency \cite{nwaiwu2025peft, liu-etal-2026-look}.
 \end{itemize}
 
-Furthermore, evaluation on the AdvGLUE benchmark reveals that while PEFT methods match or slightly edge out FFT on clean datasets, FFT exhibits superior robustness against adversarial perturbations \cite{liu-etal-2026-look}:
-\begin{itemize}
-    \item \textbf{RoBERTa-base (Adversarial Noise):} Under adversarial attacks, FFT retains an average robustness score of 36.58, significantly outperforming LoRA (30.89) and BitFit (28.21) \cite{liu-etal-2026-look}.
-    \item \textbf{RoBERTa-large (Adversarial Noise):} FFT achieves the highest overall robustness score of 55.44, compared to LoRA's 53.96 \cite{liu-etal-2026-look}.
-\end{itemize}
-Considering the nature of this study, it is justifiable the usage of PEFT as a Fine-Tuning method, considering that emotion recognition is a simple task, which does not requires a the complexity that FFTs can manage.
+\subsubsection{Empirical Performance Bounds and Robustness Trade-offs}
+While PEFT drastically reduces hardware overhead, comparative literature highlights trade-offs regarding raw task capability, instruction-following proficiency, and adversarial resilience when compared to full fine-tuning \cite{liu-etal-2026-look}. 
 
+On multi-turn instruction benchmarks, empirical evaluations demonstrate that full parameter tuning maintains a performance margin over parameter-efficient alternatives across various architectural scales \cite{liu-etal-2026-look}:
+\begin{itemize}
+    \item \textbf{TinyLLaMA Scale:} Full fine-tuning achieves an average MT-Bench score of $2.68$, outperforming LoRA ($2.05$) and Prefix-Tuning ($1.81$) \cite{liu-etal-2026-look}.
+    \item \textbf{Mistral-7B Scale:} FFT reaches an average score of $4.96$, maintaining an advantage over LoRA ($4.74$) and Prefix-Tuning ($4.67$) \cite{liu-etal-2026-look}.
+    \item \textbf{LLaMA2-7B Scale:} FFT achieves an average MT-Bench score of $5.26$, compared to $4.91$ for LoRA and $4.82$ for Prefix-Tuning \cite{liu-etal-2026-look}.
+\end{itemize}
+
+Furthermore, evaluations on the AdvGLUE benchmark indicate that while PEFT methods perform comparably to FFT on clean validation sets, full fine-tuning demonstrates superior structural robustness under adversarial perturbations \cite{liu-etal-2026-look}:
+\begin{itemize}
+    \item \textbf{RoBERTa-Base (Adversarial Noise):} Under adversarial attacks, FFT retains an average robustness score of $36.58$, significantly outperforming LoRA ($30.89$) and BitFit ($28.21$) \cite{liu-etal-2026-look}.
+    \item \textbf{RoBERTa-Large (Adversarial Noise):} FFT achieves an overall robustness score of $55.44$, compared to LoRA's $53.96$ \cite{liu-etal-2026-look}.
+\end{itemize}
+
+\subsubsection{Scope Justification for Text Emotion Recognition}
+Despite the empirical edge held by FFT in highly complex or adversarial environments, PEFT represents an optimal adaptation framework for multi-class text emotion recognition. Fine-grained emotion classification on social media corpora relies primarily on capturing localized semantic cues, pragmatic context, and affective syntax rather than performing unconstrained open-ended text generation or complex multi-step reasoning. Consequently, the reduced parameter subspace updated via LoRA ($r=16, \alpha=32$) provides sufficient capacity to resolve affective ambiguities while allowing intermediate decoders to operate efficiently within constrained compute environments \cite{nwaiwu2025peft}
 
 \subsection{Mechanics of Low-Rank Adaptation (LoRA)}
 
@@ -299,6 +306,8 @@ BERT-base & $\sim 91.5\%$ & $\sim 92.6\%$ & Strong encoder baseline \cite{zhang2
 \end{tabularx}
 \end{table}
 
+The benchmark results highlight a notable progression in classification capability across neural paradigms \cite{Jayanthi_Kavitha_2026}. Traditional recurrent networks, such as the standard LSTM, serve as the initial deep learning baseline with an accuracy of $84.0\%$, though they face difficulties when resolving fine-grained or overlapping affective categories \cite{Jayanthi_Kavitha_2026}. Transitioning to a bidirectional setup in BiLSTM enhances sequential representation by tracking context in both past and future steps, raising the accuracy to $87.0\%$ \cite{Jayanthi_Kavitha_2026}.
+
 Traditional non-neural and recurrent baselines establish the lower performance boundary \cite{saravia2018carer, kratzwald2018deep}. 
 While lightweight and fast to train, they struggle to capture the complex pragmatic cues and implicit emotional expressions present 
 in digital text \cite{chakriswaran2019emotion}. Encoder-based architectures like BERT-Base set a strong performance baseline for 
@@ -338,6 +347,21 @@ Mohammed \& Kora \cite{mohammed2026deepfake} & 2026 & LLMs + LoRA (PEFT) & Text-
 \addlinespace
 
 Cheng et al. \cite{cheng2026personality} & 2026 & LLMs In-Context Learning / SFT & Conversational Emotion Datasets & Macro-F1 & Improved multi-turn emotion tracking & Highly sensitive to prompt context; expensive inference latency for broad LLMs. \\
+\addlinespace
+
+Liu et al. \cite{liu-etal-2026-look} & 2026 & Parameter-Efficient Fine-Tuning (LoRA, AdaLoRA, Prefix-Tuning, IA3, BitFit) vs. Full Fine-Tuning (FFT) & GSM8k, ViGGO, SQL, SQuAD 1.1, GLUE/AdvGLUE, Adversarial SQuAD & Accuracy / Macro-F1 / Robustness / Memory Footprint & FFT consistently outperforms PEFT on complex reasoning/SQL and exhibits higher adversarial robustness & PEFT representation capacity is strictly bounded by tuned parameters, shows diminishing marginal gains with larger dataset sizes \\
+\addlinespace
+
+Murthy \& Kumar \cite{murthy2021review} & 2021 & Deep Learning and Transformers (RNN, LSTM, BiLSTM, CNN, BERT) & Dialogues/Conversations (DailyDialog, MELD, EmotionLines, WASSA) & Macro-F1, Jaccard Accuracy, Pearson Correlation ($r$) & State-of-the-art context and sequential modeling & Computationally expensive; degraded performance on sarcasm, negation, and multi-label edge cases. \\
+\addlinespace
+
+Luo et al. \cite{luo23_interspeech} & 2023 & Fine-tuned RoBERTa + 1D CNN-BiLSTM + Residual Blocks & MELD (Text Modality) & Weighted-Average F1 & 0.6612 (66.12\%) & High misclassification in minor classes (disgust, fear, sadness); lacks multi-modal context (audio/visual); sensitive to short, ambiguous utterances. \\
+\addlinespace
+
+Jayanthi \& Kavitha \cite{Jayanthi_Kavitha_2026} & 2026 & TF-IDF + LSTM (Unified Hybrid Framework) & EMO-KNOW (48 emotion classes) & Accuracy / Macro F1-Score & 0.954 (95.4\%) & Relies on sequential processing of sparse TF-IDF vectors; evaluated primarily on short, informal social media text. \\
+\addlinespace
+
+Stigall et al. \cite{10.1145/3603287.3651183} & 2024 & Fine-tuned $BERT_{Tiny}$ (Multi-Task Parallel Training) & Aggregated Social Media Datasets (Text) & Accuracy / F1-Score & 0.8546 (85.46\%) & Class imbalance (underrepresented neutral/worry), data loss from dual-dataloader alignment. \\
 
 \bottomrule
 \end{tabularx}
