@@ -265,7 +265,33 @@ The performance and robustness bounds separating full fine-tuning from PEFT meth
 \subsubsection{Instability and Quantization as Compounding Sources of Error}
 Adversarial training results show that the sparse trainable-parameter regime of standard LoRA introduces measurable instability under distribution shift and low-resource conditions \cite{wu2025advlora}, while separate survey evidence flags a tendency toward overconfident predictions when PEFT-tuned models are applied to small or imbalanced datasets \cite{wang2025peft}. Because QLoRA's 4-bit quantization of the frozen base weights is applied on top of an already parameter-scarce adapter, this work implicitly assumes that rank restriction and numerical quantization introduce independent, additive sources of approximation error rather than interacting nonlinearly; this interaction has not been directly characterized in the reviewed literature and is acknowledged here as an open limitation.
 
-\section{Benchmark Analysis: The CARER Dataset \& Evaluation Protocols}
+\subsection{Cross-Dataset Perspective: EMO-KNOW}
+
+To understand how emotion recognition models perform on larger and more detailed tasks, it is helpful to look at other benchmark datasets. A key example is EMO-KNOW, which consists of roughly 700,000 tweets labeled across 48 emotion categories \cite{Jayanthi_Kavitha_2026}. Beyond basic categories like joy, sadness, and anger, EMO-KNOW includes more specific affective states such as hope, despair, and relief \cite{Jayanthi_Kavitha_2026}. This dataset serves as a useful benchmark for evaluating fine-grained emotion classification.
+
+In their evaluation of EMO-KNOW, Jayanthi and Kavitha \cite{Jayanthi_Kavitha_2026} compared several machine learning and deep learning models. Logistic Regression achieved a solid 92.0\% accuracy, while Transformer models like BERT and RoBERTa reached 93.0\% and 94.0\%, respectively \cite{Jayanthi_Kavitha_2026}. The highest performance came from a hybrid TF-IDF + LSTM model, which achieved 95.4\% accuracy \cite{Jayanthi_Kavitha_2026}. These results show that combining traditional frequency-based features with contextual sequence modeling is an effective strategy for complex emotion detection.
+
+The authors also emphasized the impact of text preprocessing when dealing with social media content. Standard cleaning steps, such as removing punctuation, hashtags, user mentions, and stopwords, as well as applying stemming or lemmatization, which led to noticeable accuracy improvements across models \cite{Jayanthi_Kavitha_2026}. This step is particularly important for short social media posts, where informal phrasing and limited context add to the classification difficulty.
+
+Although EMO-KNOW and CARER differ in total size and label count (48 classes versus 6), both datasets reflect the core challenge of identifying emotions in informal online text. Looking at the results from EMO-KNOW provides a helpful external reference when examining how different model families behave. However, direct accuracy comparisons should be avoided, as the datasets, class distributions, and experimental setups are not the same.
+
+\subsection{Methodological and Architectural Alternatives in Literature}
+
+To address feature representation limitations and improve structural adaptability, several hybrid and multi-layer strategies have been established in affective computing literature \cite{luo23_interspeech}:
+
+\paragraph{Hybrid Feature Architectures}
+\begin{itemize}
+    \item \textbf{1D CNN-BiLSTM Classification Heads:} Instead of relying solely on standard linear projections, integrating a parallel 1D CNN-BiLSTM network on top of transformer embeddings enables the concurrent extraction of localized $n$-gram emotional triggers (via CNN) and long-range sequential dependencies (via BiLSTM) \cite{luo23_interspeech}.
+    \item \textbf{Multi-Layer Representation Aggregation:} Rather than using exclusively the final hidden state or pooled \texttt{[CLS]} token, feature representations can be constructed by concatenating activations across the final four transformer layers, extracting richer hierarchical semantics prior to task projection \cite{luo23_interspeech}.
+\end{itemize}
+
+\paragraph{Granular Error and Multi-Corpus Diagnostics}
+\begin{itemize}
+    \item \textbf{Semantic Pair Confusion Analysis:} Expanding performance evaluations to analyze misclassification dynamics between semantically adjacent emotion categories (e.g., \textit{fear} vs.\ \textit{surprise}, \textit{joy} vs.\ \textit{love}) isolates structural failure modes in short-text affective processing \cite{luo23_interspeech}.
+    \item \textbf{Cross-Domain Benchmarking:} Evaluating models across multi-party conversational corpora with varied dialogue lengths validates whether performance and computational efficiency trade-offs remain consistent beyond isolated, single-sentence benchmarks.
+\end{itemize}
+
+\section{Benchmark Analysis: The CARER Dataset, \& Evaluation Protocols}
 \label{sec:ejeC}
 
 \subsection{Corpus Characteristics and Domain Scope}
@@ -458,9 +484,6 @@ This introduces structural simplifications:
 
 Addressing these domain-specific constraints requires careful empirical error analysis during validation, ensuring that strong benchmark 
 performance on Macro-F1 is not mistaken for universal affective generalization across broader linguistic registers.
-
-\section{Proposed Experimental Methodology}
-\label{sec:methodology}
 
 \subsection{Experimental Framework and Hardware Constraints}
 
