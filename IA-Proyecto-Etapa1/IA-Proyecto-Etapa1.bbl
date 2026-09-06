@@ -69,6 +69,14 @@ Y.~Liu, X.~Xu, E.~Nie, Z.~Wang, S.~Feng, D.~Wang, Q.~Li, and H.~Schuetze, ``Look
 \bibitem{mohammed2026deepfake}
 A.~Mohammed and R.~Kora, ``Enhancing text-based deepfake detection: A comprehensive evaluation of lora fine-tuned large language models,'' \emph{IEEE Access}, vol.~14, pp. 44\,709--44\,727, 2026.
 
+\bibitem{teehan2022emergent}
+\BIBentryALTinterwordspacing
+R.~Teehan, M.~Clinciu, O.~Serikov, E.~Szczechla, N.~Seelam, S.~Mirkin, and A.~Gokaslan, ``Emergent structures and training dynamics in large language models,'' in \emph{Proceedings of BigScience Episode \#5 -- Workshop on Challenges \& Perspectives in Creating Large Language Models}.\hskip 1em plus 0.5em minus 0.4em\relax Association for Computational Linguistics, 2022, pp. 146--159. [Online]. Available: \url{https://aclanthology.org/2022.bigscience-1.11/}
+\BIBentrySTDinterwordspacing
+
+\bibitem{lv2026spikebert}
+C.~Lv, T.~Li, W.~Qiao, X.~Wang, M.~Wu, W.~Liu, S.~Dou, X.~Zheng, and X.~Huang, ``{SpikeBERT}: A language spikformer learned from {BERT} with knowledge distillation,'' \emph{Neural Networks}, vol. 197, p. 108482, 2026.
+
 \bibitem{wang2025peft}
 \BIBentryALTinterwordspacing
 L.~Wang, S.~Chen, L.~Jiang, S.~Pan, R.~Cai, S.~Yang, and F.~Yang, ``Parameter-efficient fine-tuning in large language models: a survey of methodologies,'' \emph{Artificial Intelligence Review}, vol.~58, p. 227, 2025. [Online]. Available: \url{https://doi.org/10.1007/s10462-025-11236-4}
@@ -81,5 +89,19 @@ J.~Luo, H.~Phan, and J.~Reiss, ``{Fine-tuned RoBERTa Model with a CNN-LSTM Netwo
 \BIBentryALTinterwordspacing
 K.~Jayanthi and D.~Kavitha, ``A unified hybrid framework for fine-grained emotion classification: Machine learning–deep learning synergy for robust performance,'' \emph{International Journal of Artificial Intelligence and Machine Learning}, vol.~6, no.~2s, p. 650–660, May 2026. [Online]. Available: \url{https://www.svedbergopen.com/index.php/ijaiml/article/view/245}
 \BIBentrySTDinterwordspacing
+
+\bibitem{wu2025advlora}
+\BIBentryALTinterwordspacing
+H.~Wu, X.~Luo, J.~Gao, and D.~Huang, ``Improving text processing via adversarial low-rank adaptation,'' \emph{Machine Learning}, vol. 114, p. 196, 2025. [Online]. Available: \url{https://doi.org/10.1007/s10994-025-06817-x}
+\BIBentrySTDinterwordspacing
+
+\bibitem{yang2023context}
+D.~Yang, A.~Kommineni, M.~Alshehri, N.~Mohanty, V.~Modi, J.~Gratch, and S.~Narayanan, ``Context unlocks emotions: Text-based emotion classification dataset auditing with large language models,'' in \emph{2023 11th International Conference on Affective Computing and Intelligent Interaction (ACII)}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE, 2023.
+
+\bibitem{alam2026beyond}
+M.~J. Alam, I.~Hossain, S.~Puppala, and S.~Talukder, ``Beyond transformers: Leveraging large language models and encoder-decoder architectures for emotion detection in low-resource language,'' in \emph{Social Networks Analysis and Mining, ASONAM 2025, Part III}, ser. Lecture Notes in Computer Science, vol. 16324.\hskip 1em plus 0.5em minus 0.4em\relax Springer, 2026, pp. 464--475.
+
+\bibitem{benayas2025comparative}
+A.~Benayas, M.~A. Sicilia, and M.~Mora-Cantallops, ``A comparative analysis of encoder only and decoder only models in intent classification and sentiment analysis: Navigating the trade-offs in model size and performance,'' \emph{Language Resources and Evaluation}, vol.~59, no.~3, pp. 2007--2030, 2025.
 
 \end{thebibliography}

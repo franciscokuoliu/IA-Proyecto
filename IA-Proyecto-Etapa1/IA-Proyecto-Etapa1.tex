@@ -231,7 +231,7 @@ To guarantee that adaptation begins from the exact pre-trained behavior of the b
 LoRA adapters are not injected into every weight matrix of a Transformer block; instead, they are selectively applied to the linear projections most responsible for task-specific behavior. As detailed later in Table~\ref{tab:peft_config}, this work targets the attention projections $W_q, W_k, W_v, W_o$ across all decoder architectures, extending to the feed-forward projections ($W_{\text{gate}}, W_{\text{up}}, W_{\text{down}}$) for DeepSeek-R1-Distill-Qwen-1.5B specifically. This selective targeting keeps the trainable parameter count within $1$--$1.5\%$ of the base decoder size \cite{nwaiwu2025peft, mohammed2026deepfake}.
 
 \subsubsection{Why a Low-Rank Update Suffices}
-The effectiveness of this constrained parameterization rests on the intrinsic-rank hypothesis: adapting a large pre-trained model to a related downstream task does not require exploring its full parameter space, but only a low-dimensional subspace of it \cite{liu-etal-2026-look}. LoRA operationalizes this hypothesis directly, rather than leaving it as an implicit property of the optimization trajectory, which is precisely the restricted solution space discussed in Section~\ref{sec:ejeB}.A.
+The effectiveness of this constrained parameterization rests on the intrinsic-rank hypothesis: adapting a large pre-trained model to a related downstream task does not require exploring its full parameter space, but only a low-dimensional subspace of it \cite{liu-etal-2026-look}. LoRA operationalizes this hypothesis directly, rather than leaving it as an implicit property of the optimization trajectory, which is precisely the restricted solution space discussed in Section~\ref{sec:ejeB}.A. This restricted-subspace view aligns with broader evidence that pre-trained language models develop identifiable internal structures during training, structures that downstream adaptation methods can exploit rather than relearn from scratch \cite{teehan2022emergent}. Efficiency-oriented alternatives that depart from the Transformer architecture altogether, such as spiking neural networks distilled from BERT, pursue a related goal through a different mechanism, replacing rank-constrained weight updates with sparse, event-driven computation; such architectures nonetheless fall outside the scope of the LoRA-based adaptation examined in this work \cite{lv2026spikebert}.
 
 \subsection{Comparative Methodologies: LoRA vs. QLoRA vs. Full Fine-Tuning}
 
@@ -387,6 +387,35 @@ Jayanthi \& Kavitha \cite{Jayanthi_Kavitha_2026} & 2026 & TF-IDF + LSTM (Unified
 \addlinespace
 
 Stigall et al. \cite{stigall2024large} & 2024 & Fine-tuned $BERT_{Tiny}$ (Multi-Task Parallel Training) & Aggregated Social Media Datasets (Text) & Accuracy / F1-Score & 0.8546 (85.46\%) & Class imbalance (underrepresented neutral/worry), data loss from dual-dataloader alignment. \\
+
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\begin{table*}[t]
+\centering
+\caption{Comparative Summary of Parameter-Efficient Fine-Tuning and Auxiliary Approaches}
+\label{tab:peft_literature_comparison}
+\scriptsize
+\setlength{\tabcolsep}{4pt} % Slightly reduces padding between columns to fit text
+\begin{tabularx}{\textwidth}{@{} >{\hsize=0.85\hsize}X c >{\hsize=1.05\hsize}X >{\hsize=1.0\hsize}X >{\hsize=0.85\hsize}X >{\hsize=1.05\hsize}X >{\hsize=1.2\hsize}X @{}}
+\toprule
+\textbf{Reference} & \textbf{Year} & \textbf{Technique} & \textbf{Dataset / Environment} & \textbf{Primary Metric} & \textbf{Reported Result} & \textbf{Identified Limitation} \\
+\midrule
+
+Wang et al. \cite{wang2025peft} & 2025 & Comprehensive PEFT Taxonomy Survey (Additive, Reparameterized, Selective, Hybrid, Quantization, Multi-Task) & Multi-Domain (NLP, Vision, Diffusion, MLLM) & Comparative GLUE Benchmarks & LoRA matches full fine-tuning accuracy on RoBERTa-large GLUE tasks while training under 1\% of parameters & Lacks principled search strategy for hybrid PEFT combinations; fine-tuned LLMs remain prone to overconfident predictions on small datasets. \\
+\addlinespace
+
+Wu et al. \cite{wu2025advlora} & 2025 & Adversarial Low-Rank Adaptation (ADV-LoRA) with FGSM Perturbations and Self-Supervised Learning & GLUE Subset (SST-2, CoLA, RTE, MRPC) and CNN/DM, XSum & Accuracy / MCC / ROUGE & Outperforms standard LoRA on RoBERTa-large (avg. 85.5 vs. 84.6) and LLaMA-2 7B (CoLA 72.0 vs. 69.4) & Introduces roughly 150\% training-time overhead versus standard LoRA; untested on morphologically complex or low-resource languages. \\
+\addlinespace
+
+Yang et al. \cite{yang2023context} & 2023 & LLM-Based Contextual Prompt Augmentation for Dataset Auditing & Text-Based Emotion Classification Datasets (Label-Context Alignment) & Human and Empirical Alignment Evaluation & Synthesized context improves alignment between input text and human-annotated emotion labels & Relies on LLM-generated context that may introduce its own biases; does not fine-tune a downstream classifier directly. \\
+\addlinespace
+
+Alam et al. \cite{alam2026beyond} & 2026 & Classical ML, Deep Learning, Transformers (mBERT, XLM-R, Bangla-BERT), and Instruction-Tuned LLMs (GPT-4, Claude, DeepSeek) & BEmoC (Bengali Emotion Corpus, 6 Classes) & Weighted F1-Score & GPT-4 few-shot reaches 82.3\% F1, surpassing the best fine-tuned transformer XLM-R (69.7\% F1) & LLM inference latency ($\sim$5s/query) hinders deployment; BEmoC's limited size (6{,}243 instances) constrains generalizability. \\
+\addlinespace
+
+Benayas et al. \cite{benayas2025comparative} & 2025 & Fine-Tuned Encoder-Only (RoBERTa) vs. Fine-Tuned/Few-Shot Decoder-Only (LLaMA2-7B via LoRA/QLoRA) & Intent Classification (SNIPS, ATIS, Banking, MASSIVE) and Sentiment Analysis (SST2, Tweet-Eval) & Macro/Micro F1-Score & RoBERTa outperforms LLaMA2 on intent classification (e.g., Banking: 94.27 vs. 70.87 F1); LLaMA2 leads slightly on sentiment analysis (96.21 vs. 91.61 on SST2) & Decoder-only inference is 29x to 108x slower than encoder-only; sensitive to class-name semantics and few-shot example ordering. \\
 
 \bottomrule
 \end{tabularx}
