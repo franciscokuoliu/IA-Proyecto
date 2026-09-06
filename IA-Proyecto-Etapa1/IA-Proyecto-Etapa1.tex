@@ -483,6 +483,12 @@ Benayas et al. \cite{benayas2025comparative} & 2025 & Fine-Tuned Encoder-Only (R
 \addlinespace
 
 Liu et al. \cite{liu-etal-2026-look} & 2026 & Parameter-Efficient Fine-Tuning (LoRA, AdaLoRA, Prefix-Tuning, IA3, BitFit) vs. Full Fine-Tuning (FFT) & GSM8k, ViGGO, SQL, SQuAD 1.1, GLUE/AdvGLUE, Adversarial SQuAD & Accuracy / Macro-F1 / Robustness / Memory Footprint & FFT consistently outperforms PEFT on complex reasoning/SQL and exhibits higher adversarial robustness & PEFT representation capacity is strictly bounded by tuned parameters, shows diminishing marginal gains with larger dataset sizes \\
+\addlinespace
+
+Teehan et al. \cite{teehan2022emergent} & 2022 & Survey: Emergent Structures \& Training Dynamics in LLMs & Literature-wide (Cross-Domain, NLP + CV) & N/A & N/A (Survey/Position Paper, no empirical benchmark) & Purely qualitative synthesis; identifies structural-analysis gaps but reports no comparative performance results. \\
+\addlinespace
+
+Lv et al. \cite{lv2026spikebert} & 2026 & Spiking Transformer (Spikformer) Distilled from BERT via Two-Stage Knowledge Distillation & 6 Text Classification Benchmarks (MR, SST-2, Subj, SST-5, ChnSenti, Waimai) & Accuracy / Energy Consumption & 80.20\% avg. accuracy vs. 84.33\% for fine-tuned BERT, using only 27.82\% of BERT's inference energy on average & Falls short of BERT accuracy on complex NLI tasks; fails to converge on CoLA/STS-B; energy savings remain a theoretical hardware estimate. \\
 
 \bottomrule
 \end{tabularx}
