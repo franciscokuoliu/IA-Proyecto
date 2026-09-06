@@ -61,11 +61,6 @@ B.~Kratzwald, S.~Ili{\'c}, M.~Kraus, S.~Feuerriegel, and H.~Prendinger, ``Deep l
 S.~Nwaiwu, ``Parameter-efficient fine-tuning for low-resource text classification: a comparative study of lora, ia3, and reft,'' \emph{Frontiers in Big Data}, vol.~8, 2025. [Online]. Available: \url{https://www.frontiersin.org/journals/big-data/articles/10.3389/fdata.2025.1677331}
 \BIBentrySTDinterwordspacing
 
-\bibitem{bharti_2022_computational}
-\BIBentryALTinterwordspacing
-S.~K. Bharti, S.~Varadhaganapathy, R.~K. Gupta, P.~K. Shukla, M.~Bouye, S.~K. Hingaa, and A.~Mahmoud, ``Text-based emotion recognition using deep learning approach,'' \emph{Computational Intelligence and Neuroscience}, vol. 2022, no.~1, p. 2645381, 2022. [Online]. Available: \url{https://onlinelibrary.wiley.com/doi/abs/10.1155/2022/2645381}
-\BIBentrySTDinterwordspacing
-
 \bibitem{liu-etal-2026-look}
 \BIBentryALTinterwordspacing
 Y.~Liu, X.~Xu, E.~Nie, Z.~Wang, S.~Feng, D.~Wang, Q.~Li, and H.~Schuetze, ``Look within or beyond? a theoretical comparison between parameter-efficient and full fine-tuning,'' in \emph{Proceedings of the 64th Annual Meeting of the {A}ssociation for {C}omputational {L}inguistics (Volume 1: Long Papers)}, M.~Liakata, V.~P. Moreira, J.~Zhang, and D.~Jurgens, Eds.\hskip 1em plus 0.5em minus 0.4em\relax San Diego, California, United States: Association for Computational Linguistics, Jul. 2026, pp. 47\,800--47\,820. [Online]. Available: \url{https://aclanthology.org/2026.acl-long.2208/}
@@ -99,6 +94,11 @@ K.~Jayanthi and D.~Kavitha, ``A unified hybrid framework for fine-grained emotio
 
 \bibitem{luo23_interspeech}
 J.~Luo, H.~Phan, and J.~Reiss, ``{Fine-tuned RoBERTa Model with a CNN-LSTM Network for Conversational Emotion Recognition},'' in \emph{{Interspeech 2023}}, 2023, pp. 2413--2417.
+
+\bibitem{bharti_2022_computational}
+\BIBentryALTinterwordspacing
+S.~K. Bharti, S.~Varadhaganapathy, R.~K. Gupta, P.~K. Shukla, M.~Bouye, S.~K. Hingaa, and A.~Mahmoud, ``Text-based emotion recognition using deep learning approach,'' \emph{Computational Intelligence and Neuroscience}, vol. 2022, no.~1, p. 2645381, 2022. [Online]. Available: \url{https://onlinelibrary.wiley.com/doi/abs/10.1155/2022/2645381}
+\BIBentrySTDinterwordspacing
 
 \bibitem{yang2023context}
 D.~Yang, A.~Kommineni, M.~Alshehri, N.~Mohanty, V.~Modi, J.~Gratch, and S.~Narayanan, ``Context unlocks emotions: Text-based emotion classification dataset auditing with large language models,'' in \emph{2023 11th International Conference on Affective Computing and Intelligent Interaction (ACII)}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE, 2023.
