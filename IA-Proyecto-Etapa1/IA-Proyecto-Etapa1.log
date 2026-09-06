@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.17)  6 SEP 2026 03:54
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.17)  6 SEP 2026 07:13
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -308,604 +308,609 @@ Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
-))
-LaTeX Font Info:    Trying to load font information for U+msa on input line 71.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 71.
- (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1{/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/base/8r.enc}
+)) [1{/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 
 ]
-Underfull \hbox (badness 3895) in paragraph at lines 81--84
+LaTeX Font Info:    Trying to load font information for U+msa on input line 77.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 77.
+ (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+Underfull \hbox (badness 3895) in paragraph at lines 87--90
 []\OT1/ptm/m/n/10 Text-based emo-tion recog-ni-tion (TBED) has evolved
  []
 
 
-Underfull \hbox (badness 3919) in paragraph at lines 86--87
+Underfull \hbox (badness 3919) in paragraph at lines 94--95
 []\OT1/ptm/b/n/10 Corpus-Based Ap-proaches\OT1/ptm/m/n/10 : In-duce domain-specific
  []
 
 
-Underfull \hbox (badness 4001) in paragraph at lines 92--93
+Underfull \hbox (badness 4001) in paragraph at lines 100--101
 []\OT1/ptm/b/n/10 Deep Learn-ing Ap-proaches\OT1/ptm/m/n/10 : Em-ploy neu-ral net-
  []
 
 
-Underfull \hbox (badness 1728) in paragraph at lines 92--93
+Underfull \hbox (badness 1728) in paragraph at lines 100--101
 \OT1/ptm/m/n/10 work ar-chi-tec-tures, such as, Re-cur-rent Neu-ral Net-
  []
 
 [2]
-Overfull \hbox (7.88435pt too wide) detected at line 179
+Overfull \hbox (7.88435pt too wide) detected at line 187
 [][][] \OMS/cmsy/m/n/10 ^^Y \OT1/cmr/m/n/10 ^^B[] + ^^B[] + ^^B[] + []
  []
 
 [3]
-Underfull \hbox (badness 1642) in paragraph at lines 185--187
+Underfull \hbox (badness 1642) in paragraph at lines 193--195
  \OT1/ptm/m/it/10 1) Tax-on-omy of Parameter-Efficient Adap-ta-tion: [][] \OT1/ptm/m/n/10 PEFT
  []
 
 [4] [5]
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 285.
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 293.
  (/usr/local/texlive/2026/texmf-dist/tex/latex/psnfss/ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
-Underfull \hbox (badness 10000) in paragraph at lines 291--292
+Underfull \hbox (badness 10000) in paragraph at lines 299--300
 []\OT1/ptm/b/n/10 Cross-Domain Bench-mark-ing: \OT1/ptm/m/n/10 Eval-u-at-ing mod-els
  []
 
 
-Underfull \hbox (badness 1521) in paragraph at lines 291--292
+Underfull \hbox (badness 1521) in paragraph at lines 299--300
 \OT1/ptm/m/n/10 di-a-logue lengths val-i-dates whether per-for-mance and
  []
 
 
-Underfull \hbox (badness 1642) in paragraph at lines 291--292
+Underfull \hbox (badness 1642) in paragraph at lines 299--300
 \OT1/ptm/m/n/10 com-pu-ta-tional ef-fi-ciency trade-offs re-main con-sis-tent
  []
 
+
+Underfull \hbox (badness 1389) in paragraph at lines 308--309
+[]\OT1/ptm/b/n/10 Lack of Con-trolled Multi-Axis Base-lines: \OT1/ptm/m/n/10 Ex-ist-
+ []
+
 [6]
-Underfull \hbox (badness 10000) in paragraph at lines 430--430
+Underfull \hbox (badness 10000) in paragraph at lines 450--450
 []|\OT1/ptm/m/n/7 BiLSTM + Con-tex-tual
  []
 
 
-Underfull \hbox (badness 6078) in paragraph at lines 430--430
+Underfull \hbox (badness 6078) in paragraph at lines 450--450
 []|\OT1/ptm/m/n/7 0.647 (Bench-mark Base-
  []
 
 
-Underfull \hbox (badness 2384) in paragraph at lines 430--430
+Underfull \hbox (badness 2384) in paragraph at lines 450--450
 \OT1/ptm/m/n/7 pac-ity; strug-gles with se-vere
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--430
+Underfull \hbox (badness 10000) in paragraph at lines 450--450
 []|\OT1/ptm/m/n/7 Classification
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--430
+Underfull \hbox (badness 10000) in paragraph at lines 450--450
 []|\OT1/ptm/m/n/7 High de-pen-dence on task-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--430
+Underfull \hbox (badness 10000) in paragraph at lines 450--450
 \OT1/ptm/m/n/7 specific fine-tuning; poor
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--430
+Underfull \hbox (badness 10000) in paragraph at lines 450--450
 []|\OT1/ptm/m/n/7 Lexicon-Based & Deep
  []
 
 
-Underfull \hbox (badness 1895) in paragraph at lines 430--430
+Underfull \hbox (badness 1895) in paragraph at lines 450--450
 \OT1/ptm/m/n/7 in-for-mal slang, sar-casm, and
  []
 
 
-Underfull \hbox (badness 4353) in paragraph at lines 430--430
+Underfull \hbox (badness 4353) in paragraph at lines 450--450
 []|\OT1/ptm/m/n/7 BERT, RNN, GRU Full
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--430
+Underfull \hbox (badness 10000) in paragraph at lines 450--450
 []|\OT1/ptm/m/n/7 BERT out-per-forms
  []
 
 
-Underfull \hbox (badness 6493) in paragraph at lines 430--430
+Underfull \hbox (badness 6493) in paragraph at lines 450--450
 \OT1/ptm/m/n/7 stan-tial mem-ory; lim-ited to
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--430
+Underfull \hbox (badness 10000) in paragraph at lines 450--450
 []|\OT1/ptm/m/n/7 Low-Resource Text
  []
 
 
-Underfull \hbox (badness 1668) in paragraph at lines 430--430
+Underfull \hbox (badness 1668) in paragraph at lines 450--450
 []|\OT1/ptm/m/n/7 Macro-F1 / Mem-ory
  []
 
 
-Underfull \hbox (badness 2809) in paragraph at lines 430--430
+Underfull \hbox (badness 2809) in paragraph at lines 450--450
 []|\OT1/ptm/m/n/7 Mohammed & Kora
  []
 
 
-Underfull \hbox (badness 1552) in paragraph at lines 430--430
+Underfull \hbox (badness 1552) in paragraph at lines 450--450
 []|\OT1/ptm/m/n/7 High pa-ram-e-ter ef-fi-ciency
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--430
+Underfull \hbox (badness 10000) in paragraph at lines 450--450
 []|\OT1/ptm/m/n/7 Conversational Emo-tion
  []
 
 
-Underfull \hbox (badness 3260) in paragraph at lines 430--430
+Underfull \hbox (badness 3260) in paragraph at lines 450--450
 \OT1/ptm/m/n/7 text; ex-pen-sive in-fer-ence la-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--430
+Underfull \hbox (badness 10000) in paragraph at lines 450--450
 []|\OT1/ptm/m/n/7 Parameter-Efficient Fine-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--430
+Underfull \hbox (badness 10000) in paragraph at lines 450--450
 []|\OT1/ptm/m/n/7 GSM8k, ViGGO,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--430
+Underfull \hbox (badness 10000) in paragraph at lines 450--450
 \OT1/ptm/m/n/7 SQL, SQuAD 1.1,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--430
+Underfull \hbox (badness 10000) in paragraph at lines 450--450
 \OT1/ptm/m/n/7 GLUE/AdvGLUE,
  []
 
 
-Underfull \hbox (badness 7777) in paragraph at lines 430--430
+Underfull \hbox (badness 7777) in paragraph at lines 450--450
 []|\OT1/ptm/m/n/7 FFT con-sis-tently out-per-
  []
 
 
-Underfull \hbox (badness 1910) in paragraph at lines 430--430
+Underfull \hbox (badness 1910) in paragraph at lines 450--450
 \OT1/ptm/m/n/7 forms PEFT on com-plex
  []
 
 
-Underfull \hbox (badness 2781) in paragraph at lines 430--430
+Underfull \hbox (badness 2781) in paragraph at lines 450--450
 \OT1/ptm/m/n/7 higher ad-ver-sar-ial ro-bust-
  []
 
 
-Underfull \hbox (badness 3078) in paragraph at lines 430--430
+Underfull \hbox (badness 3078) in paragraph at lines 450--450
 []|\OT1/ptm/m/n/7 PEFT rep-re-sen-ta-tion ca-pac-ity
  []
 
 
-Underfull \hbox (badness 1436) in paragraph at lines 430--430
+Underfull \hbox (badness 1436) in paragraph at lines 450--450
 \OT1/ptm/m/n/7 is strictly bounded by tuned
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--430
+Underfull \hbox (badness 10000) in paragraph at lines 450--450
 \OT1/ptm/m/n/7 marginal gains with larger
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--430
+Underfull \hbox (badness 10000) in paragraph at lines 450--450
 []|\OT1/ptm/m/n/7 Dialogues/Conversations
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--430
+Underfull \hbox (badness 10000) in paragraph at lines 450--450
 \OT1/ptm/m/n/7 (Dai-ly-Di-a-log, MELD,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--430
+Underfull \hbox (badness 10000) in paragraph at lines 450--450
 []|\OT1/ptm/m/n/7 Macro-F1, Jac-card
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--430
+Underfull \hbox (badness 10000) in paragraph at lines 450--450
 \OT1/ptm/m/n/7 Ac-cu-racy, Pear-son
  []
 
 
-Underfull \hbox (badness 6893) in paragraph at lines 430--430
+Underfull \hbox (badness 6893) in paragraph at lines 450--450
 []|\OT1/ptm/m/n/7 Jayanthi & Kavitha
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--430
+Underfull \hbox (badness 10000) in paragraph at lines 450--450
 []|\OT1/ptm/m/n/7 Fine-tuned $\OML/cmm/m/it/7 BERT[]$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 430--430
+Underfull \hbox (badness 10000) in paragraph at lines 450--450
 \OT1/ptm/m/n/7 (Multi-Task Par-al-lel
  []
 
 
-Underfull \hbox (badness 3668) in paragraph at lines 430--430
+Underfull \hbox (badness 3668) in paragraph at lines 450--450
 []|\OT1/ptm/m/n/7 Class im-bal-ance (un-der-rep-re-
  []
 
 
-Underfull \hbox (badness 10000) in alignment at lines 430--430
+Underfull \hbox (badness 10000) in alignment at lines 450--450
 [][][][][][][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 []|\OT1/ptm/m/n/7 Comprehensive PEFT
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 Tax-on-omy Sur-vey
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 Se-lec-tive, Hy-brid,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 []|\OT1/ptm/m/n/7 Comparative GLUE
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 []|\OT1/ptm/m/n/7 LoRA matches full
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 fine-tuning ac-cu-racy on
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 RoBERTa-large GLUE
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 []|\OT1/ptm/m/n/7 Adversarial Low-Rank
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 Adap-ta-tion (ADV-LoRA)
  []
 
 
-Underfull \hbox (badness 2012) in paragraph at lines 459--459
+Underfull \hbox (badness 2012) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 with FGSM Per-tur-ba-tions
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 and Self-Supervised
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 []|\OT1/ptm/m/n/7 GLUE Sub-set (SST-2,
  []
 
 
-Underfull \hbox (badness 4024) in paragraph at lines 459--459
+Underfull \hbox (badness 4024) in paragraph at lines 479--479
 []|\OT1/ptm/m/n/7 Accuracy / MCC /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 []|\OT1/ptm/m/n/7 Outperforms stan-dard
  []
 
 
-Underfull \hbox (badness 1960) in paragraph at lines 459--459
+Underfull \hbox (badness 1960) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 LoRA on RoBERTa-large
  []
 
 
-Underfull \hbox (badness 1642) in paragraph at lines 459--459
+Underfull \hbox (badness 1642) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 (avg. 85.5 vs. 84.6) and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 []|\OT1/ptm/m/n/7 Introduces roughly 150%
  []
 
 
-Underfull \hbox (badness 2469) in paragraph at lines 459--459
+Underfull \hbox (badness 2469) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 training-time over-head ver-sus
  []
 
 
-Underfull \hbox (badness 3148) in paragraph at lines 459--459
+Underfull \hbox (badness 3148) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 stan-dard LoRA; untested on
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 mor-pho-log-i-cally com-plex or
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 []|\OT1/ptm/m/n/7 LLM-Based Con-tex-tual
  []
 
 
-Underfull \hbox (badness 2012) in paragraph at lines 459--459
+Underfull \hbox (badness 2012) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 Prompt Aug-men-ta-tion for
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 []|\OT1/ptm/m/n/7 Synthesized con-text
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 im-proves align-ment
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 be-tween in-put text and
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 human-annotated emo-tion
  []
 
 
-Underfull \hbox (badness 2426) in paragraph at lines 459--459
+Underfull \hbox (badness 2426) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 bi-ases; does not fine-tune a
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 []|\OT1/ptm/m/n/7 Classical ML, Deep
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 Learn-ing, Trans-form-ers
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 BERT), and Instruction-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 Tuned LLMs (GPT-4,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 []|\OT1/ptm/m/n/7 GPT-4 few-shot reaches
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 []|\OT1/ptm/m/n/7 LLM in-fer-ence la-tency
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 ($\OMS/cmsy/m/n/7 ^^X$\OT1/ptm/m/n/7 5s/query) hin-ders
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 []|\OT1/ptm/m/n/7 Fine-Tuned Encoder-Only
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 (RoBERTa) vs. Fine-
  []
 
 
-Underfull \hbox (badness 8038) in paragraph at lines 459--459
+Underfull \hbox (badness 8038) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 Tuned/Few-Shot Decoder-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 Only (LLaMA2-7B via
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 []|\OT1/ptm/m/n/7 Intent Clas-si-fi-ca-tion
  []
 
 
-Underfull \hbox (badness 1917) in paragraph at lines 459--459
+Underfull \hbox (badness 1917) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 (SNIPS, ATIS, Bank-ing,
  []
 
 
-Underfull \hbox (badness 4291) in paragraph at lines 459--459
+Underfull \hbox (badness 4291) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 Anal-y-sis (SST2, Tweet-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 []|\OT1/ptm/m/n/7 Macro/Micro F1-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 []|\OT1/ptm/m/n/7 RoBERTa out-per-forms
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 LLaMA2 on in-tent
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 clas-si-fi-ca-tion (e.g.,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 459--459
+Underfull \hbox (badness 10000) in paragraph at lines 479--479
 \OT1/ptm/m/n/7 on sen-ti-ment anal-y-sis
  []
 
 
-Underfull \hbox (badness 10000) in alignment at lines 459--459
+Underfull \hbox (badness 10000) in alignment at lines 479--479
 [][][][][][][] 
  []
 
-
-Underfull \hbox (badness 1354) in paragraph at lines 482--483
+[7]
+Underfull \hbox (badness 1354) in paragraph at lines 502--503
 \OT1/ptm/m/n/10 English-speaking de-mo-graphic norms, sub-tle cul-tural
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 507--507
+[8]
+Underfull \hbox (badness 10000) in paragraph at lines 527--527
 []|\OT1/ptm/b/n/9 Architecture
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 507--508
+Underfull \hbox (badness 10000) in paragraph at lines 527--528
 []|\OT1/ptm/b/n/9 Experimental
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 509--509
+Underfull \hbox (badness 10000) in paragraph at lines 529--529
 []|\OT1/ptm/m/n/9 Non-Neural
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 511--511
+Underfull \hbox (badness 10000) in paragraph at lines 531--531
 []|\OT1/ptm/m/n/9 Encoder
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 511--512
+Underfull \hbox (badness 10000) in paragraph at lines 531--532
 []|\OT1/ptm/m/n/9 Small scale
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 512--512
+Underfull \hbox (badness 10000) in paragraph at lines 532--532
 []|\OT1/ptm/m/n/9 Encoder
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 512--513
+Underfull \hbox (badness 10000) in paragraph at lines 532--533
 []|\OT1/ptm/m/n/9 Scale ef-fect vs.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 513--513
+Underfull \hbox (badness 10000) in paragraph at lines 533--533
 []|\OT1/ptm/m/n/9 Decoder
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 513--514
+Underfull \hbox (badness 10000) in paragraph at lines 533--534
 []|\OT1/ptm/m/n/9 Small scale
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 514--514
+Underfull \hbox (badness 10000) in paragraph at lines 534--534
 []|\OT1/ptm/m/n/9 Decoder
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 514--515
+Underfull \hbox (badness 10000) in paragraph at lines 534--535
 []|\OT1/ptm/m/n/9 Scale ef-fect vs.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 515--515
+Underfull \hbox (badness 10000) in paragraph at lines 535--535
 []|\OT1/ptm/m/n/9 Decoder
  []
 
 
-Underfull \hbox (badness 2980) in paragraph at lines 515--516
+Underfull \hbox (badness 2980) in paragraph at lines 535--536
 []|\OT1/ptm/m/n/9 Family ef-fect vs.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 516--516
+Underfull \hbox (badness 10000) in paragraph at lines 536--536
 []|\OT1/ptm/m/n/9 Decoder
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 517--517
+Underfull \hbox (badness 10000) in paragraph at lines 537--537
 []|\OT1/ptm/m/n/9 DeepSeek-R1-Distill-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 517--517
+Underfull \hbox (badness 10000) in paragraph at lines 537--537
 []|\OT1/ptm/m/n/9 Decoder
  []
 
 
-Underfull \hbox (badness 2790) in paragraph at lines 517--518
+Underfull \hbox (badness 2790) in paragraph at lines 537--538
 []|\OT1/ptm/m/n/9 Training ob-jec-tive
  []
 
 
-Overfull \hbox (5.76123pt too wide) in paragraph at lines 505--520
+Overfull \hbox (5.76123pt too wide) in paragraph at lines 525--540
  [][] 
  []
 
-[7] [8] [9]
-LaTeX Font Info:    Calculating math sizes for size <8.5> on input line 569.
+[9]
+LaTeX Font Info:    Calculating math sizes for size <8.5> on input line 590.
 
-Underfull \hbox (badness 10000) in paragraph at lines 576--576
+Underfull \hbox (badness 10000) in paragraph at lines 597--597
 []|\OT1/ptm/m/n/8.5 Target Mod-ules (Qwen /
  []
 
 
-Underfull \hbox (badness 4168) in paragraph at lines 576--577
+Underfull \hbox (badness 4168) in paragraph at lines 597--598
 []|\OT1/ptm/m/n/8.5 Query ($\OML/cmm/m/it/8 W[]$\OT1/ptm/m/n/8.5 ), Key ($\OML/cmm/m/it/8 W[]$\OT1/ptm/m/n/8.5 ), Value
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 577--578
+Underfull \hbox (badness 10000) in paragraph at lines 598--599
 []|\OT1/ptm/m/n/8.5 Attention ($\OML/cmm/m/it/8 W[]; W[]; W[]; W[]$\OT1/ptm/m/n/8.5 ) +
  []
 
 
-Underfull \hbox (badness 4429) in paragraph at lines 579--580
+Underfull \hbox (badness 4429) in paragraph at lines 600--601
 []|\OT1/ptm/m/n/8.5 4-bit Nor-malFloat (QLoRA) on
  []
 
-[10] (./IA-Proyecto-Etapa1.bbl
+[10] [11] (./IA-Proyecto-Etapa1.bbl
 Underfull \hbox (badness 1629) in paragraph at lines 61--63
 []\OT1/ptm/m/n/8 S. Nwaiwu, ``Parameter-efficient fine-tuning for low-
  []
 
-)
+[12])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -917,25 +922,27 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[11] (./IA-Proyecto-Etapa1.aux)
+[13
+
+] (./IA-Proyecto-Etapa1.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 4527 strings out of 467525
- 70737 string characters out of 5418988
- 525610 words of memory out of 5000000
- 33367 multiletter control sequences out of 15000+600000
+ 4531 strings out of 467525
+ 70821 string characters out of 5418988
+ 525763 words of memory out of 5000000
+ 33371 multiletter control sequences out of 15000+600000
  681366 words of font info for 146 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,15n,65p,1543b,317s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on IA-Proyecto-Etapa1.pdf (11 pages, 295181 bytes).
+Output written on IA-Proyecto-Etapa1.pdf (13 pages, 301813 bytes).
 PDF statistics:
- 156 PDF objects out of 1000 (max. 8388607)
- 96 compressed objects within 1 object stream
+ 164 PDF objects out of 1000 (max. 8388607)
+ 101 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

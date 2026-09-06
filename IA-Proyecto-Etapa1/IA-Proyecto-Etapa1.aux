@@ -10,13 +10,12 @@
 \citation{saravia2018carer}
 \citation{cheng2026personality}
 \citation{stigall2024large}
-\citation{kratzwald2018deep}
 \@writefile{toc}{\contentsline {section}{\numberline {II}Domain Analysis \& Evolution of Text Emotion Recognition}{2}{}\protected@file@percent }
 \newlabel{sec:ejeA}{{II}{2}{}{section.2}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-A}}Dominant Traditional Approaches}{2}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-B}}The Shift to Generative Decoders}{2}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {II-B}1}Zero-Shot and Few-Shot Prompting Paradigms}{2}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {II-B}2}Supervised Fine-Tuning versus In-Context Learning}{2}{}\protected@file@percent }
+\citation{kratzwald2018deep}
 \citation{nwaiwu2025peft}
 \citation{zhang2024comparative}
 \citation{maruf2024challenges}
@@ -28,8 +27,7 @@
 \citation{maruf2024challenges}
 \citation{zhang2024comparative}
 \citation{liu-etal-2026-look}
-\citation{nwaiwu2025peft}
-\citation{nwaiwu2025peft,mohammed2026deepfake}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {II-B}2}Supervised Fine-Tuning versus In-Context Learning}{3}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-C}}Established Standards and Open Challenges}{3}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {II-C}1}Established Baselines in Binary Sentiment Analysis}{3}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {II-C}2}Open Challenge 1: Fine-Grained Multi-Class Emotion Mapping}{3}{}\protected@file@percent }
@@ -38,6 +36,8 @@
 \@writefile{toc}{\contentsline {section}{\numberline {III}Parameter-Efficient Adaptation of Encoder and Decoder Architectures}{3}{}\protected@file@percent }
 \newlabel{sec:ejeB}{{III}{3}{}{section.3}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-A}}Full Fine-Tuning vs. PEFT Paradigms}{3}{}\protected@file@percent }
+\citation{nwaiwu2025peft}
+\citation{nwaiwu2025peft,mohammed2026deepfake}
 \citation{liu-etal-2026-look}
 \citation{liu-etal-2026-look}
 \citation{liu-etal-2026-look}
@@ -53,16 +53,15 @@
 \citation{nwaiwu2025peft}
 \citation{nwaiwu2025peft}
 \citation{nwaiwu2025peft,mohammed2026deepfake}
-\citation{liu-etal-2026-look}
-\citation{teehan2022emergent}
-\citation{lv2026spikebert}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-A}1}Taxonomy of Parameter-Efficient Adaptation}{4}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-A}2}Empirical Performance Bounds and Robustness Trade-offs}{4}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-A}3}Scope Justification for Text Emotion Recognition}{4}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}Mechanics of Low-Rank Adaptation (LoRA)}{4}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-B}1}Initialization Scheme}{4}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-B}2}Target Module Selection}{4}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-B}3}Why a Low-Rank Update Suffices}{4}{}\protected@file@percent }
+\citation{liu-etal-2026-look}
+\citation{teehan2022emergent}
+\citation{lv2026spikebert}
 \citation{wang2025peft}
 \citation{liu-etal-2026-look}
 \citation{nwaiwu2025peft}
@@ -72,8 +71,7 @@
 \citation{nwaiwu2025peft}
 \citation{teehan2022emergent}
 \citation{liu-etal-2026-look}
-\citation{wu2025advlora}
-\citation{wang2025peft}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-B}3}Why a Low-Rank Update Suffices}{5}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-C}}Comparative Methodologies: LoRA vs. QLoRA vs. Full Fine-Tuning}{5}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-C}1}Quantization-Aware Adaptation: QLoRA}{5}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-C}2}Positioning Along the Memory-Performance Spectrum}{5}{}\protected@file@percent }
@@ -82,7 +80,8 @@
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-D}1}The Intrinsic-Rank Assumption Is Empirical, Not Guaranteed}{5}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-D}2}Generalization Across Architectures and Objectives Is Not Assumed}{5}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-D}3}Robustness Bounds Derived from General NLP Tasks}{5}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-D}4}Instability and Quantization as Compounding Sources of Error}{5}{}\protected@file@percent }
+\citation{wu2025advlora}
+\citation{wang2025peft}
 \citation{Jayanthi_Kavitha_2026}
 \citation{Jayanthi_Kavitha_2026}
 \citation{Jayanthi_Kavitha_2026}
@@ -93,17 +92,13 @@
 \citation{luo23_interspeech}
 \citation{luo23_interspeech}
 \citation{luo23_interspeech}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {III-D}4}Instability and Quantization as Compounding Sources of Error}{6}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-E}}Cross-Dataset Perspective: EMO-KNOW}{6}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-F}}Methodological and Architectural Alternatives in Literature}{6}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {III-F}0a}Hybrid Feature Architectures}{6}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {paragraph}{\numberline {\mbox  {III-F}0b}Granular Error and Multi-Corpus Diagnostics}{6}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {IV}Benchmark Analysis: The CARER Dataset, \& Evaluation Protocols}{6}{}\protected@file@percent }
-\newlabel{sec:ejeC}{{IV}{6}{}{section.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Corpus Characteristics and Domain Scope}{6}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}1}Class Distribution and Imbalance}{6}{}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Class Distribution Across the Evaluation Corpus}}{6}{}\protected@file@percent }
-\newlabel{tab:carer_distribution}{{I}{6}{}{table.1}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-A}2}Linguistic Complexity and Domain Scope}{6}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Gaps in Literature \& Identified Limitations}{6}{}\protected@file@percent }
+\newlabel{sec:gaps}{{IV}{6}{}{section.4}{}}
 \citation{saravia2018carer,zhang2024comparative}
 \citation{saravia2018carer,maruf2024challenges}
 \citation{chakriswaran2019emotion}
@@ -135,34 +130,38 @@
 \citation{benayas2025comparative}
 \citation{saravia2018carer}
 \citation{saravia2018carer}
+\@writefile{toc}{\contentsline {section}{\numberline {V}Benchmark Analysis: The CARER Dataset, \& Evaluation Protocols}{7}{}\protected@file@percent }
+\newlabel{sec:ejeC}{{V}{7}{}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-A}}Corpus Characteristics and Domain Scope}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-A}1}Class Distribution and Imbalance}{7}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Class Distribution Across the Evaluation Corpus}}{7}{}\protected@file@percent }
+\newlabel{tab:carer_distribution}{{I}{7}{}{table.1}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-A}2}Linguistic Complexity and Domain Scope}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-B}}Reported Metrics and Published Baselines}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-B}1}Evaluation Metrics}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-B}2}Published Baselines and Benchmark References}{7}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Representative Performance Baselines on CARER}}{7}{}\protected@file@percent }
+\newlabel{tab:published_baselines}{{II}{7}{}{table.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-C}}Known Dataset Limitations and Biases}{7}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-C}1}Linguistic and Register Constraints}{7}{}\protected@file@percent }
 \citation{saravia2018carer}
 \citation{cheng2026personality}
 \citation{chakriswaran2019emotion}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Reported Metrics and Published Baselines}{7}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-B}1}Evaluation Metrics}{7}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-B}2}Published Baselines and Benchmark References}{7}{}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Representative Performance Baselines on CARER}}{7}{}\protected@file@percent }
-\newlabel{tab:published_baselines}{{II}{7}{}{table.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-C}}Known Dataset Limitations and Biases}{7}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-C}1}Linguistic and Register Constraints}{7}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {IV-C}2}Annotation Granularity and Cultural Bias}{7}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {V}Proposed Experimental Methodology}{7}{}\protected@file@percent }
-\newlabel{sec:methodology}{{V}{7}{}{section.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-A}}Experimental Framework and Hardware Constraints}{7}{}\protected@file@percent }
-\citation{gemmateam2026gemma4}
 \@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces Comparative Summary of Existing Approaches in Affective Computing and PEFT Architectures}}{8}{}\protected@file@percent }
 \newlabel{tab:literature_comparison}{{III}{8}{}{table.3}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-A}1}Model Selection and Taxonomy}{8}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-A}2}Hardware Environment}{8}{}\protected@file@percent }
-\citation{alam2026beyond}
-\citation{zhang2024comparative}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-C}2}Annotation Granularity and Cultural Bias}{8}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Proposed Experimental Methodology}{8}{}\protected@file@percent }
+\newlabel{sec:methodology}{{VI}{8}{}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-A}}Experimental Framework and Hardware Constraints}{8}{}\protected@file@percent }
+\citation{gemmateam2026gemma4}
 \@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces Comparative Summary of Parameter-Efficient Fine-Tuning and Auxiliary Approaches}}{9}{}\protected@file@percent }
 \newlabel{tab:peft_literature_comparison}{{IV}{9}{}{table.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VI-A}1}Model Selection and Taxonomy}{9}{}\protected@file@percent }
 \@writefile{lot}{\contentsline {table}{\numberline {V}{\ignorespaces Taxonomy of Evaluated Models and Experimental Controls}}{9}{}\protected@file@percent }
 \newlabel{tab:model_taxonomy}{{V}{9}{}{table.5}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-A}3}Measurement Protocols}{9}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-B}}Model Selection and Adapter Configuration}{9}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-B}1}Model Configurations and Training Objectives}{9}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VI-A}2}Hardware Environment}{9}{}\protected@file@percent }
+\citation{alam2026beyond}
+\citation{zhang2024comparative}
 \citation{gemmateam2026gemma4}
 \citation{nwaiwu2025peft}
 \citation{benayas2025comparative}
@@ -170,18 +169,44 @@
 \citation{maruf2024challenges}
 \citation{maruf2024challenges}
 \citation{nwaiwu2025peft}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VI-A}3}Measurement Protocols}{10}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-B}}Model Selection and Adapter Configuration}{10}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VI-B}1}Model Configurations and Training Objectives}{10}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VI-B}2}LoRA Hyperparameter and Target Module Setup}{10}{}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {VI}{\ignorespaces LoRA Adapter Hyperparameter Configuration}}{10}{}\protected@file@percent }
+\newlabel{tab:peft_config}{{VI}{10}{}{table.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-C}}Pre-Processing and Imbalance Mitigation Strategy}{10}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VI-C}1}Text Normalization and Deduplication}{10}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VI-C}2}Class-Weighted Loss Under Frozen Backbones}{10}{}\protected@file@percent }
 \citation{wu2025advlora}
 \citation{wu2025advlora}
 \citation{yang2023context}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-B}2}LoRA Hyperparameter and Target Module Setup}{10}{}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {VI}{\ignorespaces LoRA Adapter Hyperparameter Configuration}}{10}{}\protected@file@percent }
-\newlabel{tab:peft_config}{{VI}{10}{}{table.6}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-C}}Pre-Processing and Imbalance Mitigation Strategy}{10}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-C}1}Text Normalization and Deduplication}{10}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-C}2}Class-Weighted Loss Under Frozen Backbones}{10}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-D}}Evaluation Protocol and Statistical Validation}{10}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-D}1}Data Partitioning}{10}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-D}2}Variance Across Random Seeds}{10}{}\protected@file@percent }
+\citation{zhang2024comparative}
+\citation{benayas2025comparative,wang2025peft}
+\citation{stigall2024large}
+\citation{maruf2024challenges}
+\citation{nwaiwu2025peft}
+\citation{mohammed2026deepfake}
+\citation{cheng2026personality}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-D}}Evaluation Protocol and Statistical Validation}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VI-D}1}Data Partitioning}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VI-D}2}Variance Across Random Seeds}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VI-D}3}Statistical Comparison Between Models}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-E}}Explicit Baseline Target for Evaluation (Axis C)}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-F}}Methodological Risks and Data Partition Integrity (Track B)}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-G}}Data Augmentation Strategy (Track B)}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VII}Ethical Considerations}{11}{}\protected@file@percent }
+\newlabel{sec:ethics}{{VII}{11}{}{section.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {VIII}Discussion \& Open Research Directions}{11}{}\protected@file@percent }
+\newlabel{sec:discussion}{{VIII}{11}{}{section.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VIII-A}}Architectural Trade-Offs: Performance vs. Memory Footprint}{11}{}\protected@file@percent }
+\citation{Jayanthi_Kavitha_2026}
+\citation{wang2025peft}
+\citation{liu-etal-2026-look}
+\citation{lv2026spikebert}
+\citation{alam2026beyond,cheng2026personality}
+\citation{chakriswaran2019emotion}
+\citation{saravia2018carer}
 \bibstyle{IEEEtran}
 \bibdata{references}
 \bibcite{maruf2024challenges}{1}
@@ -204,11 +229,10 @@
 \bibcite{yang2023context}{18}
 \bibcite{alam2026beyond}{19}
 \bibcite{benayas2025comparative}{20}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VIII-B}}Handling Imbalance in Parameter-Efficient Regimes}{12}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VIII-C}}Future Research Directions}{12}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {IX}Conclusion}{12}{}\protected@file@percent }
+\newlabel{sec:conclusion}{{IX}{12}{}{section.9}{}}
+\@writefile{toc}{\contentsline {section}{References}{12}{}\protected@file@percent }
 \bibcite{gemmateam2026gemma4}{21}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-D}3}Statistical Comparison Between Models}{11}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {VI}Discussion \& Open Research Directions}{11}{}\protected@file@percent }
-\newlabel{sec:discussion}{{VI}{11}{}{section.6}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {VII}Conclusion}{11}{}\protected@file@percent }
-\newlabel{sec:conclusion}{{VII}{11}{}{section.7}{}}
-\@writefile{toc}{\contentsline {section}{References}{11}{}\protected@file@percent }
-\gdef \@abspage@last{11}
+\gdef \@abspage@last{13}

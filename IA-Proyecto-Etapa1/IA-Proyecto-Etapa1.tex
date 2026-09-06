@@ -66,6 +66,12 @@ imbalanced CARER emotion dataset.
 
 Building on this motivation, our guiding research question is the following: how do architectural family, parameter scale, and training objective each affect the trade-off between classification quality (Macro-F1) and computational cost in multi-class emotion classification, and which of these three factors most strongly influences that trade-off? Rather than searching for a single winning architecture, this work isolates each factor through matched comparisons, allowing its individual contribution to be characterized independently of the others.
 
+\textbf{Working Hypothesis:} We hypothesize that \textit{parameter scale} and \textit{training objective} yield diminishing returns for 
+fine-grained multi-class emotion classification, whereas the \textit{architectural family} (generative decoder vs. discriminative encoder) 
+dominates performance. Specifically, we predict that a 1.5B LoRA-adapted generative decoder (Qwen2.5-1.5B) will achieve higher Macro-F1 scores 
+on minority emotion classes (e.g., \textit{surprise}, \textit{love}) than fully fine-tuned encoders (BERT-Base), but that increasing decoder scale 
+beyond 2B parameters will yield marginal Macro-F1 gains while disproportionately increasing peak VRAM footprint and inference latency.
+
 Our main contributions are as follows:
 \begin{itemize}
     \item \textbf{Three-Axis Controlled Benchmark:} We design a controlled comparison that isolates architectural family, parameter scale, and training objective as independent variables, rather than benchmarking architectures in an unstructured manner.
@@ -78,8 +84,10 @@ The remainder of this survey is structured as follows: Section~\ref{sec:ejeA} re
 \section{Domain Analysis \& Evolution of Text Emotion Recognition}
 \label{sec:ejeA}
 \subsection{Dominant Traditional Approaches}
-Text-based emotion recognition (TBED) has evolved through a rapid progression of computational methodologies designed to address semantic ambiguity and unstructured language. Affective computing has transitioned from rule-based and lexicon-driven heuristics toward deep representation learning and generative paradigms \cite{maruf2024challenges}. These foundational techniques can be broadly categorized into keyword-based, corpus-based, rule-based, traditional machine learning, and deep learning:
-Some of these computational approaches have relied on multiple computational paradigms to interpret a text and determine which emotions are shown. These foundational techniques can be broadly categorized into keyword-based, corpus-based, ruled-based, tradicional machine learning and deep learning.
+Text-based emotion recognition (TBED) has evolved through a rapid progression of computational methodologies designed to address semantic ambiguity and unstructured language. Affective computing has transitioned from rule-based and lexicon-driven heuristics toward deep representation learning and generative paradigms \cite{maruf2024challenges}. 
+Some of these computational approaches have relied on multiple computational paradigms to interpret a text and determine which emotions are shown. 
+These foundational techniques can be broadly categorized into keyword-based, corpus-based, rule-based, traditional machine learning, and deep learning:
+
 \begin{itemize}
     \item \textbf{Keyword-Based Approaches}: Identify explicit emotional terms using lexical databases (such as WordNet-Affect or SentiWordNet) and apply linguistic rules to assess sentiment intensity \cite{murthy2021review}.
     
@@ -290,6 +298,18 @@ To address feature representation limitations and improve structural adaptabilit
     \item \textbf{Semantic Pair Confusion Analysis:} Expanding performance evaluations to analyze misclassification dynamics between semantically adjacent emotion categories (e.g., \textit{fear} vs.\ \textit{surprise}, \textit{joy} vs.\ \textit{love}) isolates structural failure modes in short-text affective processing \cite{luo23_interspeech}.
     \item \textbf{Cross-Domain Benchmarking:} Evaluating models across multi-party conversational corpora with varied dialogue lengths validates whether performance and computational efficiency trade-offs remain consistent beyond isolated, single-sentence benchmarks.
 \end{itemize}
+
+\section{Gaps in Literature \& Identified Limitations}
+\label{sec:gaps}
+
+Despite recent advances in parameter-efficient fine-tuning (PEFT) and affective computing, a systematic synthesis of the reviewed literature reveals four critical research gaps:
+
+\begin{enumerate}
+    \item \textbf{Lack of Controlled Multi-Axis Baselines:} Existing studies primarily benchmark individual encoder or decoder architectures in isolation, leaving it unclear whether performance shifts stem from parameter scale, training objective, or architectural inductive bias.
+    \item \textbf{Over-Reliance on Overall Accuracy Under Severe Skew:} Literature predominantly reports overall accuracy on standard sentiment benchmarks, masking severe degradation in minority class recall for imbalanced affect corpora like CARER.
+    \item \textbf{Scarcity of Matched Hardware Benchmarks:} Comparative evaluations rarely enforce uniform hardware constraints (e.g., peak VRAM budgets $\le 10\text{ GB}$), preventing realistic deployment trade-off assessments between lightweight encoders and LoRA-adapted decoders.
+    \item \textbf{Under-Explored Quantization-Adapter Interactions:} The compounded impact of 4-bit quantization (QLoRA) and rank restriction ($r=16$) on minor emotion class representations remains insufficiently characterized.
+\end{enumerate}
 
 \section{Benchmark Analysis: The CARER Dataset, \& Evaluation Protocols}
 \label{sec:ejeC}
@@ -559,7 +579,8 @@ We select nine distinct models to evaluate performance across recurrent baseline
 The decision to evaluate encoder and decoder families side by side, rather than treating one as a strict upgrade over the other, follows direct empirical precedent: a controlled comparison between a fine-tuned encoder-only model and a larger decoder-only model on intent classification and sentiment analysis found that the encoder consistently matched or outperformed the decoder at a fraction of the inference latency, with the gap widening as the number of target classes increased \cite{benayas2025comparative}. Whether this pattern extends to multi-class emotion recognition once decoder models are adapted via LoRA rather than compared through full fine-tuning or few-shot prompting is one of the open questions this work investigates.
 
 \subsubsection{LoRA Hyperparameter and Target Module Setup}
-For decoder models, LoRA adapters are injected into specific linear projection matrices inside the self-attention and feed-forward networks (FFN). Table~\ref{tab:peft_config} summarizes the key hyperparameter settings used during training.
+For decoder models, LoRA adapters are injected into specific linear projection matrices inside the self-attention and feed-forward networks (FFN). 
+Table~\ref{tab:peft_config} summarizes the key hyperparameter settings used during training.
 
 \begin{table}[htbp]
 \centering
@@ -581,9 +602,12 @@ Quantization & 4-bit NormalFloat (QLoRA) on low-VRAM GPUs \\
 \end{tabular}
 \end{table}
 
-By setting the adapter rank $r = 16$ and scaling factor $\alpha = 32$, we achieve an effective learning scale while keeping trainable parameters under $1.5\%$ of the base decoder size \cite{nwaiwu2025peft}. In accordance with standard initialization, weight matrix $A$ is initialized using a Gaussian distribution, while matrix $B$ starts at zero to maintain an identity mapping at the start of training.
+By setting the adapter rank $r = 16$ and scaling factor $\alpha = 32$, we achieve an effective learning scale while keeping trainable parameters 
+under $1.5\%$ of the base decoder size \cite{nwaiwu2025peft}. In accordance with standard initialization, weight matrix $A$ is initialized using 
+a Gaussian distribution, while matrix $B$ starts at zero to maintain an identity mapping at the start of training.
 
-For our direct comparison between Qwen2.5-1.5B and DeepSeek-R1-Distill-Qwen-1.5B, we keep identical LoRA configurations to isolate the effect of reasoning-focused distillation pre-training against standard instruction tuning.
+For our direct comparison between Qwen2.5-1.5B and DeepSeek-R1-Distill-Qwen-1.5B, we keep identical LoRA configurations to isolate the effect of 
+reasoning-focused distillation pre-training against standard instruction tuning.
 
 \subsection{Pre-Processing and Imbalance Mitigation Strategy}
 
@@ -604,11 +628,60 @@ Because parameter-efficient fine-tuning has been shown to introduce measurable i
 \subsubsection{Statistical Comparison Between Models}
 Pairwise comparisons that isolate a single axis, such as DistilBERT against BERT-Base for parameter scale or Qwen2.5-1.5B against DeepSeek-R1-Distill-Qwen-1.5B for training objective, are evaluated with a paired significance test on a per-sample basis, following the same paired-testing approach used to validate PEFT robustness claims in the reviewed literature \cite{wu2025advlora}. Given the small number of classes and runs involved, results are cross-checked with a non-parametric alternative when the normality of the underlying score distribution cannot be assumed, in line with the Kruskal-Wallis and post-hoc testing procedure used to evaluate LLM-based emotion classification differences in related work \cite{yang2023context}. A difference between two configurations is treated as informative only when it clears this statistical threshold, rather than being read directly off the raw Macro-F1 gap.
 
+\subsection{Explicit Baseline Target for Evaluation (Axis C)}
+To establish a clear target for competitive task performance, our primary empirical goal is to equal or surpass the Macro-F1 baseline of \textbf{89.8\%} established by fully fine-tuned DistilBERT and \textbf{91.5\%} set by BERT-Base on the CARER dataset structure \cite{zhang2024comparative}. We aim to achieve this threshold using LoRA-adapted generative decoders operating under a strict 10 GB VRAM envelope.
+
+\subsection{Methodological Risks and Data Partition Integrity (Track B)}
+A major risk in multi-class text emotion benchmarks is partition contamination arising from near-duplicate social media posts across community mirrors. To eliminate dataset leakage, we implement strict SHA-256 string hashing and deduplication across raw text strings prior to splitting. Stratified partitioning (80\% train, 10\% validation, 10\% test) is executed once, ensuring zero overlap between training sequences and evaluation metrics.
+
+\subsection{Data Augmentation Strategy (Track B)}
+For Track B experiments, synthetic data augmentation (such as back-translation or LLM context generation) is intentionally omitted. Given that social media emotion datasets rely on subtle pragmatics, synthetic augmentation introduces artificial surface cues or class-label noise. Instead, class imbalance is managed strictly via inverse-frequency class-weighted cross-entropy loss applied across all model heads during adaptation.
+
+\section{Ethical Considerations}
+\label{sec:ethics}
+
+Evaluating emotion classification models on user-generated digital text raises key ethical considerations:
+\begin{itemize}
+    \item \textbf{Privacy and Anonymization:} The CARER dataset comprises publicly accessible social media posts. All text instances undergo anonymization to scrub personally identifiable information (PII), handles, and explicit user identifiers.
+    \item \textbf{Algorithmic Bias and Misclassification:} Emotion classifiers trained on informal digital text can perpetuate demographic or cultural biases. Systemic misclassification of minority affective states could lead to improper downstream actions in sensitive applications such as mental health monitoring.
+    \item \textbf{Dual-Use and Psychological Profiling:} Automated affect recognition systems carry risks of unauthorized psychological profiling or manipulative targeted advertising. These models are intended strictly as analytical research baselines.
+\end{itemize}
+
 \section{Discussion \& Open Research Directions}
 \label{sec:discussion}
 
+\subsection{Architectural Trade-Offs: Performance vs. Memory Footprint}
+Comparing discriminative encoders against LoRA-adapted generative decoders highlights a clear Pareto efficiency frontier 
+\cite{benayas2025comparative, wang2025peft}. Fully fine-tuned compact encoders like BERT-Base maintain minimal peak VRAM 
+footprints ($<2\text{ GB}$) and low inference latency \cite{stigall2024large}, but reach an accuracy ceiling when processing 
+mplicit emotional phrasing \cite{maruf2024challenges}. Conversely, intermediate decoders leverage deep parametric representations, 
+utilizing parameter-efficient fine-tuning (PEFT) \cite{nwaiwu2025peft} via low-rank adaptation \cite{mohammed2026deepfake} to operate 
+within moderate VRAM limits while preserving broad context-aware language capacity \cite{cheng2026personality}.
+
+\subsection{Handling Imbalance in Parameter-Efficient Regimes}
+While freezing base parameters limits global weight updates, reweighting the loss function at the classification head enables LoRA 
+adapters to retain high Macro-F1 across underrepresented categories (e.g., \textit{surprise}, \textit{love}). Bridging shallow feature 
+spaces and deep contextual representations remains critical for stabilizing class-imbalanced emotion detection \cite{Jayanthi_Kavitha_2026}.
+
+\subsection{Future Research Directions}
+Key directions include evaluating 4-bit quantization limits under constrained VRAM budgets \cite{wang2025peft}, exploring dynamic 
+layer-wise adapter rank allocation \cite{liu-etal-2026-look}, and deploying ultra-low-latency distilled spiking variants \cite{lv2026spikebert}. 
+Furthermore, expanding evaluation to low-resource languages and multi-turn conversational corpora \cite{alam2026beyond, cheng2026personality} 
+will prove vital for real-world affective computing applications \cite{chakriswaran2019emotion}.
+
 \section{Conclusion}
 \label{sec:conclusion}
+
+This work presented a controlled, three-axis experimental framework comparing non-neural baselines, fully fine-tuned encoders, 
+and LoRA-adapted generative decoders for multi-class text emotion recognition on the CARER dataset \cite{saravia2018carer}. 
+By isolating architectural family, parameter scale, and pre-training objectives under unified hardware constraints, our methodology 
+provides a principled framework for selecting optimal NLP models in resource-constrained environments.
+
+\section*{AI Usage Declaration}
+In accordance with institutional guidelines for ethical AI usage in research, the authors declare that generative AI tools (Claude / Gemini) 
+were utilized during the preparation of this manuscript strictly for draft refinement, grammatical polishing,and LaTeX structural formatting. 
+All core research concepts, experimental design, theoretical frameworks, data partitioning methodologies, and literature analysis were 
+conceptualized, verified, and written by the human authors.
 
 \bibliographystyle{IEEEtran}
 \bibliography{references}
