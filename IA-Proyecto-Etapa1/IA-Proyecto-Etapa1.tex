@@ -253,6 +253,18 @@ Because LoRA and QLoRA target the same class of linear projection matrices descr
 
 \subsection{Theoretical Limitations and Underlying Assumptions}
 
+\subsubsection{The Intrinsic-Rank Assumption Is Empirical, Not Guaranteed}
+The intrinsic-rank hypothesis introduced in Section~\ref{sec:ejeB}.B is supported by empirical observation, not by a closed-form guarantee that the optimal weight update for a given task actually lies within a rank-$r$ subspace. The rank $r=16$ used throughout this work is a fixed hyperparameter chosen a priori, not derived from a task-specific theoretical bound; if the true update required for multi-class emotion classification exceeds this rank, LoRA would underfit silently, and the resulting performance gap could be misattributed to architectural family or training objective rather than to a capacity mismatch introduced by the adaptation method itself. This variance across target modules and tasks has already been observed empirically \cite{nwaiwu2025peft}, but its theoretical origin remains only partially understood.
+
+\subsubsection{Generalization Across Architectures and Objectives Is Not Assumed}
+The theoretical grounding for low-rank adaptation, including the view that pre-trained models develop structures a downstream update can exploit rather than relearn \cite{teehan2022emergent}, was developed primarily on general-purpose language models rather than validated separately across recurrent, encoder, and decoder families pretrained under distinct objectives. Because this work's central question is precisely whether architectural family, parameter scale, or training objective most shapes the quality-cost trade-off, assuming in advance that LoRA behaves identically across all three would presuppose the answer this study sets out to test. This assumption is therefore treated here as a hypothesis under evaluation, not as an established premise.
+
+\subsubsection{Robustness Bounds Derived from General NLP Tasks}
+The performance and robustness bounds separating full fine-tuning from PEFT methods discussed in Section~\ref{sec:ejeB}.A, including the adversarial robustness gap reported for RoBERTa-Large ($55.44$ vs. $53.96$) \cite{liu-etal-2026-look}, were measured on structured reasoning and generation benchmarks such as GSM8k and SQL, not on short, informal, class-imbalanced affective text. Whether the same gap holds for multi-class emotion classification on the CARER benchmark is an open empirical question that this study's experimental design directly addresses, rather than one it assumes settled in advance.
+
+\subsubsection{Instability and Quantization as Compounding Sources of Error}
+Adversarial training results show that the sparse trainable-parameter regime of standard LoRA introduces measurable instability under distribution shift and low-resource conditions \cite{wu2025advlora}, while separate survey evidence flags a tendency toward overconfident predictions when PEFT-tuned models are applied to small or imbalanced datasets \cite{wang2025peft}. Because QLoRA's 4-bit quantization of the frozen base weights is applied on top of an already parameter-scarce adapter, this work implicitly assumes that rank restriction and numerical quantization introduce independent, additive sources of approximation error rather than interacting nonlinearly; this interaction has not been directly characterized in the reviewed literature and is acknowledged here as an open limitation.
+
 \section{Benchmark Analysis: The CARER Dataset \& Evaluation Protocols}
 \label{sec:ejeC}
 

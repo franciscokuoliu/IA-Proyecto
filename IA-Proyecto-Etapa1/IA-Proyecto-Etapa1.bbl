@@ -82,17 +82,17 @@ C.~Lv, T.~Li, W.~Qiao, X.~Wang, M.~Wu, W.~Liu, S.~Dou, X.~Zheng, and X.~Huang, `
 L.~Wang, S.~Chen, L.~Jiang, S.~Pan, R.~Cai, S.~Yang, and F.~Yang, ``Parameter-efficient fine-tuning in large language models: a survey of methodologies,'' \emph{Artificial Intelligence Review}, vol.~58, p. 227, 2025. [Online]. Available: \url{https://doi.org/10.1007/s10462-025-11236-4}
 \BIBentrySTDinterwordspacing
 
+\bibitem{wu2025advlora}
+\BIBentryALTinterwordspacing
+H.~Wu, X.~Luo, J.~Gao, and D.~Huang, ``Improving text processing via adversarial low-rank adaptation,'' \emph{Machine Learning}, vol. 114, p. 196, 2025. [Online]. Available: \url{https://doi.org/10.1007/s10994-025-06817-x}
+\BIBentrySTDinterwordspacing
+
 \bibitem{luo23_interspeech}
 J.~Luo, H.~Phan, and J.~Reiss, ``{Fine-tuned RoBERTa Model with a CNN-LSTM Network for Conversational Emotion Recognition},'' in \emph{{Interspeech 2023}}, 2023, pp. 2413--2417.
 
 \bibitem{Jayanthi_Kavitha_2026}
 \BIBentryALTinterwordspacing
 K.~Jayanthi and D.~Kavitha, ``A unified hybrid framework for fine-grained emotion classification: Machine learning–deep learning synergy for robust performance,'' \emph{International Journal of Artificial Intelligence and Machine Learning}, vol.~6, no.~2s, p. 650–660, May 2026. [Online]. Available: \url{https://www.svedbergopen.com/index.php/ijaiml/article/view/245}
-\BIBentrySTDinterwordspacing
-
-\bibitem{wu2025advlora}
-\BIBentryALTinterwordspacing
-H.~Wu, X.~Luo, J.~Gao, and D.~Huang, ``Improving text processing via adversarial low-rank adaptation,'' \emph{Machine Learning}, vol. 114, p. 196, 2025. [Online]. Available: \url{https://doi.org/10.1007/s10994-025-06817-x}
 \BIBentrySTDinterwordspacing
 
 \bibitem{yang2023context}
