@@ -20,6 +20,9 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
+\bibitem{maruf2024challenges}
+A.~A. Maruf, F.~Khanam, M.~M. Haque, Z.~M. Jiyad, M.~F. Mridha, and Z.~Aung, ``Challenges and opportunities of text-based emotion detection: A survey,'' \emph{IEEE Access}, vol.~12, pp. 18\,416--18\,450, 2024.
+
 \bibitem{murthy2021review}
 A.~Murthy and A.~Kumar~K.M, ``A review of different approaches for detecting emotion from text,'' \emph{IOP Conference Series: Materials Science and Engineering}, vol. 1110, p. 012009, 03 2021.
 
@@ -41,6 +44,11 @@ E.~Saravia, H.-C.~T. Liu, Y.-H. Huang, J.~Wu, and Y.-S. Chen, ``{CARER}: Context
 \bibitem{cheng2026personality}
 \BIBentryALTinterwordspacing
 Y.~Cheng, H.~Chen, X.~Guo, B.~Ding, and Z.~Pei, ``Personality-aware emotion recognition in conversation with large language models,'' \emph{Pattern Recognition}, vol. 178, p. 113460, 2026. [Online]. Available: \url{https://www.sciencedirect.com/science/article/pii/S0300312026004267}
+\BIBentrySTDinterwordspacing
+
+\bibitem{stigall2024large}
+\BIBentryALTinterwordspacing
+W.~Stigall, M.~A. Al~Hafiz~Khan, D.~Attota, F.~Nweke, and Y.~Pei, ``Large language models performance comparison of emotion and sentiment classification,'' in \emph{Proceedings of the 2024 ACM Southeast Conference}, ser. ACMSE '24.\hskip 1em plus 0.5em minus 0.4em\relax New York, NY, USA: Association for Computing Machinery, 2024, p. 60–68. [Online]. Available: \url{https://doi.org/10.1145/3603287.3651183}
 \BIBentrySTDinterwordspacing
 
 \bibitem{kratzwald2018deep}
@@ -67,11 +75,6 @@ J.~Luo, H.~Phan, and J.~Reiss, ``{Fine-tuned RoBERTa Model with a CNN-LSTM Netwo
 \bibitem{Jayanthi_Kavitha_2026}
 \BIBentryALTinterwordspacing
 K.~Jayanthi and D.~Kavitha, ``A unified hybrid framework for fine-grained emotion classification: Machine learning–deep learning synergy for robust performance,'' \emph{International Journal of Artificial Intelligence and Machine Learning}, vol.~6, no.~2s, p. 650–660, May 2026. [Online]. Available: \url{https://www.svedbergopen.com/index.php/ijaiml/article/view/245}
-\BIBentrySTDinterwordspacing
-
-\bibitem{10.1145/3603287.3651183}
-\BIBentryALTinterwordspacing
-W.~Stigall, M.~A. Al~Hafiz~Khan, D.~Attota, F.~Nweke, and Y.~Pei, ``Large language models performance comparison of emotion and sentiment classification,'' in \emph{Proceedings of the 2024 ACM Southeast Conference}, ser. ACMSE '24.\hskip 1em plus 0.5em minus 0.4em\relax New York, NY, USA: Association for Computing Machinery, 2024, p. 60–68. [Online]. Available: \url{https://doi.org/10.1145/3603287.3651183}
 \BIBentrySTDinterwordspacing
 
 \end{thebibliography}

@@ -82,7 +82,7 @@ The remainder of this survey is structured as follows: Section~\ref{sec:ejeA} re
 \section{Domain Analysis \& Evolution of Text Emotion Recognition}
 \label{sec:ejeA}
 \subsection{Dominant Traditional Approaches}
-Text-based emotion recognition has evolved through a rapid progression of computational methodologies, which are designed to address the challenges related to semantic ambiguity and unstructured language.
+Text-based emotion recognition (TBED) has evolved through a rapid progression of computational methodologies designed to address semantic ambiguity and unstructured language. Affective computing has transitioned from rule-based and lexicon-driven heuristics toward deep representation learning and generative paradigms \cite{maruf2024challenges}. These foundational techniques can be broadly categorized into keyword-based, corpus-based, rule-based, traditional machine learning, and deep learning:
 Some of these computational approaches have relied on multiple computational paradigms to interpret a text and determine which emotions are shown. These foundational techniques can be broadly categorized into keyword-based, corpus-based, ruled-based, tradicional machine learning and deep learning.
 \begin{itemize}
     \item \textbf{Keyword-Based Approaches}: Identify explicit emotional terms using lexical databases (such as WordNet-Affect or SentiWordNet) and apply linguistic rules to assess sentiment intensity \cite{murthy2021review}.
@@ -123,6 +123,7 @@ Few-shot prompting builds on this by adding $k$ example pairs directly into the 
 While zero-shot and few-shot setups avoid task-specific training costs, their reliability for fine-grained emotion tasks varies greatly. 
 Zero-shot decoders are notoriously sensitive to how prompts are written, how context examples are ordered, and how subtle affective 
 context is presented. Furthermore, without parameter adaptation for a specific domain, zero-shot LLMs often struggle with subtle emotion boundaries.
+Furthermore, empirical studies comparing small task-specific encoders against 7B generative models (e.g., Llama-2 and Mistral) show that in-context prompting often yields higher variance and lower overall classification accuracy on affective tasks compared to direct supervised tuning \cite{stigall2024large}.
 
 \subsubsection{Supervised Fine-Tuning versus In-Context Learning}
 To address the instability of in-context learning, supervised fine-tuning (SFT) adjusts the model's output probabilities to align 
@@ -153,22 +154,13 @@ standard supervised models handle well-structured text with high reliability.
 
 \subsubsection{Open Challenge 1: Fine-Grained Multi-Class Emotion Mapping}
 Moving beyond binary sentiment requires mapping text to specific psychological states, such as Ekman's six core emotions: 
-anger, fear, joy, love, sadness, and surprise. The primary difficulty here is overlapping 
-class boundaries. Distinct emotions like fear and surprise frequently share identical keywords, meaning the model must rely 
-on broader context rather than individual terms to tell them apart \cite{kratzwald2018deep}. Modern decoder architectures 
-capture these subtle contextual shifts well, but mapping their outputs into discrete emotion categories without misclassifications 
-remains difficult \cite{cheng2026personality}.
+anger, fear, joy, love, sadness, and surprise. As categorized in emotion detection surveys \cite{maruf2024challenges}, adopting a discrete theoretical model simplifies categorical boundaries but introduces challenges when modeling overlapping affective states. Distinct emotions like fear and surprise frequently share identical keywords, meaning the model must rely on broader context rather than individual terms to tell them apart \cite{kratzwald2018deep}. Modern decoder architectures capture these subtle contextual shifts well, but mapping their outputs into discrete emotion categories without misclassifications remains difficult \cite{cheng2026personality}.
 
 \subsubsection{Open Challenge 2: Extreme Class Imbalance in Affective Corpora}
-A major bottleneck in emotion datasets like the CARER benchmark is severe class imbalance \cite{saravia2018carer}. 
-Everyday language features common emotions like joy or sadness far more often than high-intensity states like surprise or fear. 
-Standard cross-entropy loss naturally focuses on majority-class errors, which leads to high overall accuracy but poor performance 
-on minority categories. While sampling methods and weighted losses help traditional encoders, managing severe imbalance within 
-Parameter-Efficient Fine-Tuning (PEFT) frameworks, where base weights remain frozen, is still an ongoing challenge for Macro-F1 
-optimization \cite{nwaiwu2025peft}.
+A major bottleneck in emotion datasets like the CARER benchmark is severe class imbalance \cite{saravia2018carer}. Everyday language features common emotions like joy or sadness far more often than high-intensity states like surprise or fear. Standard cross-entropy loss naturally focuses on majority-class errors, which leads to high overall accuracy but poor recall on minority categories \cite{maruf2024challenges}. While sampling methods and weighted losses help traditional encoders, managing severe imbalance within Parameter-Efficient Fine-Tuning (PEFT) frameworks, where base weights remain frozen, is still an ongoing challenge for Macro-F1 optimization \cite{nwaiwu2025peft}.
 
 \subsubsection{Open Challenge 3: Ambiguity in Digital Text}
-Short online texts introduce noise that degrades classification accuracy. The main causes of ambiguity include:
+Short online texts introduce noise that degrades classification accuracy. Much of this noise is produced by the way people write, there are writing styles that can lead to misinterpretations in literary readings \cite{maruf2024challenges}. The main causes of ambiguity in affective corpora include:
 
 \begin{itemize}
     \item \textbf{Implicit Emotions and Sarcasm:} Phrases without direct emotion keywords (such as \textit{"Great, another delay."}) depend on pragmatic reasoning that basic encoders often miss.
@@ -303,7 +295,7 @@ performance across all target categories while accounting for resource consumpti
 To measure both classification performance and operational cost, models are evaluated across a standardized set of metrics:
 
 \begin{itemize}
-    \item \textbf{Macro-F1 ($\mathbf{F_1^{\text{macro}}}$):} Serves as the primary quality metric. By calculating the unweighted mean of $F_1$ scores across all six emotion categories, Macro-F1 treats every class equally, making it sensitive to poor performance on underrepresented classes like \textit{surprise} or \textit{love} \cite{saravia2018carer}.
+    \item \textbf{Macro-F1 ($\mathbf{F_1^{\text{macro}}}$):} Serves as the primary quality metric. By calculating the unweighted mean of $F_1$ scores across all six emotion categories, Macro-F1 treats every class equally, making it sensitive to poor performance on underrepresented classes like \textit{surprise} or \textit{love} \cite{saravia2018carer, maruf2024challenges}.
     \item \textbf{Weighted-F1 ($\mathbf{F_1^{\text{weighted}}}$):} Computes the average $F_1$ score weighted by class support. While provided for comparison, it can mask weak performance on minority categories when majority classes achieve high precision and recall \cite{chakriswaran2019emotion}.
     \item \textbf{Inference Latency and Memory Footprint:} Measures average prediction time per sample (in milliseconds) alongside peak GPU memory utilization (in gigabytes) to quantify operational deployment overhead \cite{nwaiwu2025peft}.
 \end{itemize}
@@ -382,7 +374,7 @@ Luo et al. \cite{luo23_interspeech} & 2023 & Fine-tuned RoBERTa + 1D CNN-BiLSTM 
 Jayanthi \& Kavitha \cite{Jayanthi_Kavitha_2026} & 2026 & TF-IDF + LSTM (Unified Hybrid Framework) & EMO-KNOW (48 emotion classes) & Accuracy / Macro F1-Score & 0.954 (95.4\%) & Relies on sequential processing of sparse TF-IDF vectors; evaluated primarily on short, informal social media text. \\
 \addlinespace
 
-Stigall et al. \cite{10.1145/3603287.3651183} & 2024 & Fine-tuned $BERT_{Tiny}$ (Multi-Task Parallel Training) & Aggregated Social Media Datasets (Text) & Accuracy / F1-Score & 0.8546 (85.46\%) & Class imbalance (underrepresented neutral/worry), data loss from dual-dataloader alignment. \\
+Stigall et al. \cite{stigall2024large} & 2024 & Fine-tuned $BERT_{Tiny}$ (Multi-Task Parallel Training) & Aggregated Social Media Datasets (Text) & Accuracy / F1-Score & 0.8546 (85.46\%) & Class imbalance (underrepresented neutral/worry), data loss from dual-dataloader alignment. \\
 
 \bottomrule
 \end{tabularx}
