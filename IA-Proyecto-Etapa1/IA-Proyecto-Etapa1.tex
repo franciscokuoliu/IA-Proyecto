@@ -39,13 +39,7 @@ dwu@estudiantec.cr}
 \maketitle
 
 \begin{abstract}
-Text-based emotion recognition remains a challenge in Natural Language Processing (NLP) due to severe class imbalance, 
-contextual ambiguity, and informal language in short digital texts. While traditional encoder-based architectures and recurrent neural 
-networks have served as standard baselines, modern generative Large Language Models (LLMs) offer promising capabilities for capturing
-subtle affective nuances. However, full fine-tuning of these models remains computationally prohibitive. 
-In this work, we present an empirical evaluation comparing traditional encoder models (BiLSTM, BERT) against intermediate-scale 
-decoder architectures (Qwen, Gemma, DeepSeek) using Parameter-Efficient Fine-Tuning (PEFT/LoRA). Experiments on the 
-CARER / Kaggle Emotion dataset demonstrate the trade-offs in classification performance, measure via Macro-F1, under controlled hardware constraints. 
+Text-based emotion recognition remains challenging in Natural Language Processing due to severe class imbalance, contextual ambiguity, and informal language in short digital texts. Prior work has compared individual encoder or decoder architectures in isolation, but it remains unclear which factor most shapes the trade-off between classification quality and computational cost: the underlying architectural family (recurrent, encoder-Transformer, or decoder-Transformer), the parameter scale within a family, or the training objective used during pre-training. This work proposes a controlled, three-axis experimental framework to address this gap: a non-neural and a recurrent baseline, fully fine-tuned encoder Transformers (DistilBERT, BERT-Base), and decoder Transformers (Qwen2.5-0.5B/1.5B, Gemma-2-2B, DeepSeek-R1-Distill-Qwen-1.5B) adapted via Parameter-Efficient Fine-Tuning (PEFT/LoRA), evaluated on the CARER emotion dataset under matched hardware constraints. Rather than identifying a single best-performing model, our objective is to characterize which of these three factors, architectural family, parameter scale, or training objective, most strongly shifts the Macro-F1-versus-compute trade-off in multi-class emotion classification. We detail this experimental design and its grounding in the current literature, providing a methodological basis for practitioners choosing between compact encoders and LoRA-adapted decoders under resource constraints.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -68,11 +62,13 @@ that frequently masks poor performance on minority emotional classes. Furthermor
 and LoRA-adapted intermediate decoders under identical hardware constraints remain scarce in current literature.
 
 To address these gaps, this work evaluates the trade-offs between legacy encoder baselines and modern intermediate-scale decoders on the highly 
-imbalanced CARER emotion dataset. 
+imbalanced CARER emotion dataset.
+
+Building on this motivation, our guiding research question is the following: how do architectural family, parameter scale, and training objective each affect the trade-off between classification quality (Macro-F1) and computational cost in multi-class emotion classification, and which of these three factors most strongly influences that trade-off? Rather than searching for a single winning architecture, this work isolates each factor through matched comparisons, allowing its individual contribution to be characterized independently of the others.
 
 Our main contributions are as follows:
 \begin{itemize}
-    \item \textbf{Cross-Architecture Benchmark:} We provide a systematic empirical comparison between state-of-the-art intermediate decoders (Qwen, Gemma, DeepSeek) and established encoder baselines (BiLSTM, BERT) for multi-class emotion classification.
+    \item \textbf{Three-Axis Controlled Benchmark:} We design a controlled comparison that isolates architectural family, parameter scale, and training objective as independent variables, rather than benchmarking architectures in an unstructured manner.
     \item \textbf{Efficiency \& Optimization Analysis:} We evaluate the operational trade-offs of PEFT/LoRA across decoder architectures, focusing on memory footprint, parameter count, and convergence rates under strict hardware limitations.
     \item \textbf{Imbalance-Aware Evaluation:} We analyze model resilience to severe class imbalance on the CARER dataset, prioritizing Macro-F1 metrics to ensure fair assessment across underrepresented emotion classes.
     \item \textbf{Practical Deployment Guidelines:} We outline concrete performance-versus-compute trade-offs to offer actionable decision frameworks for researchers and practitioners choosing between compact encoders and LoRA-adapted decoders.
@@ -91,7 +87,7 @@ Some of these computational approaches have relied on multiple computational par
     
     \item \textbf{Rule-Based Approaches}: Apply expert heuristic rules, Part-of-Speech tagging, and phrasal patterns to infer emotional states based on predefined linguistic structure \cite{murthy2021review}.
     
-    \item \textbf{Traditional Machine Learning Approaches}: Utilize supervised algorithms, such as, Support Vector Machines (SVM), Na\"ive Bayes, Decision Trees, and $K$-Nearest Neighbors—that rely on manual feature engineering to classify text into emotional categories \cite{murthy2021review}.
+    \item \textbf{Traditional Machine Learning Approaches}: Utilize supervised algorithms, such as, Support Vector Machines (SVM), Na\"ive Bayes, Decision Trees, and $K$-Nearest Neighbors that rely on manual feature engineering to classify text into emotional categories \cite{murthy2021review}.
     
     \item \textbf{Deep Learning Approaches}: Employ neural network architectures, such as, Recurrent Neural Networks (RNNs/LSTMs), Convolutional Neural Networks (CNNs), and Transformer-based models (e.g., BERT), to automatically learn hierarchical representations and capture complex contextual semantics directly from raw text [1].
 \end{itemize}
