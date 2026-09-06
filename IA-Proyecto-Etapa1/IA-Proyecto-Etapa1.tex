@@ -158,7 +158,7 @@ standard supervised models handle well-structured text with high reliability.
 
 \subsubsection{Open Challenge 1: Fine-Grained Multi-Class Emotion Mapping}
 Moving beyond binary sentiment requires mapping text to specific psychological states, such as Ekman's six core emotions: 
-anger, fear, joy, love, sadness, and surprise. As categorized in emotion detection surveys \cite{maruf2024challenges}, adopting a discrete theoretical model simplifies categorical boundaries but introduces challenges when modeling overlapping affective states. Distinct emotions like fear and surprise frequently share identical keywords, meaning the model must rely on broader context rather than individual terms to tell them apart \cite{kratzwald2018deep}. Modern decoder architectures capture these subtle contextual shifts well, but mapping their outputs into discrete emotion categories without misclassifications remains difficult \cite{cheng2026personality}.
+anger, fear, joy, love, sadness, and surprise. As categorized in emotion detection surveys \cite{maruf2024challenges}, adopting a discrete theoretical model simplifies categorical boundaries but introduces challenges when modeling overlapping affective states. Distinct emotions like fear and surprise frequently share identical keywords, meaning the model must rely on broader context rather than individual terms to tell them apart \cite{kratzwald2018deep}. This challenge also appears in hybrid models: \cite{bharti_2022_computational} uses the same six-emotion taxonomy on a combined text corpus and reaches 80.11\% accuracy with a CNN + Bi-GRU + SVM approach, but does not report per-class results, so it is unclear whether emotions like fear and surprise were commonly confused. Modern decoder architectures capture these subtle contextual shifts well, but mapping their outputs into discrete emotion categories without misclassifications remains difficult \cite{cheng2026personality}.
 
 \subsubsection{Open Challenge 2: Extreme Class Imbalance in Affective Corpora}
 A major bottleneck in emotion datasets like the CARER benchmark is severe class imbalance \cite{saravia2018carer}. Everyday language features common emotions like joy or sadness far more often than high-intensity states like surprise or fear. Standard cross-entropy loss naturally focuses on majority-class errors, which leads to high overall accuracy but poor recall on minority categories \cite{maruf2024challenges}. While sampling methods and weighted losses help traditional encoders, managing severe imbalance within Parameter-Efficient Fine-Tuning (PEFT) frameworks, where base weights remain frozen, is still an ongoing challenge for Macro-F1 optimization \cite{nwaiwu2025peft}.
@@ -432,9 +432,6 @@ Mohammed \& Kora \cite{mohammed2026deepfake} & 2026 & LLMs + LoRA (PEFT) & Text-
 Cheng et al. \cite{cheng2026personality} & 2026 & LLMs In-Context Learning / SFT & Conversational Emotion Datasets & Macro-F1 & Improved multi-turn emotion tracking & Highly sensitive to prompt context; expensive inference latency for broad LLMs. \\
 \addlinespace
 
-Liu et al. \cite{liu-etal-2026-look} & 2026 & Parameter-Efficient Fine-Tuning (LoRA, AdaLoRA, Prefix-Tuning, IA3, BitFit) vs. Full Fine-Tuning (FFT) & GSM8k, ViGGO, SQL, SQuAD 1.1, GLUE/AdvGLUE, Adversarial SQuAD & Accuracy / Macro-F1 / Robustness / Memory Footprint & FFT consistently outperforms PEFT on complex reasoning/SQL and exhibits higher adversarial robustness & PEFT representation capacity is strictly bounded by tuned parameters, shows diminishing marginal gains with larger dataset sizes \\
-\addlinespace
-
 Murthy \& Kumar \cite{murthy2021review} & 2021 & Deep Learning and Transformers (RNN, LSTM, BiLSTM, CNN, BERT) & Dialogues/Conversations (DailyDialog, MELD, EmotionLines, WASSA) & Macro-F1, Jaccard Accuracy, Pearson Correlation ($r$) & State-of-the-art context and sequential modeling & Computationally expensive; degraded performance on sarcasm, negation, and multi-label edge cases. \\
 \addlinespace
 
@@ -445,6 +442,15 @@ Jayanthi \& Kavitha \cite{Jayanthi_Kavitha_2026} & 2026 & TF-IDF + LSTM (Unified
 \addlinespace
 
 Stigall et al. \cite{stigall2024large} & 2024 & Fine-tuned $BERT_{Tiny}$ (Multi-Task Parallel Training) & Aggregated Social Media Datasets (Text) & Accuracy / F1-Score & 0.8546 (85.46\%) & Class imbalance (underrepresented neutral/worry), data loss from dual-dataloader alignment. \\
+\addlinespace
+
+Maruf et al. \cite{maruf2024challenges} & 2024 & Text Preprocessing, Lexicon-Based, Machine Learning, Deep Learning (CNN/RNN/LSTM), Transformers (BERT/RoBERTa) & Literature-wide (TBED Corpora) & Accuracy / F1-Score & N/A (Survey Analysis) & Scarcity of annotated non-English/code-switched data; dataset imbalance; lack of dynamic context and domain transferability. \\
+\addlinespace
+
+Jayanthi and Kavitha \cite{Jayanthi_Kavitha_2026} & 2026 & Hybrid Framework (TF-IDF + LSTM) & EMO-KNOW (700k Tweets) & Accuracy / F1-Score / Precision / Recall & 95.4\% Accuracy & Evaluated primarily on short English Twitter posts, potential dependency on domain-specific lexical quality. \\
+\addlinespace
+
+Bharti et al. \cite{bharti_2022_computational} & 2022 & Hybrid CNN + Bi-GRU + SVM & Combined ISEAR/WASSA/Emotion-Stimulus & Accuracy / F1-Score & 80.11\% Accuracy (81.27\% F1) & Relies on aggregate accuracy/F1 rather than Macro-F1. \\
 
 \bottomrule
 \end{tabularx}
@@ -474,6 +480,9 @@ Alam et al. \cite{alam2026beyond} & 2026 & Classical ML, Deep Learning, Transfor
 \addlinespace
 
 Benayas et al. \cite{benayas2025comparative} & 2025 & Fine-Tuned Encoder-Only (RoBERTa) vs. Fine-Tuned/Few-Shot Decoder-Only (LLaMA2-7B via LoRA/QLoRA) & Intent Classification (SNIPS, ATIS, Banking, MASSIVE) and Sentiment Analysis (SST2, Tweet-Eval) & Macro/Micro F1-Score & RoBERTa outperforms LLaMA2 on intent classification (e.g., Banking: 94.27 vs. 70.87 F1); LLaMA2 leads slightly on sentiment analysis (96.21 vs. 91.61 on SST2) & Decoder-only inference is 29x to 108x slower than encoder-only; sensitive to class-name semantics and few-shot example ordering. \\
+\addlinespace
+
+Liu et al. \cite{liu-etal-2026-look} & 2026 & Parameter-Efficient Fine-Tuning (LoRA, AdaLoRA, Prefix-Tuning, IA3, BitFit) vs. Full Fine-Tuning (FFT) & GSM8k, ViGGO, SQL, SQuAD 1.1, GLUE/AdvGLUE, Adversarial SQuAD & Accuracy / Macro-F1 / Robustness / Memory Footprint & FFT consistently outperforms PEFT on complex reasoning/SQL and exhibits higher adversarial robustness & PEFT representation capacity is strictly bounded by tuned parameters, shows diminishing marginal gains with larger dataset sizes \\
 
 \bottomrule
 \end{tabularx}
