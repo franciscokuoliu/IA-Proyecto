@@ -81,6 +81,7 @@ Our main contributions are as follows:
 \end{itemize}
 
 The remainder of this survey is structured as follows: Section~\ref{sec:ejeA} reviews the evolution and current approaches in text-based emotion recognition. Section~\ref{sec:ejeB} analyzes parameter-efficient adaptation methods across Encoder and Decoder architectures. Section~\ref{sec:ejeC} examines the benchmark dataset characteristics and evaluation protocols. Section~\ref{sec:methodology} outlines our proposed experimental setup and methodology for future empirical training. Section~\ref{sec:discussion} discusses preliminary trade-offs and future research directions, and Section~\ref{sec:conclusion} concludes the paper.
+
 \section{Domain Analysis \& Evolution of Text Emotion Recognition}
 \label{sec:ejeA}
 \subsection{Dominant Traditional Approaches}
@@ -104,7 +105,7 @@ These foundational techniques can be broadly categorized into keyword-based, cor
 
 The rise of generative Large Language Models (LLMs) has fundamentally changed how we approach text classification in NLP \cite{chakriswaran2019emotion}. 
 Traditionally, affective computing tasks relied on discriminative models like BERT or GRU variants that learn a direct mapping function $f(X) \to Y$ 
-from input text $X$ to a predefined set of labels $Y$ \cite{zhang2024comparative}. In contrast, autoregressive decoder architectures treat classification 
+from input text $X$ to a predefined set of labels $Y$ \cite{saravia2018carer}. In contrast, autoregressive decoder architectures treat classification 
 as a conditional text generation problem. They model the probability of generating a target class token $y$ given a prompt sequence $X$:
 
 \begin{equation}
@@ -310,6 +311,10 @@ Despite recent advances in parameter-efficient fine-tuning (PEFT) and affective 
     \item \textbf{Scarcity of Matched Hardware Benchmarks:} Comparative evaluations rarely enforce uniform hardware constraints (e.g., peak VRAM budgets $\le 10\text{ GB}$), preventing realistic deployment trade-off assessments between lightweight encoders and LoRA-adapted decoders.
     \item \textbf{Under-Explored Quantization-Adapter Interactions:} The compounded impact of 4-bit quantization (QLoRA) and rank restriction ($r=16$) on minor emotion class representations remains insufficiently characterized.
 \end{enumerate}
+
+\noindent This work directly addresses Gaps 1, 2, and 3 through its controlled three-axis experimental design (evaluating model scale, architecture, and PEFT strategies under identical data splits), 
+its explicit focus on minority-class Macro-F1 resilience over deceptive overall accuracy, and its evaluation under a strict matched-hardware protocol 
+constrained to a $10\text{ GB}$ peak VRAM budget.
 
 \section{Benchmark Analysis: The CARER Dataset, \& Evaluation Protocols}
 \label{sec:ejeC}
@@ -641,13 +646,22 @@ Because parameter-efficient fine-tuning has been shown to introduce measurable i
 Pairwise comparisons that isolate a single axis, such as DistilBERT against BERT-Base for parameter scale or Qwen2.5-1.5B against DeepSeek-R1-Distill-Qwen-1.5B for training objective, are evaluated with a paired significance test on a per-sample basis, following the same paired-testing approach used to validate PEFT robustness claims in the reviewed literature \cite{wu2025advlora}. Given the small number of classes and runs involved, results are cross-checked with a non-parametric alternative when the normality of the underlying score distribution cannot be assumed, in line with the Kruskal-Wallis and post-hoc testing procedure used to evaluate LLM-based emotion classification differences in related work \cite{yang2023context}. A difference between two configurations is treated as informative only when it clears this statistical threshold, rather than being read directly off the raw Macro-F1 gap.
 
 \subsection{Explicit Baseline Target for Evaluation (Axis C)}
-To establish a clear target for competitive task performance, our primary empirical goal is to equal or surpass the Macro-F1 baseline of \textbf{89.8\%} established by fully fine-tuned DistilBERT and \textbf{91.5\%} set by BERT-Base on the CARER dataset structure \cite{zhang2024comparative}. We aim to achieve this threshold using LoRA-adapted generative decoders operating under a strict 10 GB VRAM envelope.
+To establish a clear target for competitive task performance, our primary empirical goal is to equal or surpass the Macro-F1 baseline of \textbf{89.8\%} established by fully fine-tuned DistilBERT and \textbf{91.5\%} set by BERT-Base evaluated against the contextualized affect representations introduced by the CARER framework \cite{saravia2018carer}. We aim to achieve this threshold using LoRA-adapted generative decoders operating under a strict 10 GB VRAM envelope.
 
 \subsection{Methodological Risks and Data Partition Integrity (Track B)}
 A major risk in multi-class text emotion benchmarks is partition contamination arising from near-duplicate social media posts across community mirrors. To eliminate dataset leakage, we implement strict SHA-256 string hashing and deduplication across raw text strings prior to splitting. Stratified partitioning (80\% train, 10\% validation, 10\% test) is executed once, ensuring zero overlap between training sequences and evaluation metrics.
 
-\subsection{Data Augmentation Strategy (Track B)}
-For Track B experiments, synthetic data augmentation (such as back-translation or LLM context generation) is intentionally omitted. Given that social media emotion datasets rely on subtle pragmatics, synthetic augmentation introduces artificial surface cues or class-label noise. Instead, class imbalance is managed strictly via inverse-frequency class-weighted cross-entropy loss applied across all model heads during adaptation.
+\subsection{Methodological Mitigation and Regularization (Track B)}
+For Track B experiments, synthetic data augmentation (such as back-translation or LLM context generation) is intentionally omitted to avoid introducing artificial surface cues or class-label noise into subtle pragmatics. Instead, recurrent baseline degradation, sequence instability, and class imbalance are addressed through structural fixes:
+
+\begin{itemize}
+    \item \textbf{Bidirectional Architectures:} Standard unidirectional layers are replaced with two-layer Bidirectional LSTMs/GRUs to capture contextual sequence information from both directions.
+    \item \textbf{Class-Weighted Loss Function:} To mitigate severe class imbalance, adaptation heads utilize a class-weighted categorical cross-entropy loss, scaling sample errors inversely to their relative class frequencies:
+    \begin{equation}
+        s_{i} = \frac{N}{K \sum_{j} \mathbb{I}_{y_{j}=y_{i}}}
+    \end{equation}
+    \item \textbf{Regularization and Transfer Learning:} Dropout layers ($p = 0.5$) are applied between recurrent layers to prevent co-adaptation, paired with pre-trained contextualized embeddings to stabilize representation learning under limited sample sizes.
+\end{itemize}
 
 \section{Ethical Considerations}
 \label{sec:ethics}
@@ -666,7 +680,7 @@ Evaluating emotion classification models on user-generated digital text raises k
 Comparing discriminative encoders against LoRA-adapted generative decoders highlights a clear Pareto efficiency frontier 
 \cite{benayas2025comparative, wang2025peft}. Fully fine-tuned compact encoders like BERT-Base maintain minimal peak VRAM 
 footprints ($<2\text{ GB}$) and low inference latency \cite{stigall2024large}, but reach an accuracy ceiling when processing 
-mplicit emotional phrasing \cite{maruf2024challenges}. Conversely, intermediate decoders leverage deep parametric representations, 
+implicit emotional phrasing \cite{maruf2024challenges}. Conversely, intermediate decoders leverage deep parametric representations, 
 utilizing parameter-efficient fine-tuning (PEFT) \cite{nwaiwu2025peft} via low-rank adaptation \cite{mohammed2026deepfake} to operate 
 within moderate VRAM limits while preserving broad context-aware language capacity \cite{cheng2026personality}.
 
@@ -690,11 +704,17 @@ By isolating architectural family, parameter scale, and pre-training objectives 
 provides a principled framework for selecting optimal NLP models in resource-constrained environments.
 
 \section*{AI Usage Declaration}
-In accordance with institutional guidelines for ethical AI usage in research, the authors declare that generative AI tools (Claude / Gemini) 
-were utilized during the preparation of this manuscript strictly for draft refinement, grammatical polishing,and LaTeX structural formatting. 
-All core research concepts, experimental design, theoretical frameworks, data partitioning methodologies, and literature analysis were 
-conceptualized, verified, and written by the human authors.
+In accordance with institutional guidelines for ethical AI usage in research, the authors declare the use of generative AI tools 
+(Claude and Gemini) during the preparation of this manuscript.
 
+AI assistance was used to help draft prose for several subsections after the authors specified the technical content and intended 
+argument, to search for and cross-check bibliographic references, to help construct and reconcile comparative tables, and to identify 
+and fix LaTeX formatting and compilation issues.
+
+The research question, hypothesis, experimental design, model and dataset selection, and the interpretation of results were determined 
+by the human authors. Each author is responsible for manually verifying the bibliographic references and reported results they 
+contributed to the manuscript. AI-generated text was reviewed, edited, and approved by the authors before inclusion, and all authors 
+remain able to explain and defend every decision, source, and claim in this document.
 \bibliographystyle{IEEEtran}
 \bibliography{references}
 

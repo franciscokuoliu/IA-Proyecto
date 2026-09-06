@@ -31,11 +31,6 @@ A.~Murthy and A.~Kumar~K.M, ``A review of different approaches for detecting emo
 P.~Chakriswaran, D.~R. Vincent, K.~Srinivasan, V.~Sharma, C.-Y. Chang, and D.~G. Reina, ``Emotion ai-driven sentiment analysis: A survey, future research directions, and open issues,'' \emph{Applied Sciences}, vol.~9, no.~24, p. 5462, 2019. [Online]. Available: \url{https://www.mdpi.com/2076-3417/9/24/5462}
 \BIBentrySTDinterwordspacing
 
-\bibitem{zhang2024comparative}
-\BIBentryALTinterwordspacing
-C.~Zhang, ``A comparative exploration of bert, rnn, and gru for sentiment classification,'' \emph{Highlights in Science, Engineering and Technology}, vol. 120, pp. 54--58, Dec. 2024. [Online]. Available: \url{https://drpress.org/ojs/index.php/HSET/article/view/28777}
-\BIBentrySTDinterwordspacing
-
 \bibitem{saravia2018carer}
 \BIBentryALTinterwordspacing
 E.~Saravia, H.-C.~T. Liu, Y.-H. Huang, J.~Wu, and Y.-S. Chen, ``{CARER}: Contextualized affect representations for emotion recognition,'' in \emph{Proceedings of the 2018 Conference on Empirical Methods in Natural Language Processing}, E.~Riloff, D.~Chiang, J.~Hockenmaier, and J.~Tsujii, Eds.\hskip 1em plus 0.5em minus 0.4em\relax Brussels, Belgium: Association for Computational Linguistics, Oct.-Nov. 2018, pp. 3687--3697. [Online]. Available: \url{https://aclanthology.org/D18-1404/}
@@ -59,6 +54,11 @@ B.~Kratzwald, S.~Ili{\'c}, M.~Kraus, S.~Feuerriegel, and H.~Prendinger, ``Deep l
 \bibitem{nwaiwu2025peft}
 \BIBentryALTinterwordspacing
 S.~Nwaiwu, ``Parameter-efficient fine-tuning for low-resource text classification: a comparative study of lora, ia3, and reft,'' \emph{Frontiers in Big Data}, vol.~8, 2025. [Online]. Available: \url{https://www.frontiersin.org/journals/big-data/articles/10.3389/fdata.2025.1677331}
+\BIBentrySTDinterwordspacing
+
+\bibitem{zhang2024comparative}
+\BIBentryALTinterwordspacing
+C.~Zhang, ``A comparative exploration of bert, rnn, and gru for sentiment classification,'' \emph{Highlights in Science, Engineering and Technology}, vol. 120, pp. 54--58, Dec. 2024. [Online]. Available: \url{https://drpress.org/ojs/index.php/HSET/article/view/28777}
 \BIBentrySTDinterwordspacing
 
 \bibitem{liu-etal-2026-look}
