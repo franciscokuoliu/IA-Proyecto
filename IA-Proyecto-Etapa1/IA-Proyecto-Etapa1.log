@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.17)  6 SEP 2026 01:26
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.17)  6 SEP 2026 02:00
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -839,64 +839,57 @@ Underfull \hbox (badness 2980) in paragraph at lines 489--490
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 490--490
-[]|\OT1/ptm/m/n/9 DeepSeek-R1-Distill-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 490--490
 []|\OT1/ptm/m/n/9 Decoder
  []
 
 
-Underfull \hbox (badness 2790) in paragraph at lines 490--491
+Underfull \hbox (badness 10000) in paragraph at lines 491--491
+[]|\OT1/ptm/m/n/9 DeepSeek-R1-Distill-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 491--491
+[]|\OT1/ptm/m/n/9 Decoder
+ []
+
+
+Underfull \hbox (badness 2790) in paragraph at lines 491--492
 []|\OT1/ptm/m/n/9 Training ob-jec-tive
  []
 
 
-Overfull \hbox (5.76123pt too wide) in paragraph at lines 479--493
+Overfull \hbox (5.76123pt too wide) in paragraph at lines 479--494
  [][] 
  []
 
+[8]
+LaTeX Font Info:    Calculating math sizes for size <8.5> on input line 543.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [8]
-Underfull \hbox (badness 5592) in paragraph at lines 529--530
-[]\OT1/ptm/b/n/10 Decoder Trans-form-ers: \OT1/ptm/m/n/10 Our de-coder mod-els in-
- []
-
-
-Underfull \hbox (badness 1776) in paragraph at lines 529--530
-\OT1/ptm/m/n/10 within con-sumer GPU mem-ory lim-its (such as an
- []
-
-LaTeX Font Info:    Calculating math sizes for size <8.5> on input line 540.
-
-Underfull \hbox (badness 10000) in paragraph at lines 547--547
+Underfull \hbox (badness 10000) in paragraph at lines 550--550
 []|\OT1/ptm/m/n/8.5 Target Mod-ules (Qwen /
  []
 
 
-Underfull \hbox (badness 4168) in paragraph at lines 547--548
+Underfull \hbox (badness 4168) in paragraph at lines 550--551
 []|\OT1/ptm/m/n/8.5 Query ($\OML/cmm/m/it/8 W[]$\OT1/ptm/m/n/8.5 ), Key ($\OML/cmm/m/it/8 W[]$\OT1/ptm/m/n/8.5 ), Value
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 548--549
+Underfull \hbox (badness 10000) in paragraph at lines 551--552
 []|\OT1/ptm/m/n/8.5 Attention ($\OML/cmm/m/it/8 W[]; W[]; W[]; W[]$\OT1/ptm/m/n/8.5 ) +
  []
 
 
-Underfull \hbox (badness 4429) in paragraph at lines 550--551
+Underfull \hbox (badness 4429) in paragraph at lines 553--554
 []|\OT1/ptm/m/n/8.5 4-bit Nor-malFloat (QLoRA) on
  []
 
-(./IA-Proyecto-Etapa1.bbl
+[9] (./IA-Proyecto-Etapa1.bbl
 Underfull \hbox (badness 1629) in paragraph at lines 61--63
 []\OT1/ptm/m/n/8 S. Nwaiwu, ``Parameter-efficient fine-tuning for low-
  []
 
-[9])
+[10])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -908,7 +901,7 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[10
+[11
 
 ] (./IA-Proyecto-Etapa1.aux)
  ***********
@@ -917,18 +910,18 @@ L3 programming layer <2026-01-19>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 4488 strings out of 467525
- 70155 string characters out of 5418988
- 525988 words of memory out of 5000000
- 33333 multiletter control sequences out of 15000+600000
+ 4489 strings out of 467525
+ 70176 string characters out of 5418988
+ 525994 words of memory out of 5000000
+ 33334 multiletter control sequences out of 15000+600000
  680851 words of font info for 144 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,15n,65p,1538b,317s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,15n,65p,1543b,317s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on IA-Proyecto-Etapa1.pdf (10 pages, 282769 bytes).
+Output written on IA-Proyecto-Etapa1.pdf (11 pages, 287652 bytes).
 PDF statistics:
- 148 PDF objects out of 1000 (max. 8388607)
- 91 compressed objects within 1 object stream
+ 151 PDF objects out of 1000 (max. 8388607)
+ 93 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

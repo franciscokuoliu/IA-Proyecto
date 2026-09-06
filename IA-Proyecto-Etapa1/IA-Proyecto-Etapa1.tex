@@ -39,7 +39,7 @@ dwu@estudiantec.cr}
 \maketitle
 
 \begin{abstract}
-Text-based emotion recognition remains challenging in Natural Language Processing due to severe class imbalance, contextual ambiguity, and informal language in short digital texts. Prior work has compared individual encoder or decoder architectures in isolation, but it remains unclear which factor most shapes the trade-off between classification quality and computational cost: the underlying architectural family (recurrent, encoder-Transformer, or decoder-Transformer), the parameter scale within a family, or the training objective used during pre-training. This work proposes a controlled, three-axis experimental framework to address this gap: a non-neural and a recurrent baseline, fully fine-tuned encoder Transformers (DistilBERT, BERT-Base), and decoder Transformers (Qwen2.5-0.5B/1.5B, Gemma-2-2B, DeepSeek-R1-Distill-Qwen-1.5B) adapted via Parameter-Efficient Fine-Tuning (PEFT/LoRA), evaluated on the CARER emotion dataset under matched hardware constraints. Rather than identifying a single best-performing model, our objective is to characterize which of these three factors, architectural family, parameter scale, or training objective, most strongly shifts the Macro-F1-versus-compute trade-off in multi-class emotion classification. We detail this experimental design and its grounding in the current literature, providing a methodological basis for practitioners choosing between compact encoders and LoRA-adapted decoders under resource constraints.
+Text-based emotion recognition remains challenging in Natural Language Processing due to severe class imbalance, contextual ambiguity, and informal language in short digital texts. Prior work has compared individual encoder or decoder architectures in isolation, but it remains unclear which factor most shapes the trade-off between classification quality and computational cost: the underlying architectural family (recurrent, encoder-Transformer, or decoder-Transformer), the parameter scale within a family, or the training objective used during pre-training. This work proposes a controlled, three-axis experimental framework to address this gap: a non-neural and a recurrent baseline, fully fine-tuned encoder Transformers (DistilBERT, BERT-Base), and decoder Transformers (Qwen2.5-0.5B/1.5B, Gemma 4 E2B/E4B, DeepSeek-R1-Distill-Qwen-1.5B) adapted via Parameter-Efficient Fine-Tuning (PEFT/LoRA), evaluated on the CARER emotion dataset under matched hardware constraints. Rather than identifying a single best-performing model, our objective is to characterize which of these three factors, architectural family, parameter scale, or training objective, most strongly shifts the Macro-F1-versus-compute trade-off in multi-class emotion classification. We detail this experimental design and its grounding in the current literature, providing a methodological basis for practitioners choosing between compact encoders and LoRA-adapted decoders under resource constraints.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -469,7 +469,7 @@ we establish a standardized experimental environment. The evaluation spans a rep
 and pre-training objectives across both non-neural and neural paradigms.
 
 \subsubsection{Model Selection and Taxonomy}
-As detailed in Table~\ref{tab:model_taxonomy}, the experimental setup evaluates eight distinct architectures to enable controlled comparative analysis:
+As detailed in Table~\ref{tab:model_taxonomy}, the experimental setup evaluates nine distinct architectures to enable controlled comparative analysis:
 
 \begin{table}[htbp]
 \centering
@@ -486,7 +486,8 @@ DistilBERT & Encoder Transformer & Small scale encoder baseline \\
 BERT-base & Encoder Transformer & Scale effect vs. DistilBERT \\
 Qwen2.5-0.5B & Decoder Transformer & Small scale decoder \\
 Qwen2.5-1.5B & Decoder Transformer & Scale effect vs. Qwen2.5-0.5B \\
-Gemma-2-2B & Decoder Transformer & Family effect vs. Qwen2.5-1.5B \\
+Gemma 4 E2B & Decoder Transformer & Family effect vs. Qwen2.5-1.5B \\
+Gemma 4 E4B & Decoder Transformer & Parameter scale effect vs. Gemma 4 E2B \\
 DeepSeek-R1-Distill-Qwen-1.5B & Decoder Transformer & Training objective effect vs. Qwen2.5-1.5B \\
 \bottomrule
 \end{tabular}
@@ -495,7 +496,7 @@ DeepSeek-R1-Distill-Qwen-1.5B & Decoder Transformer & Training objective effect 
 This systematic selection isolates key variables across three dimensions:
 \begin{itemize}
     \item \textbf{Architectural Family:} Comparing traditional recurrent neural networks (BiLSTM) against transformer-based encoders and decoders under uniform evaluation conditions.
-    \item \textbf{Parameter Scale:} Evaluating intra-family scaling behaviors by comparing small versus base/larger variants within encoders (DistilBERT vs. BERT-base) and decoders (Qwen2.5-0.5B vs. Qwen2.5-1.5B).
+    \item \textbf{Parameter Scale:} Evaluating intra-family scaling behaviors by comparing small versus base/larger variants within encoders (DistilBERT vs. BERT-base), decoders (Qwen2.5-0.5B vs. Qwen2.5-1.5B), and within the Gemma 4 family itself (E2B vs. E4B) \cite{gemmateam2026gemma4}.
     \item \textbf{Pre-training Objective:} Isolating the impact of training objectives by directly comparing general instruction-tuned Qwen2.5-1.5B against DeepSeek-R1-Distill-Qwen-1.5B, maintaining identical base architecture and parameter count while varying reasoning-oriented fine-tuning.
 \end{itemize}
 
@@ -503,7 +504,7 @@ This systematic selection isolates key variables across three dimensions:
 Experiments are distributed across local hardware resources representing heterogeneous computational capacities:
 \begin{itemize}
     \item \textbf{Standard Workstations:} NVIDIA GTX 1650 (4 GB VRAM) and NVIDIA RTX 2060 (6 GB VRAM) utilized for baseline models, data pre-processing, and lightweight encoder fine-tuning.
-    \item \textbf{High-Performance Workstation:} NVIDIA RTX 3080 (10 GB VRAM) allocated for larger encoder runs and parameter-efficient fine-tuning (PEFT/LoRA) of decoder architectures.
+    \item \textbf{High-Performance Workstation:} NVIDIA RTX 3080 (10 GB VRAM) allocated for larger encoder runs and parameter-efficient fine-tuning (PEFT/LoRA) of decoder architectures, including the larger Gemma 4 E4B variant (approximately $8\text{B}$ parameters with embeddings).
     \item \textbf{Unified Memory Platform:} Apple MacBook Pro M5 (24 GB Unified Memory) utilized for local execution, low-bit quantized inference testing, and host environment evaluations.
 \end{itemize}
 
@@ -514,20 +515,22 @@ To address severe class imbalance while capturing resource consumption, we evalu
     \item \textbf{Computational Cost:} Metrics include total training duration, peak memory footprint (VRAM/RAM), trainable parameter count, and per-sample inference latency.
 \end{itemize}
 The central synthesis constructs a Pareto efficiency frontier plotting computational cost (X-axis) against Macro-F1 performance (Y-axis) 
-to identify optimal deployment candidates.
+to identify optimal deployment candidates. This framing is directly motivated by recent evidence in a closely related low-resource emotion classification setting, where an instruction-tuned decoder evaluated in a zero- or few-shot regime achieved the highest reported F1-score but at a substantially higher per-query inference cost than a smaller fine-tuned encoder, illustrating that the highest-quality model and the most cost-efficient model need not coincide \cite{alam2026beyond}.
 
 \subsection{Model Selection and Adapter Configuration}
 
 To balance model adaptation against hardware constraints across our experimental setups, we apply distinct training strategies based on model architecture and parameter scale.
 
 \subsubsection{Model Configurations and Training Objectives}
-We select eight distinct models to evaluate performance across recurrent baselines, encoder architectures, and modern generative decoders:
+We select nine distinct models to evaluate performance across recurrent baselines, encoder architectures, and modern generative decoders:
 
 \begin{itemize}
     \item \textbf{Baseline Models:} We implement a TF-IDF + Logistic Regression model operating on standard n-gram features as a non-neural benchmark. For a recurrent baseline, we train a BiLSTM model using static word embeddings to capture sequential text structures.
     \item \textbf{Encoder Transformers:} We select DistilBERT ($\approx 66\text{M}$ parameters) and BERT-Base ($\approx 110\text{M}$ parameters) for full supervised fine-tuning (SFT) \cite{zhang2024comparative}. Because of their small memory footprints, all parameters across all transformer layers are updated directly using standard cross-entropy loss.
-    \item \textbf{Decoder Transformers:} Our decoder models include Qwen2.5-0.5B, Qwen2.5-1.5B, Gemma-2-2B, and DeepSeek-R1-Distill-Qwen-1.5B. To perform fine-tuning within consumer GPU memory limits (such as an NVIDIA RTX 3080 with 10 GB VRAM), the base model weights $\Theta_0$ remain frozen while downstream adaptation is handled through Low-Rank Adaptation (LoRA) \cite{nwaiwu2025peft}.
+    \item \textbf{Decoder Transformers:} Our decoder models include Qwen2.5-0.5B, Qwen2.5-1.5B, Gemma 4 E2B, Gemma 4 E4B, and DeepSeek-R1-Distill-Qwen-1.5B \cite{gemmateam2026gemma4}. To perform fine-tuning within consumer GPU memory limits (such as an NVIDIA RTX 3080 with 10 GB VRAM), the base model weights $\Theta_0$ remain frozen while downstream adaptation is handled through Low-Rank Adaptation (LoRA) \cite{nwaiwu2025peft}.
 \end{itemize}
+
+The decision to evaluate encoder and decoder families side by side, rather than treating one as a strict upgrade over the other, follows direct empirical precedent: a controlled comparison between a fine-tuned encoder-only model and a larger decoder-only model on intent classification and sentiment analysis found that the encoder consistently matched or outperformed the decoder at a fraction of the inference latency, with the gap widening as the number of target classes increased \cite{benayas2025comparative}. Whether this pattern extends to multi-class emotion recognition once decoder models are adapted via LoRA rather than compared through full fine-tuning or few-shot prompting is one of the open questions this work investigates.
 
 \subsubsection{LoRA Hyperparameter and Target Module Setup}
 For decoder models, LoRA adapters are injected into specific linear projection matrices inside the self-attention and feed-forward networks (FFN). Table~\ref{tab:peft_config} summarizes the key hyperparameter settings used during training.

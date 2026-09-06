@@ -104,4 +104,9 @@ M.~J. Alam, I.~Hossain, S.~Puppala, and S.~Talukder, ``Beyond transformers: Leve
 \bibitem{benayas2025comparative}
 A.~Benayas, M.~A. Sicilia, and M.~Mora-Cantallops, ``A comparative analysis of encoder only and decoder only models in intent classification and sentiment analysis: Navigating the trade-offs in model size and performance,'' \emph{Language Resources and Evaluation}, vol.~59, no.~3, pp. 2007--2030, 2025.
 
+\bibitem{gemmateam2026gemma4}
+\BIBentryALTinterwordspacing
+{Gemma Team}, ``Gemma 4 technical report,'' 2026. [Online]. Available: \url{https://arxiv.org/abs/2607.02770}
+\BIBentrySTDinterwordspacing
+
 \end{thebibliography}
