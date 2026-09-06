@@ -235,6 +235,22 @@ The effectiveness of this constrained parameterization rests on the intrinsic-ra
 
 \subsection{Comparative Methodologies: LoRA vs. QLoRA vs. Full Fine-Tuning}
 
+Building on the mechanics introduced in Section~\ref{sec:ejeB}.B, this section positions Low-Rank Adaptation and its quantized variant, QLoRA, relative to full fine-tuning along a single axis: how much memory a given adaptation strategy requires to reach comparable task performance.
+
+\subsubsection{Quantization-Aware Adaptation: QLoRA}
+QLoRA extends the reparameterization scheme described above by additionally storing the frozen base weights $W_0$ in a 4-bit quantized format (commonly NormalFloat4, NF4), rather than the standard 16-bit (FP16/BF16) precision used by conventional LoRA. Because $W_0$ remains frozen throughout training, this quantization affects only the static memory footprint of the base model, not the trainable low-rank matrices $A$ and $B$, which are still updated in higher precision. As summarized in Table~\ref{tab:peft_config}, this work applies 4-bit NormalFloat quantization specifically on the lower-VRAM GPUs available to the team, reducing the static weight memory of the decoder models by approximately fourfold relative to FP16 storage \cite{wang2025peft}, at the cost of a small computational overhead introduced by on-the-fly dequantization during the forward and backward passes.
+
+\subsubsection{Positioning Along the Memory-Performance Spectrum}
+The three adaptation strategies considered in this work occupy distinct points along a single memory-performance spectrum:
+\begin{itemize}
+    \item \textbf{Full Fine-Tuning (FFT):} Updates every parameter in $\Theta$, requiring the largest memory footprint of the three but retaining the highest empirical ceiling on task performance and adversarial robustness \cite{liu-etal-2026-look}.
+    \item \textbf{LoRA:} Freezes $\Theta_0$ and restricts updates to the low-rank matrices $A, B$, reducing trainable parameters to under $1.5\%$ of the base model while storing the frozen weights at standard precision \cite{nwaiwu2025peft}.
+    \item \textbf{QLoRA:} Combines the LoRA reparameterization with 4-bit quantization of $\Theta_0$, further reducing static memory at the cost of a modest computational overhead, without changing the number of trainable parameters \cite{wang2025peft}.
+\end{itemize}
+
+\subsubsection{Architectural Compatibility Across Model Families}
+Because LoRA and QLoRA target the same class of linear projection matrices described in Section~\ref{sec:ejeB}.B, both methods apply uniformly across the encoder and decoder architectures evaluated in this work. The attention projections $W_q, W_k, W_v, W_o$ are present in BERT-based encoders as well as in the Qwen, Gemma, and DeepSeek decoders, so the adaptation mechanism itself does not need to change across families. What differs in practice is how much quantization matters: for the encoder baselines (DistilBERT, BERT-Base), which are fully fine-tuned under $2\text{ GB}$ of VRAM \cite{zhang2024comparative}, quantization offers little practical benefit, while for the decoder models, whose base weights alone approach or exceed the available VRAM on the team's lower-end GPUs, QLoRA is what makes training feasible at all \cite{wang2025peft}.
+
 \subsection{Theoretical Limitations and Underlying Assumptions}
 
 \section{Benchmark Analysis: The CARER Dataset \& Evaluation Protocols}

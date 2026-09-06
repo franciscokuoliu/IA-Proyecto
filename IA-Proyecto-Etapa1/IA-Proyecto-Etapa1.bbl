@@ -69,6 +69,11 @@ Y.~Liu, X.~Xu, E.~Nie, Z.~Wang, S.~Feng, D.~Wang, Q.~Li, and H.~Schuetze, ``Look
 \bibitem{mohammed2026deepfake}
 A.~Mohammed and R.~Kora, ``Enhancing text-based deepfake detection: A comprehensive evaluation of lora fine-tuned large language models,'' \emph{IEEE Access}, vol.~14, pp. 44\,709--44\,727, 2026.
 
+\bibitem{wang2025peft}
+\BIBentryALTinterwordspacing
+L.~Wang, S.~Chen, L.~Jiang, S.~Pan, R.~Cai, S.~Yang, and F.~Yang, ``Parameter-efficient fine-tuning in large language models: a survey of methodologies,'' \emph{Artificial Intelligence Review}, vol.~58, p. 227, 2025. [Online]. Available: \url{https://doi.org/10.1007/s10462-025-11236-4}
+\BIBentrySTDinterwordspacing
+
 \bibitem{luo23_interspeech}
 J.~Luo, H.~Phan, and J.~Reiss, ``{Fine-tuned RoBERTa Model with a CNN-LSTM Network for Conversational Emotion Recognition},'' in \emph{{Interspeech 2023}}, 2023, pp. 2413--2417.
 
