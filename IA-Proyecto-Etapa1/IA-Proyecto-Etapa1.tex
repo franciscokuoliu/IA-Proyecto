@@ -558,7 +558,22 @@ For our direct comparison between Qwen2.5-1.5B and DeepSeek-R1-Distill-Qwen-1.5B
 
 \subsection{Pre-Processing and Imbalance Mitigation Strategy}
 
+\subsubsection{Text Normalization and Deduplication}
+Prior to tokenization, the raw corpus is deduplicated to remove exact-duplicate entries that can arise when aggregating community-hosted mirrors of the CARER dataset, preventing the same sample from appearing in both the training and evaluation partitions. Text normalization is kept minimal: standard whitespace and encoding artifacts are cleaned, but punctuation, capitalization, and emoticons are preserved, since these surface-level cues frequently carry affective signal in short, informal social media text \cite{maruf2024challenges}. Each model family applies its own native tokenizer (WordPiece for the BERT-based encoders, byte-pair encoding for the Qwen, Gemma, and DeepSeek decoders) directly on this normalized text, without a shared vocabulary or intermediate representation across families.
+
+\subsubsection{Class-Weighted Loss Under Frozen Backbones}
+As previously noted, standard cross-entropy loss favors majority classes and can mask poor recall on underrepresented emotions \cite{maruf2024challenges}, and this imbalance is only partially addressed by existing PEFT frameworks, since the base decoder weights remain frozen throughout adaptation \cite{nwaiwu2025peft}. Because a frozen backbone does not prevent reweighting the loss computed at the classification head, this work applies inverse-frequency class weighting to the cross-entropy objective uniformly across all eight models, whether the head sits atop a fully fine-tuned encoder or a LoRA-adapted decoder. This keeps the imbalance-mitigation strategy constant across the three axes under study, so that any observed differences in Macro-F1 can be attributed to architectural family, parameter scale, or training objective rather than to inconsistent handling of class imbalance between models.
+
 \subsection{Evaluation Protocol and Statistical Validation}
+
+\subsubsection{Data Partitioning}
+The corpus is split once into training, validation, and test partitions ($80\%/10\%/10\%$), stratified by emotion label to preserve the original class proportions described in Section~\ref{sec:ejeC}.A across all three partitions. This fixed partition is shared across all eight models to avoid the risk, specific to text classification tasks, of near-duplicate samples leaking between training and evaluation splits when partitions are regenerated independently per model; the validation split is used exclusively for early stopping and hyperparameter selection, never for reporting final results.
+
+\subsubsection{Variance Across Random Seeds}
+Because parameter-efficient fine-tuning has been shown to introduce measurable instability relative to full fine-tuning, particularly under the sparse trainable-parameter regime that LoRA and QLoRA rely on \cite{wu2025advlora}, each decoder configuration is trained across three random seeds, with the held-out test set evaluated independently for each run. Results are reported as mean $\pm$ standard deviation on Macro-F1 rather than as a single-run point estimate, so that the reported quality-cost trade-off reflects the typical behavior of each configuration rather than a favorable outlier.
+
+\subsubsection{Statistical Comparison Between Models}
+Pairwise comparisons that isolate a single axis, such as DistilBERT against BERT-Base for parameter scale or Qwen2.5-1.5B against DeepSeek-R1-Distill-Qwen-1.5B for training objective, are evaluated with a paired significance test on a per-sample basis, following the same paired-testing approach used to validate PEFT robustness claims in the reviewed literature \cite{wu2025advlora}. Given the small number of classes and runs involved, results are cross-checked with a non-parametric alternative when the normality of the underlying score distribution cannot be assumed, in line with the Kruskal-Wallis and post-hoc testing procedure used to evaluate LLM-based emotion classification differences in related work \cite{yang2023context}. A difference between two configurations is treated as informative only when it clears this statistical threshold, rather than being read directly off the raw Macro-F1 gap.
 
 \section{Discussion \& Open Research Directions}
 \label{sec:discussion}
