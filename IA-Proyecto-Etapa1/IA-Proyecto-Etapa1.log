@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.17)  6 SEP 2026 03:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.17)  6 SEP 2026 03:54
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -320,10 +320,6 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 
 ]
-
-LaTeX Warning: Reference `sec:methodology' on page 2 undefined on input line 77.
-
-
 Underfull \hbox (badness 3895) in paragraph at lines 81--84
 []\OT1/ptm/m/n/10 Text-based emo-tion recog-ni-tion (TBED) has evolved
  []
@@ -793,68 +789,38 @@ Underfull \hbox (badness 1354) in paragraph at lines 482--483
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 504--504
+Underfull \hbox (badness 10000) in paragraph at lines 507--507
 []|\OT1/ptm/b/n/9 Architecture
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 504--505
+Underfull \hbox (badness 10000) in paragraph at lines 507--508
 []|\OT1/ptm/b/n/9 Experimental
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 506--506
+Underfull \hbox (badness 10000) in paragraph at lines 509--509
 []|\OT1/ptm/m/n/9 Non-Neural
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 508--508
-[]|\OT1/ptm/m/n/9 Encoder
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 508--509
-[]|\OT1/ptm/m/n/9 Small scale
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 509--509
-[]|\OT1/ptm/m/n/9 Encoder
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 509--510
-[]|\OT1/ptm/m/n/9 Scale ef-fect vs.
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 510--510
-[]|\OT1/ptm/m/n/9 Decoder
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 510--511
-[]|\OT1/ptm/m/n/9 Small scale
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 511--511
-[]|\OT1/ptm/m/n/9 Decoder
+[]|\OT1/ptm/m/n/9 Encoder
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 511--512
-[]|\OT1/ptm/m/n/9 Scale ef-fect vs.
+[]|\OT1/ptm/m/n/9 Small scale
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 512--512
-[]|\OT1/ptm/m/n/9 Decoder
+[]|\OT1/ptm/m/n/9 Encoder
  []
 
 
-Underfull \hbox (badness 2980) in paragraph at lines 512--513
-[]|\OT1/ptm/m/n/9 Family ef-fect vs.
+Underfull \hbox (badness 10000) in paragraph at lines 512--513
+[]|\OT1/ptm/m/n/9 Scale ef-fect vs.
  []
 
 
@@ -863,8 +829,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 513--513
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 514--514
-[]|\OT1/ptm/m/n/9 DeepSeek-R1-Distill-
+Underfull \hbox (badness 10000) in paragraph at lines 513--514
+[]|\OT1/ptm/m/n/9 Small scale
  []
 
 
@@ -873,34 +839,64 @@ Underfull \hbox (badness 10000) in paragraph at lines 514--514
  []
 
 
-Underfull \hbox (badness 2790) in paragraph at lines 514--515
+Underfull \hbox (badness 10000) in paragraph at lines 514--515
+[]|\OT1/ptm/m/n/9 Scale ef-fect vs.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 515--515
+[]|\OT1/ptm/m/n/9 Decoder
+ []
+
+
+Underfull \hbox (badness 2980) in paragraph at lines 515--516
+[]|\OT1/ptm/m/n/9 Family ef-fect vs.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 516--516
+[]|\OT1/ptm/m/n/9 Decoder
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 517--517
+[]|\OT1/ptm/m/n/9 DeepSeek-R1-Distill-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 517--517
+[]|\OT1/ptm/m/n/9 Decoder
+ []
+
+
+Underfull \hbox (badness 2790) in paragraph at lines 517--518
 []|\OT1/ptm/m/n/9 Training ob-jec-tive
  []
 
 
-Overfull \hbox (5.76123pt too wide) in paragraph at lines 502--517
+Overfull \hbox (5.76123pt too wide) in paragraph at lines 505--520
  [][] 
  []
 
 [7] [8] [9]
-LaTeX Font Info:    Calculating math sizes for size <8.5> on input line 566.
+LaTeX Font Info:    Calculating math sizes for size <8.5> on input line 569.
 
-Underfull \hbox (badness 10000) in paragraph at lines 573--573
+Underfull \hbox (badness 10000) in paragraph at lines 576--576
 []|\OT1/ptm/m/n/8.5 Target Mod-ules (Qwen /
  []
 
 
-Underfull \hbox (badness 4168) in paragraph at lines 573--574
+Underfull \hbox (badness 4168) in paragraph at lines 576--577
 []|\OT1/ptm/m/n/8.5 Query ($\OML/cmm/m/it/8 W[]$\OT1/ptm/m/n/8.5 ), Key ($\OML/cmm/m/it/8 W[]$\OT1/ptm/m/n/8.5 ), Value
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 574--575
+Underfull \hbox (badness 10000) in paragraph at lines 577--578
 []|\OT1/ptm/m/n/8.5 Attention ($\OML/cmm/m/it/8 W[]; W[]; W[]; W[]$\OT1/ptm/m/n/8.5 ) +
  []
 
 
-Underfull \hbox (badness 4429) in paragraph at lines 576--577
+Underfull \hbox (badness 4429) in paragraph at lines 579--580
 []|\OT1/ptm/m/n/8.5 4-bit Nor-malFloat (QLoRA) on
  []
 
@@ -926,21 +922,17 @@ Before submitting the final camera ready copy, remember to:
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
  ) 
 Here is how much of TeX's memory you used:
  4527 strings out of 467525
  70737 string characters out of 5418988
- 525621 words of memory out of 5000000
+ 525610 words of memory out of 5000000
  33367 multiletter control sequences out of 15000+600000
  681366 words of font info for 146 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  57i,15n,65p,1543b,317s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on IA-Proyecto-Etapa1.pdf (11 pages, 295277 bytes).
+Output written on IA-Proyecto-Etapa1.pdf (11 pages, 295181 bytes).
 PDF statistics:
  156 PDF objects out of 1000 (max. 8388607)
  96 compressed objects within 1 object stream
