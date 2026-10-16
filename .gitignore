@@ -1,0 +1,71 @@
+# Entornos y secretos
+.venv/
+venv/
+env/
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Datasets
+data/**/*.csv
+data/**/*.tsv
+data/**/*.parquet
+data/**/*.jsonl
+data/**/*.zip
+data/**/*.gz
+data/**/*.tar
+
+# Pesos, checkpoints y cachés de entrenamiento. Los adaptadores se comparten fuera de git.
+checkpoints/
+adapters/
+wandb/
+mlruns/
+runs/
+.cache/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+pytorch_model.bin
+model.safetensors.index.json
+
+# LaTeX. run.log de results/ sí se versiona.
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.out
+*.toc
+*.lof
+*.lot
+*.nav
+*.snm
+*.bcf
+*.run.xml
+*.synctex.gz
+*.xdv
+*.dvi
+*.log
+!results/**/*.log
+!**/run.log
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp
