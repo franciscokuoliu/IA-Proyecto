@@ -1,0 +1,10 @@
+estrategia: stratified
+semilla: 42
+split: test
+n_train: 16000
+n_eval: 2000
+clase_mayoritaria_train: joy
+conteos_train: {"sadness": 4638, "joy": 5409, "love": 1313, "anger": 1727, "fear": 1549, "surprise": 1364}
+conteos_eval: {"sadness": 580, "joy": 676, "love": 164, "anger": 216, "fear": 194, "surprise": 170}
+macro_f1=0.172672  weighted_f1=0.232322  n=2000  split=test  probabilidades=ok
+Escrito en C:\Users\MSI GL65\Documents\SCHOOL\IA\IA-Proyecto\IA-Proyecto-Etapa2\results\smoke\dummy_stratified\seed_42\metrics.json

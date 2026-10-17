@@ -1,0 +1,11 @@
+{
+  "labels": [
+    "sadness",
+    "joy",
+    "love",
+    "anger",
+    "fear",
+    "surprise"
+  ],
+  "status": "Solo para la prueba de humo. El orden oficial se fija al verificar el dataset de Kaggle."
+}

@@ -17,14 +17,14 @@ __pycache__/
 .ruff_cache/
 .ipynb_checkpoints/
 
-# Datasets
-data/**/*.csv
-data/**/*.tsv
-data/**/*.parquet
-data/**/*.jsonl
-data/**/*.zip
-data/**/*.gz
-data/**/*.tar
+# Datasets. Vale para data/ en la raíz y para IA-Proyecto-Etapa2/data/.
+**/data/**/*.csv
+**/data/**/*.tsv
+**/data/**/*.parquet
+**/data/**/*.jsonl
+**/data/**/*.zip
+**/data/**/*.gz
+**/data/**/*.tar
 
 # Pesos, checkpoints y cachés de entrenamiento. Los adaptadores se comparten fuera de git.
 checkpoints/
