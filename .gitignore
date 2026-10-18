@@ -1,0 +1,21 @@
+# Entornos virtuales
+venv/
+.venv/
+env/
+
+# Archivos de entorno y configuración sensible
+.env
+
+# Archivos del sistema y editores de código
+.DS_Store
+.vscode/
+.idea/
+*.log
+
+# Datos y reportes pesados globales
+*.csv
+*.xlsx
+*.parquet
+
+# Excluir las salidas generadas en la Etapa 2 (limpiador_CSV.py)
+IA-Proyecto-Etapa2/salida/
