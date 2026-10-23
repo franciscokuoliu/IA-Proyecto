@@ -40,7 +40,7 @@ from sklearn.preprocessing import normalize
 def parsear_argumentos():
     """Configura y lee los parámetros de la línea de comandos."""
     parser = argparse.ArgumentParser(description="Limpieza eficiente de dataset de texto.")
-    parser.add_argument("--csv", default="Emotions.csv", help="Ruta al archivo CSV de entrada.")
+    parser.add_argument("--csv", default="./data/raw/text.csv", help="Ruta al archivo CSV de entrada.")
     parser.add_argument("--out", default="salida", help="Carpeta de salida para reportes y datos limpios.")
     parser.add_argument("--umbral", type=float, default=0.90, help="Coseno mínimo para cuasi-duplicado.")
     parser.add_argument("--raro", type=float, default=0.002, help="Un término es raro si aparece en <= 0.2%% de textos.")
