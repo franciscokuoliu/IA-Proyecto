@@ -79,3 +79,9 @@ model.safetensors.index.json
 
 # Excluir las salidas generadas en la Etapa 2 (limpiador_CSV.py)
 IA-Proyecto-Etapa2/salida/
+
+# Datos regenerables de Etapa 2 (se reconstruyen con scripts/prepare_data.py)
+IA-Proyecto-Etapa2/splits/
+IA-Proyecto-Etapa2/data/raw/
+IA-Proyecto-Etapa2/data/labels.csv
+IA-Proyecto-Etapa2/results/**/predictions.csv
