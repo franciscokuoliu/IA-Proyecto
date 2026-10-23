@@ -44,15 +44,38 @@ Hace, en orden:
 
 Los pasos ya hechos se omiten; `--force` rehace todo. Si el paso 4 imprime **OK**, tus particiones son idénticas a las de todos. Si falla en las huellas (fingerprints), revisa las versiones de pandas/scikit-learn contra `requirements.txt` y avisa al equipo antes de entrenar.
 
-### Empezar desde cero
+### Referencia rápida de comandos
+
+Todos se corren desde la raíz del repo con el entorno activado. Abreviamos `prepare_data.py` como `PD` (ruta completa: `IA-Proyecto-Etapa2/scripts/prepare_data.py`).
+
+| Quiero... | Comando |
+|---|---|
+| Preparar todo por primera vez | `python PD` |
+| Solo verificar que mis datos coinciden con el equipo | `python PD` (omite lo ya hecho y siempre verifica) |
+| Rehacer todo sin borrar antes | `python PD --force` |
+| Borrar lo generado (pide confirmación) | `python PD --reset` |
+| Borrar lo generado y también `results/` | `python PD --reset --reset-results` |
+| Borrar sin preguntar | `python PD --reset --yes` |
+| Rehacer solo particiones y verificación | borrar `splits/` y `data/labels.csv` y correr `python PD` |
+| Ayuda | `python PD --help` |
+
+`--reset` borra `data/raw/`, `salida/`, `splits/` y `data/labels.csv`. Nunca borra `data/expected_hashes.json`, el código ni `labels.json`. Después de un reset, `python PD` vuelve a descargar y limpiar (es lo más lento).
+
+Ejemplo de reinicio completo:
 
 ```bash
-python IA-Proyecto-Etapa2/scripts/prepare_data.py --reset                    # borra data/raw, salida, splits y labels.csv (pide confirmación)
-python IA-Proyecto-Etapa2/scripts/prepare_data.py --reset --reset-results    # además borra results/
-python IA-Proyecto-Etapa2/scripts/prepare_data.py                            # regenera todo
+python IA-Proyecto-Etapa2/scripts/prepare_data.py --reset
+python IA-Proyecto-Etapa2/scripts/prepare_data.py
 ```
 
-Nunca se borra `data/expected_hashes.json` ni el código. `--yes` salta la confirmación.
+Debe terminar con `Listo: tus datos son identicos a la referencia del equipo`.
+
+### Si algo falla
+
+- **Falla la descarga o el SHA-256 no coincide:** Kaggle entregó otro archivo. No sigas; avisa al equipo.
+- **Falla en las huellas (paso 4) pero lo demás está bien:** casi siempre es una versión distinta de pandas o scikit-learn. Compara `pip freeze` con el de un compañero.
+- **Error de importación (por ejemplo `sklearn.utils.validation`):** el venv quedó corrupto. En Windows: `.\setup_env.ps1 -Recreate`. Si persiste, créalo en una ruta corta fuera de Documents.
+- **Falta `data/expected_hashes.json`:** haz `git pull`. Solo quien define la referencia usa `--write-reference`.
 
 ### Qué se versiona y qué no
 
