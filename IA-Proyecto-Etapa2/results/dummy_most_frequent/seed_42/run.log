@@ -1,0 +1,10 @@
+estrategia: most_frequent
+semilla: 42
+split: test
+n_train: 297220
+n_eval: 37153
+clase_mayoritaria_train: joy
+conteos_train: {"sadness": 92835, "joy": 103490, "love": 19502, "anger": 41861, "fear": 31668, "surprise": 7864}
+conteos_eval: {"sadness": 11604, "joy": 12937, "love": 2438, "anger": 5233, "fear": 3958, "surprise": 983}
+macro_f1=0.086092  weighted_f1=0.179867  n=37153  split=test  probabilidades=ok
+Escrito en C:\Users\danie\Documents\GitHub\IA-Proyecto\IA-Proyecto-Etapa2\results\dummy_most_frequent\seed_42\metrics.json

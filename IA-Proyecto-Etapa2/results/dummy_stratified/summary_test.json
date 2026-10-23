@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "report": "seed_summary",
+  "model": "dummy_stratified",
+  "split": "test",
+  "n_seeds": 3,
+  "seeds": [
+    42,
+    1337,
+    2026
+  ],
+  "primary_metric": "macro_f1",
+  "macro_f1": {
+    "values": [
+      0.16349025073395893,
+      0.16630069512669987,
+      0.16871580850692233
+    ],
+    "mean": 0.16616891812252707,
+    "std": 0.00261527004222626,
+    "std_ddof": 1
+  },
+  "weighted_f1": {
+    "values": [
+      0.2526799158264018,
+      0.25355160426357576,
+      0.2568496530996551
+    ],
+    "mean": 0.2543603910632109,
+    "std": 0.0021993815715872045,
+    "std_ddof": 1
+  },
+  "runs": [
+    "seed_42/metrics.json",
+    "seed_1337/metrics.json",
+    "seed_2026/metrics.json"
+  ]
+}

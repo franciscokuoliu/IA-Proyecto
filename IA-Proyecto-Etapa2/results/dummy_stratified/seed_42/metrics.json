@@ -1,0 +1,142 @@
+{
+  "schema_version": 1,
+  "report": "run",
+  "split": "test",
+  "n": 37153,
+  "predictions_file": "predictions.csv",
+  "labels": [
+    "sadness",
+    "joy",
+    "love",
+    "anger",
+    "fear",
+    "surprise"
+  ],
+  "primary_metric": "macro_f1",
+  "macro_f1": 0.16349025073395893,
+  "weighted_f1": 0.2526799158264018,
+  "per_class": {
+    "sadness": {
+      "precision": 0.3120725034199726,
+      "recall": 0.3145467080317132,
+      "f1": 0.3133047210300429,
+      "support": 11604
+    },
+    "joy": {
+      "precision": 0.346031746031746,
+      "recall": 0.34544330215660507,
+      "f1": 0.3457372737118985,
+      "support": 12937
+    },
+    "love": {
+      "precision": 0.06272912423625254,
+      "recall": 0.06316652994257588,
+      "f1": 0.06294706723891273,
+      "support": 2438
+    },
+    "anger": {
+      "precision": 0.13461909353905496,
+      "recall": 0.13338429199312057,
+      "f1": 0.13399884814743712,
+      "support": 5233
+    },
+    "fear": {
+      "precision": 0.10191082802547771,
+      "recall": 0.10106114199090449,
+      "f1": 0.10148420652036026,
+      "support": 3958
+    },
+    "surprise": {
+      "precision": 0.02354145342886387,
+      "recall": 0.023397761953204477,
+      "f1": 0.02346938775510204,
+      "support": 983
+    }
+  },
+  "confusion_matrix": {
+    "labels": [
+      "sadness",
+      "joy",
+      "love",
+      "anger",
+      "fear",
+      "surprise"
+    ],
+    "rows": "y_true",
+    "cols": "y_pred",
+    "matrix": [
+      [
+        3650,
+        4083,
+        717,
+        1645,
+        1204,
+        305
+      ],
+      [
+        4096,
+        4469,
+        869,
+        1791,
+        1372,
+        340
+      ],
+      [
+        781,
+        837,
+        154,
+        328,
+        270,
+        68
+      ],
+      [
+        1659,
+        1818,
+        363,
+        698,
+        571,
+        124
+      ],
+      [
+        1233,
+        1372,
+        264,
+        572,
+        400,
+        117
+      ],
+      [
+        277,
+        336,
+        88,
+        151,
+        108,
+        23
+      ]
+    ]
+  },
+  "probability_check": {
+    "max_abs_sum_error": 0.0,
+    "ok": true
+  },
+  "metadata": {
+    "gpu": null,
+    "driver_version": null,
+    "torch_version": null,
+    "train_time_s": 0.05406550000043353,
+    "samples_per_s": 5497405.924251448,
+    "peak_vram_bytes": null,
+    "n_params": 0,
+    "n_trainable_params": 0,
+    "batch_size": null,
+    "max_len": null,
+    "dtype": null,
+    "model": "dummy_stratified",
+    "seed": 42,
+    "commit": "3852ad0707f8cb46efd9f16023384a754a84eb4b",
+    "libraries": {
+      "numpy": "2.5.4",
+      "scikit-learn": "1.9.1"
+    }
+  }
+}

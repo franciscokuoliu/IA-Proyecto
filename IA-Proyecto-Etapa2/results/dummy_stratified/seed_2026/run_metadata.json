@@ -1,0 +1,20 @@
+{
+  "gpu": null,
+  "driver_version": null,
+  "torch_version": null,
+  "train_time_s": 0.06084190000183298,
+  "samples_per_s": 4885120.287023345,
+  "peak_vram_bytes": null,
+  "n_params": 0,
+  "n_trainable_params": 0,
+  "batch_size": null,
+  "max_len": null,
+  "dtype": null,
+  "model": "dummy_stratified",
+  "seed": 2026,
+  "commit": "3852ad0707f8cb46efd9f16023384a754a84eb4b",
+  "libraries": {
+    "numpy": "2.5.4",
+    "scikit-learn": "1.9.1"
+  }
+}

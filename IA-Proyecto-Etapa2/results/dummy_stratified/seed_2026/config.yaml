@@ -1,0 +1,9 @@
+model: "dummy_stratified"
+strategy: "stratified"
+seed: 2026
+split: "test"
+class_weight: null
+n_train: 297220
+n_eval: 37153
+smoke: false
+source: "data\\labels.csv"
