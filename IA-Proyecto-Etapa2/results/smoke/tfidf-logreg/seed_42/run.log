@@ -1,0 +1,3 @@
+entrenamiento_s: 0.314
+macro_f1=0.675048  weighted_f1=0.701104  n=2000  split=val_select  probabilidades=ok
+Escrito en C:\Users\MSI GL65\Documents\SCHOOL\IA\IA-Proyecto\IA-Proyecto-Etapa2\results\smoke\tfidf-logreg\seed_42\metrics.json

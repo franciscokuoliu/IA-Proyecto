@@ -1,0 +1,30 @@
+model: "tfidf-logreg"
+family: "tfidf"
+model_id: null
+seed: 42
+split: "val_select"
+train_ids: "train_ids.csv"
+n_train: 2000
+n_eval: 2000
+class_weight: [0.533333, 0.478927, 2.544529, 1.182033, 1.564945, 6.289308]
+labels: ["sadness", "joy", "love", "anger", "fear", "surprise"]
+epochs: null
+max_steps: null
+limit: 2000
+fraction: null
+batch_size: null
+grad_accum: null
+effective_batch: null
+learning_rate: 1.0
+best_macro_f1_val_select: null
+steps: null
+trial: null
+C: 1.0
+ngram: [1, 2]
+min_df: 2
+max_features: null
+n_features: 5494
+n_params: 32970
+n_trainable_params: 32970
+peak_vram_bytes: null
+dtype: null

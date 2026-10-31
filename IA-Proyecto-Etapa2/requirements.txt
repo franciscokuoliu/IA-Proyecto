@@ -3,3 +3,12 @@ pandas>=1.3.0
 scipy>=1.7.0
 scikit-learn>=1.0.0
 kagglehub>=0.3.0
+# torch tiene que coincidir con la GPU (rueda CUDA en las máquinas del equipo).
+torch
+transformers>=4.46
+peft
+accelerate
+bitsandbytes
+sentencepiece
+protobuf
+safetensors

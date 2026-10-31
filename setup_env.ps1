@@ -55,6 +55,7 @@ Invoke-Checked $venvPy @("-m", "pip", "install", "--upgrade", "pip")
 # requirements.txt tiene todas las dependencias de la Etapa 2:
 #   numpy, pandas, scipy, scikit-learn -> scripts/dataset_cleaner.py y los de evaluacion
 #   kagglehub                          -> scripts/download_data.py
+#   torch, transformers, peft, ...     -> el arnes de entrenamiento
 # Se busca en la raiz y en IA-Proyecto-Etapa2.
 $req = @("requirements.txt", "IA-Proyecto-Etapa2\requirements.txt") |
     Where-Object { Test-Path $_ } | Select-Object -First 1
