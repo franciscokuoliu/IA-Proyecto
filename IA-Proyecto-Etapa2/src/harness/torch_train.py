@@ -37,14 +37,27 @@ def require_torch():
     return torch
 
 
+def pick_device(torch):
+    """cuda si hay GPU NVIDIA, mps en Mac con Apple Silicon, cpu en otro caso."""
+    if torch.cuda.is_available():
+        return torch.device("cuda")
+    mps = getattr(torch.backends, "mps", None)
+    if mps is not None and mps.is_available():
+        return torch.device("mps")
+    return torch.device("cpu")
+
+
 def pick_dtype(torch, requested: str | None):
-    if requested in ("bf16", "fp16") and not torch.cuda.is_available():
-        raise HarnessError("bf16 y fp16 piden una GPU CUDA. En CPU el arnés usa fp32.")
+    device = pick_device(torch)
+    if requested in ("bf16", "fp16") and device.type == "cpu":
+        raise HarnessError("bf16 y fp16 piden una GPU (CUDA o MPS). En CPU el arnés usa fp32.")
     if requested in (None, "auto"):
-        if torch.cuda.is_available() and torch.cuda.get_device_capability(0)[0] >= 8:
+        if device.type == "cuda" and torch.cuda.get_device_capability(0)[0] >= 8:
             return torch.bfloat16, "bf16"
-        if torch.cuda.is_available():
+        if device.type == "cuda":
             return torch.float16, "fp16"
+        if device.type == "mps":
+            return torch.bfloat16, "bf16"
         return torch.float32, "fp32"
     table = {"bf16": torch.bfloat16, "fp16": torch.float16, "fp32": torch.float32}
     if requested not in table:
@@ -332,10 +345,19 @@ def _counts(model) -> tuple[int, int]:
 
 
 def _peak_vram() -> int | None:
+    """CUDA: pico de memoria asignada. MPS: memoria total que pidio el driver
+    (no hay pico exacto; es memoria unificada, no VRAM dedicada)."""
     torch = require_torch()
-    if not torch.cuda.is_available():
-        return None
-    return int(torch.cuda.max_memory_allocated())
+    if torch.cuda.is_available():
+        return int(torch.cuda.max_memory_allocated())
+    if pick_device(torch).type == "mps":
+        return int(torch.mps.driver_allocated_memory())
+    return None
+
+
+def _memory_kind() -> str | None:
+    device = pick_device(require_torch())
+    return {"cuda": "cuda_max_allocated", "mps": "mps_driver_allocated"}.get(device.type)
 
 
 def train_bilstm(
@@ -357,7 +379,7 @@ def train_bilstm(
 ) -> TorchRun:
     torch = require_torch()
     compute_dtype, dtype_label = pick_dtype(torch, dtype_name)
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = pick_device(torch)
     vocab = _WordVocab(train.texts, max_len)
     model = _BiLSTM(len(vocab.tokens), hidden, dropout, n_classes, glove, vocab).to(device)
     train_loader = _token_loader(train, vocab, batch_size, seed, shuffle=True)
@@ -396,6 +418,8 @@ def train_bilstm(
             "n_params": total,
             "n_trainable_params": trainable,
             "peak_vram_bytes": _peak_vram(),
+            "device": pick_device(torch).type,
+            "memory_kind": _memory_kind(),
             "log": loop.log,
             **loop.timing(),
         },
@@ -581,6 +605,8 @@ def train_transformer(
             "n_params": total,
             "n_trainable_params": trainable,
             "peak_vram_bytes": _peak_vram(),
+            "device": pick_device(torch).type,
+            "memory_kind": _memory_kind(),
             "log": loop.log,
             **loop.timing(),
         },
@@ -607,34 +633,43 @@ def _load_model(family, model_id, n_classes, id2label, label2id, compute_dtype, 
             id2label=id2label,
             label2id=label2id,
         )
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        device = pick_device(torch)
         return model.to(device), "sequence-classification", None
 
-    quant_config = _nf4_config(compute_dtype)
+    # Con CUDA el decoder va en NF4 (bitsandbytes). Sin CUDA (Mac/MPS) bitsandbytes no
+    # existe: el modelo se carga sin cuantizar en el dtype de computo. Es otro regimen
+    # y los resultados se reportan aparte (contrato, seccion 11).
+    cuda = torch.cuda.is_available()
+    device = pick_device(torch)
+    if cuda:
+        load_kwargs = {"quantization_config": _nf4_config(compute_dtype), "device_map": "auto"}
+        quant_label = "nf4"
+    else:
+        load_kwargs = {"dtype": compute_dtype}
+        quant_label = "none"
     try:
         model = AutoModelForSequenceClassification.from_pretrained(
             model_id,
             num_labels=n_classes,
             id2label=id2label,
             label2id=label2id,
-            quantization_config=quant_config,
-            device_map="auto",
+            **load_kwargs,
         )
+        if not cuda:
+            model = model.to(device)
         model.config.pad_token_id = tokenizer.pad_token_id
         model = _apply_lora(model, lora_r, ["score", "classifier"])
-        return model, "sequence-classification", "nf4"
+        return model, "sequence-classification", quant_label
     except HarnessError:
         raise
     except Exception as sequence_error:
         try:
-            base = AutoModel.from_pretrained(
-                model_id,
-                quantization_config=quant_config,
-                device_map="auto",
-            )
+            base = AutoModel.from_pretrained(model_id, **load_kwargs)
+            if not cuda:
+                base = base.to(device)
         except Exception as base_error:
             raise HarnessError(
-                "No pude cargar el decoder en 4 bits.\n"
+                f"No pude cargar el decoder ({quant_label}).\n"
                 f"SequenceClassification: {sequence_error}\n"
                 f"AutoModel: {base_error}"
             ) from base_error
@@ -642,7 +677,7 @@ def _load_model(family, model_id, n_classes, id2label, label2id, compute_dtype, 
             base.config.pad_token_id = tokenizer.pad_token_id
         base = _apply_lora(base, lora_r, [])
         model = _manual_head(base, _hidden_size(base.config), n_classes)
-        return model, "manual-last-nonpad", "nf4"
+        return model, "manual-last-nonpad", quant_label
 
 
 def _nf4_config(compute_dtype):

@@ -1,7 +1,7 @@
 # Contrato experimental: Etapa 2 (Track B)
 
 Benchmark de reconocimiento de emociones en texto (CARER, 6 clases).
-Versión: 0.1 (borrador, no congelado).
+Versión: 0.2 (borrador, no congelado).
 
 Este documento fija las reglas que valen para los tres integrantes y para todos los modelos. Una regla solo cambia por commit, con la razón escrita en el "Historial de cambios" (sección 16). Nadie ajusta una regla de forma local en su máquina.
 
@@ -20,11 +20,13 @@ Ejes de estudio: familia arquitectural, escala de parámetros y objetivo de entr
 |---|---|
 | DistilBERT vs BERT-base | Escala (encoders) |
 | Qwen2.5-0.5B vs Qwen2.5-1.5B | Escala (decoders) |
-| Gemma 4 E2B vs Gemma 4 E4B | Escala (decoders, otra familia) |
+| Gemma 4 E2B vs Gemma 4 E4B | Escala (decoders, otra familia). Se compara en el régimen B de la Mac (sección 11) |
 | Qwen2.5-1.5B vs Gemma 4 E2B | Familia (decoders) |
 | Qwen2.5-1.5B vs DeepSeek-R1-Distill-Qwen-1.5B | Objetivo de entrenamiento |
 
 **Regla de pares controlados.** Dentro de un par, todo es idéntico salvo la variable bajo estudio: misma partición, mismo conjunto de entrenamiento, mismo `max_len`, misma loss, mismo optimizador y planificación, mismos módulos y rango de LoRA, mismo régimen de cuantización y mismo dtype de cómputo. Si el hardware de una máquina impide cumplirlo, el modelo se corre en otra máquina antes de romper el par.
+
+**Excepción declarada: par de Gemma.** Gemma 4 E4B no cabe en la RTX 3080 (10 GB) ni en 4 bits: solo sus tablas de embeddings ocupan unos 6.5 GB y bitsandbytes no las cuantiza (estimado total en 4 bits: 8.8 GB, sin margen para entrenar; ver sección 11). Para no romper el par, E4B se corre en la Mac M5 en bf16 sin cuantizar (régimen B) y **E2B se corre también en el régimen B** como modelo puente. El par E2B vs E4B se compara solo entre las dos corridas del régimen B. La corrida de E2B en NF4 en la 3080 (régimen A) es la que entra a la comparación principal y permite medir, además, el efecto de la cuantización (E2B-A vs E2B-B).
 
 **Verificación pendiente.** Confirmar en la model card sobre qué base fue destilado DeepSeek-R1-Distill-Qwen-1.5B. Si no es Qwen2.5-1.5B, el par no aísla solo el objetivo de entrenamiento y el artículo debe decirlo.
 
@@ -114,7 +116,7 @@ Salida: `data/clean.parquet` y un reporte `data/cleaning_report.md` con conteos 
 | Checkpoint a reportar | El de mayor Macro-F1 en val de selección |
 | Semillas (finales) | 42, 1337, 2026, para **todos** los modelos neuronales |
 | Semilla de la búsqueda | 42 |
-| Precisión | Declarada por modelo: fp16 en Turing (1650, 2060), bf16 en Ampere (3080) |
+| Precisión | Declarada por modelo: fp16 en Turing (1650, 2060), bf16 en Ampere (3080), bf16 en la Mac M5 (MPS) |
 
 - Las semillas controlan inicialización de la cabeza, orden de los datos y dropout. No tocan la partición.
 - Se fijan `random`, `numpy` y `torch` (CPU y CUDA), y se activan los flags deterministas de cuDNN donde sea viable. Se declara que las corridas con cuantización y GPU no son reproducibles bit a bit.
@@ -159,7 +161,11 @@ Las tres máquinas tienen GPUs distintas, así que tiempos y latencias medidos e
 - **Costo para la frontera de Pareto:** parámetros entrenables, VRAM pico de inferencia y **latencia unificada**, todos medidos en la misma máquina de referencia (RTX 3080) con un benchmark común. Cada integrante comparte los adaptadores o checkpoints finales (son pequeños) y se corre el benchmark una sola vez para todos.
 - **Protocolo de latencia:** 500 muestras fijas del test (`splits/latency_ids.csv`), lote 1 y lote 32, 50 pasos de calentamiento, `torch.cuda.synchronize()`, se reportan mediana y p95 en ms. La tokenización se mide aparte. Se mide el modelo tal como fue evaluado (base cuantizada más adaptador). Los modelos de CPU (Dummy, TF-IDF) se miden en la CPU de la máquina de referencia.
 - **Tiempo de entrenamiento:** se declara por máquina y no se compara entre GPUs distintas.
-- **Mac M5 (24 GB):** solo para pruebas auxiliares, plan B de Gemma 4 E4B y la Etapa 3. Sus números se etiquetan aparte y no entran a la Pareto principal. Si E4B termina en la Mac, ese punto se marca como régimen distinto (MLX, cuantización diferente a NF4).
+- **Régimen A (referencia):** GPUs NVIDIA, decoders en QLoRA NF4. La frontera de Pareto (parámetros entrenables, VRAM pico y latencia) se calcula solo con corridas del régimen A, medidas en la RTX 3080.
+- **Régimen B (Mac M5, 24 GB de memoria unificada):** PyTorch en MPS, bf16 sin cuantizar. Se usa solo para el par de Gemma: **E4B** y el **puente E2B-B**. Los modelos del régimen B no entran a la Pareto: su tiempo y su memoria dependen de otra arquitectura y se etiquetan aparte (`device: mps` en `run_metadata.json`).
+- **Memoria en MPS:** no existe un pico exacto como en CUDA. El arnés reporta la memoria total pedida al driver (`memory_kind: mps_driver_allocated`), que sirve como orden de magnitud y no es comparable con `max_memory_allocated`.
+- **Si E4B no cabe en el presupuesto del régimen B:** se reduce el número de semillas (una como mínimo) y se declara como desviación del contrato. Gradient checkpointing es el recurso para bajar memoria y se declara si se usa.
+- Etapa 3 y pruebas auxiliares también pueden correr en la Mac.
 
 ---
 
@@ -229,6 +235,9 @@ Nadie entrena un modelo final hasta completar los pasos 1 a 6.
 | Tres semillas para todos los neuronales | Solo para decoders | Los encoders y el BiLSTM son baratos y así el ± es comparable entre familias |
 | Val de selección de 10K | Val completa en cada evaluación | Evaluar 39K muestras cada cuarto de época es caro y no cambia la decisión de parada |
 | `max_len` común | `max_len` por modelo | Mantiene la entrada idéntica entre modelos; es un parámetro más del control |
+| E4B y E2B-puente en la Mac (régimen B, bf16) | Comparar E2B en NF4 contra E4B en bf16 | La escala quedaría mezclada con la cuantización |
+| Un solo régimen de referencia (3080) para la Pareto | Mover todos los decoders a la Mac | La Mac es más lenta, comparte memoria con el sistema operativo y no mide VRAM como CUDA |
+| Corrida de E2B en NF4 y en bf16 | Solo una de las dos | Permite aislar el efecto de la cuantización dentro del mismo modelo |
 
 ---
 
@@ -237,3 +246,4 @@ Nadie entrena un modelo final hasta completar los pasos 1 a 6.
 | Versión | Fecha | Cambio | Autor |
 |---|---|---|---|
 | 0.1 | | Borrador inicial | |
+| 0.2 | 2026-11-02 | Gemma 4 E4B no cabe en 10 GB: se agrega el régimen B (Mac M5, bf16 sin cuantizar) con E2B como puente, se aclara que la Pareto es solo del régimen A y se registra el costo de memoria en MPS | Dani |
