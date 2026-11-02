@@ -139,6 +139,10 @@ class _Loop:
         self.patience = 3
         self.steps = 0
         self.log: list[str] = []
+        self.train_seconds = 0.0
+        self.train_samples = 0
+        self.eval_seconds: list[float] = []
+        self._tick = 0.0
 
     def run(self) -> None:
         torch = self.torch
@@ -150,6 +154,8 @@ class _Loop:
         self.optimizer.zero_grad(set_to_none=True)
         pending = 0
         stop = False
+        self._sync()
+        self._tick = time.perf_counter()
         autocast_enabled = (
             self.compute_dtype is not None
             and self.compute_dtype != torch.float32
@@ -169,6 +175,7 @@ class _Loop:
                     loss.backward()
                 else:
                     self.scaler.scale(loss).backward()
+                self.train_samples += int(batch["labels"].shape[0])
                 pending += 1
                 if pending == self.accum:
                     self._flush(pending)
@@ -183,9 +190,11 @@ class _Loop:
             if stop:
                 break
         if self.best_state is None:
+            self._close_train_interval()
             self._evaluate()
         if self.best_state is not None:
             _restore(self.model, self.best_state)
+        self._log_timing()
 
     def _flush(self, pending: int) -> None:
         trainable = [parameter for parameter in self.model.parameters() if parameter.requires_grad]
@@ -203,11 +212,53 @@ class _Loop:
         self.scheduler.step()
         self.optimizer.zero_grad(set_to_none=True)
         self.steps += 1
+        self._close_train_interval()
         if self.steps % self.eval_every == 0 or self.steps == self.total_steps:
             self._evaluate()
 
+    def _sync(self) -> None:
+        if self.torch.cuda.is_available():
+            self.torch.cuda.synchronize()
+
+    def _close_train_interval(self) -> None:
+        self._sync()
+        now = time.perf_counter()
+        self.train_seconds += now - self._tick
+        self._tick = now
+
+    def timing(self) -> dict:
+        train_s = self.train_seconds
+        evals = self.eval_seconds
+        return {
+            "seconds_per_step": None if self.steps <= 0 or train_s <= 0 else train_s / self.steps,
+            "train_samples_per_s": None if train_s <= 0 else self.train_samples / train_s,
+            "eval_time_s": None if not evals else sum(evals) / len(evals),
+            "n_evals": len(evals),
+            "train_samples": self.train_samples,
+            "train_seconds": train_s,
+        }
+
+    def _log_timing(self) -> None:
+        info = self.timing()
+        seconds = info["seconds_per_step"]
+        samples = info["train_samples_per_s"]
+        evaluation = info["eval_time_s"]
+        line = (
+            f"segundos_por_paso={0.0 if seconds is None else seconds:.6f}  "
+            f"muestras_por_segundo={0.0 if samples is None else samples:.3f}  "
+            f"segundos_por_evaluacion={0.0 if evaluation is None else evaluation:.3f}  "
+            f"evaluaciones={info['n_evals']}"
+        )
+        self.log.append(line)
+        print(line, flush=True)
+
     def _evaluate(self) -> None:
+        self._sync()
+        started = time.perf_counter()
         predicted, _ = predict_batches(self.model, self.val_loader, self.compute_dtype)
+        self._sync()
+        self.eval_seconds.append(time.perf_counter() - started)
+        self._tick = time.perf_counter()
         score = _macro_f1(self.y_val, np.asarray(predicted), self.n_classes)
         improved = score > self.best_f1
         if improved:
@@ -346,6 +397,7 @@ def train_bilstm(
             "n_trainable_params": trainable,
             "peak_vram_bytes": _peak_vram(),
             "log": loop.log,
+            **loop.timing(),
         },
     )
 
@@ -530,6 +582,7 @@ def train_transformer(
             "n_trainable_params": trainable,
             "peak_vram_bytes": _peak_vram(),
             "log": loop.log,
+            **loop.timing(),
         },
     )
 

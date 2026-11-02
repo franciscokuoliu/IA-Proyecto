@@ -232,7 +232,9 @@ def execute(args, spec: ModelSpec, trial: str | None = None) -> dict:
         "driver_version": driver,
         "torch_version": library_versions().get("torch"),
         "train_time_s": elapsed,
-        "samples_per_s": None if elapsed <= 0 else len(train.ids) / elapsed,
+        "samples_per_s": details.get("train_samples_per_s")
+        if details.get("train_samples_per_s") is not None
+        else (None if elapsed <= 0 else len(train.ids) / elapsed),
         "peak_vram_bytes": details.get("peak_vram_bytes"),
         "n_params": details.get("n_params"),
         "n_trainable_params": details.get("n_trainable_params"),
