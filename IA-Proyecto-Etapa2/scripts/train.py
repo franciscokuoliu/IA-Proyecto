@@ -224,8 +224,8 @@ def execute(args, spec: ModelSpec, trial: str | None = None) -> dict:
     if spec.family == "tfidf":
         micro, accum, effective = None, None, None
     else:
-        micro, accum = effective_batch(args.batch_size)
-        effective = micro * accum
+        micro = args.batch_size
+        effective, accum = effective_batch(args.batch_size)
     gpu, driver = gpu_status()
     metadata = {
         "gpu": gpu,
