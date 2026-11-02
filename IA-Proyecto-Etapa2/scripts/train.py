@@ -65,6 +65,8 @@ def set_seed(seed: int) -> None:
     torch.manual_seed(seed)
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)
+    elif getattr(torch.backends, "mps", None) is not None and torch.backends.mps.is_available():
+        torch.mps.manual_seed(seed)
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
 
@@ -229,6 +231,8 @@ def execute(args, spec: ModelSpec, trial: str | None = None) -> dict:
     gpu, driver = gpu_status()
     metadata = {
         "gpu": gpu,
+        "device": details.get("device"),
+        "memory_kind": details.get("memory_kind"),
         "driver_version": driver,
         "torch_version": library_versions().get("torch"),
         "train_time_s": elapsed,

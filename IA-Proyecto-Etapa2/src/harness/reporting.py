@@ -5,6 +5,7 @@ from __future__ import annotations
 import csv
 import json
 import os
+import platform
 import subprocess
 import sys
 from pathlib import Path
@@ -32,6 +33,15 @@ def git_commit() -> str | None:
 
 
 def gpu_status() -> tuple[str | None, str | None]:
+    if sys.platform == "darwin":
+        # Mac: no hay nvidia-smi. Se reporta el chip y la version de macOS.
+        try:
+            chip = subprocess.run(
+                ["sysctl", "-n", "machdep.cpu.brand_string"], capture_output=True, text=True, check=False
+            ).stdout.strip()
+        except OSError:
+            chip = ""
+        return (chip or "Apple Silicon"), "macOS " + (platform.mac_ver()[0] or "?")
     try:
         completed = subprocess.run(
             ["nvidia-smi", "--query-gpu=name,driver_version", "--format=csv,noheader"],

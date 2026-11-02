@@ -8,7 +8,7 @@ torch
 transformers>=4.46
 peft
 accelerate
-bitsandbytes
+bitsandbytes; sys_platform != "darwin"
 sentencepiece
 protobuf
 safetensors
