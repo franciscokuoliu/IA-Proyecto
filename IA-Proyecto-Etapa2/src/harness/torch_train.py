@@ -612,11 +612,16 @@ def _apply_lora(model, rank: int, extra_modules: list[str]):
         raise HarnessError("Falta peft. Instálalo con pip install -r IA-Proyecto-Etapa2/requirements.txt") from exc
     module_names = [module_name for module_name, _ in model.named_modules()]
     present = [name for name in extra_modules if any(name in module_name for module_name in module_names)]
+    attention = ["q_proj", "k_proj", "v_proj", "o_proj"]
+    # Modelos multimodales (Gemma 4) traen torres de vision y audio con capas q_proj
+    # envueltas que PEFT no soporta. El contrato adapta solo el decoder de texto.
+    has_language_model = any("language_model" in name for name in module_names)
+    target_modules = r".*language_model.*\.(q_proj|k_proj|v_proj|o_proj)" if has_language_model else attention
     config = LoraConfig(
         r=rank,
         lora_alpha=2 * rank,
         lora_dropout=0.05,
-        target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],
+        target_modules=target_modules,
         task_type=TaskType.SEQ_CLS if present else TaskType.FEATURE_EXTRACTION,
         modules_to_save=present or None,
         bias="none",
@@ -631,8 +636,8 @@ def _apply_lora(model, rank: int, extra_modules: list[str]):
         ]
         preview = ", ".join(linear[:40]) or "(ninguno)"
         raise HarnessError(
-            "PEFT no encontró q_proj, k_proj, v_proj y o_proj. "
-            f"Módulos lineales del modelo: {preview}."
+            f"PEFT no pudo aplicar LoRA: {type(exc).__name__}: {exc}\n"
+            f"Módulos lineales del modelo (primeros 40): {preview}."
         ) from exc
 
 
