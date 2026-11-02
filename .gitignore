@@ -85,3 +85,6 @@ IA-Proyecto-Etapa2/splits/
 IA-Proyecto-Etapa2/data/raw/
 IA-Proyecto-Etapa2/data/labels.csv
 IA-Proyecto-Etapa2/results/**/predictions.csv
+# Salidas de pruebas de humo y de medicion de velocidad (se regeneran; las cifras van al contrato)
+IA-Proyecto-Etapa2/results/smoke/
+IA-Proyecto-Etapa2/results/throughput/
