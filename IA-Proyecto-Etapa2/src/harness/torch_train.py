@@ -743,7 +743,10 @@ def _manual_head(base, hidden: int, n_classes: int):
         def forward(self, input_ids=None, attention_mask=None, **_kwargs):
             output = self.base(input_ids=input_ids, attention_mask=attention_mask)
             hidden_state = output.last_hidden_state
-            last = attention_mask.sum(dim=1).clamp(min=1) - 1
+            # Ultimo token real, con relleno a la derecha o a la izquierda. Gemma rellena
+            # por la izquierda: "suma de la mascara - 1" apuntaria a un token equivocado.
+            positions = torch.arange(attention_mask.size(1), device=attention_mask.device)
+            last = (attention_mask.long() * positions).argmax(dim=1)
             gathered = hidden_state[torch.arange(hidden_state.size(0), device=hidden_state.device), last]
             if self.head.weight.device != gathered.device:
                 self.head.to(gathered.device)
