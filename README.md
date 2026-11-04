@@ -1,6 +1,6 @@
 # IA-Proyecto
 
-Proyecto semestral del curso de IA (Track B: Deep Learning, NLP). Benchmark controlado de 9 modelos para clasificación de emociones en 6 clases (dataset Kaggle "Emotions", derivado de CARER).
+Proyecto semestral del curso de IA (Track B: Deep Learning, NLP). Integrantes: Francisco Kuo Liu, Jimmy Feng Liu y Danielo Wu Zhong. Benchmark controlado de 9 modelos para clasificación de emociones en 6 clases (dataset Kaggle "Emotions", derivado de CARER).
 
 - `IA-Proyecto-Etapa1/`: documento y entregables de la Etapa 1.
 - `IA-Proyecto-Etapa2/`: modelado, XAI y evaluación. Las reglas del experimento están en `EXPERIMENT_CONTRACT.md`.
@@ -39,10 +39,10 @@ Hace, en orden:
 |---|---|---|
 | 1 | `download_data.py` | `data/raw/text.csv` (verifica SHA-256) |
 | 2 | `dataset_cleaner.py --modo agrupar` (con `PYTHONHASHSEED=0` fijado) | `salida/cleaned_full_data.csv` |
-| 3 | `make_splits.py` | `splits/{train,val,test,val_select}_ids.csv`, `data/labels.csv` |
+| 3 | `make_splits.py` | `splits/{train,val,test,val_select}_ids.csv`, `splits/train_S_ids.csv` (subconjunto S), `data/labels.csv` |
 | 4 | `check_splits.py --require-reference` | verificación |
 
-Los pasos ya hechos se omiten; `--force` rehace todo. Si el paso 4 imprime **OK**, tus particiones son idénticas a las de todos. Si falla en las huellas (fingerprints), revisa las versiones de pandas/scikit-learn contra `requirements.txt` y avisa al equipo antes de entrenar.
+Los pasos ya hechos se omiten; `--force` rehace todo. Si el paso 4 termina en verde (incluye `subconjunto S: n y huella`), tus particiones y tu S son idénticos a los de todos. Si falla en las huellas (fingerprints), revisa las versiones de pandas/scikit-learn contra `requirements.txt` y avisa al equipo antes de entrenar.
 
 ### Referencia rápida de comandos
 
@@ -84,7 +84,7 @@ Debe terminar con `Listo: tus datos son identicos a la referencia del equipo`.
 
 ### Partición (determinista)
 
-`StratifiedGroupKFold(n_splits=10, shuffle=True, random_state=42)` sobre grupos de casi-duplicados: fold 0 = test, fold 1 = val, resto = train (~80/10/10). `val_select` son 10 000 muestras estratificadas de val (semilla 42). Los grupos evitan fugas de casi-duplicados entre train y test.
+`StratifiedGroupKFold(n_splits=10, shuffle=True, random_state=42)` sobre grupos de casi-duplicados: fold 0 = test, fold 1 = val, resto = train (~80/10/10). `val_select` son 10 000 muestras estratificadas de val (semilla 42). **S** (`splits/train_S_ids.csv`) son 32 000 muestras de train, estratificadas por emoción (semilla 42): es el conjunto con el que entrenan todos los modelos. Los grupos evitan fugas de casi-duplicados entre train y test.
 
 ### Cambiar la referencia (solo con acuerdo del equipo)
 
@@ -94,7 +94,80 @@ python IA-Proyecto-Etapa2/scripts/prepare_data.py --write-reference --force-refe
 
 Luego hacer commit de `data/expected_hashes.json` y avisar a todos.
 
-## 3. Baseline trivial y evaluación
+## 3. Entrenar
+
+Requisito: `prepare_data.py` en verde (huella de S `2d518490c80f`). Todo desde la raíz del repo, con el entorno activado. Las reglas del experimento están en `IA-Proyecto-Etapa2/EXPERIMENT_CONTRACT.md`.
+
+### Una corrida
+
+```powershell
+python IA-Proyecto-Etapa2/scripts/train.py train --model qwen2.5-1.5b --seed 42
+```
+
+Modelos: `tfidf-logreg`, `bilstm`, `distilbert`, `bert-base`, `qwen2.5-0.5b`, `qwen2.5-1.5b`, `gemma-4-e2b`, `deepseek-r1-distill-qwen-1.5b` (`gemma-4-e4b` existe en el arnés, pero no se entrena mientras el equipo no confirme si entra al plan).
+
+| Opción | Para qué |
+|---|---|
+| `--seed` | 42, 1337 y 2026 en las corridas finales |
+| `--max-steps N` | Prueba rápida (2 pasos) para ver que todo funciona |
+| `--predict-split test` | Calificar en test. **Solo en las corridas finales**, una vez por configuración |
+| `--save-model` | Guarda los adaptadores (o el modelo, en encoders y BiLSTM) en `<corrida>/model/`. Se necesita para el XAI. Úsalo solo en las corridas finales |
+| `--batch-size` | 8 por defecto; el lote efectivo siempre es 32 (se acumula el gradiente). Si hay error de memoria, baja a 4 |
+| `--output-root` | Carpeta de resultados. Para pruebas usa `IA-Proyecto-Etapa2/results/smoke` (Git la ignora). Ojo: una ruta relativa se cuenta desde donde corras el comando |
+
+No cambies `--max-len` (64 para todos). Cada corrida escribe en `IA-Proyecto-Etapa2/results/<modelo>/seed_<n>/`: `metrics.json`, `config.yaml`, `run.log`, `run_metadata.json` y, sin versionar, `predictions.csv` y `model/`.
+
+### Búsqueda de hiperparámetros (HPO)
+
+```powershell
+python IA-Proyecto-Etapa2/scripts/train.py hpo --family decoder    # Dani, hecho: lr 2e-4, r 16
+python IA-Proyecto-Etapa2/scripts/train.py hpo --family encoder    # Jimmy (corre en BERT-base)
+python IA-Proyecto-Etapa2/scripts/train.py hpo --family tfidf      # Fran
+python IA-Proyecto-Etapa2/scripts/train.py hpo --family bilstm     # Fran
+```
+
+Califica solo en `val_select` y guarda cada intento en `results/hpo/<familia>/`. Haz commit de esa carpeta al terminar.
+
+### Corridas finales
+
+Tres semillas por modelo, una semilla completa a la vez, y se salta lo que ya terminó (si se corta, relanza el mismo bloque). Cambia `$modelos` por los tuyos:
+
+```powershell
+$modelos = "qwen2.5-1.5b","deepseek-r1-distill-qwen-1.5b","gemma-4-e2b"   # los de Dani
+foreach ($seed in 42,1337,2026) {
+  foreach ($m in $modelos) {
+    if (Test-Path "IA-Proyecto-Etapa2\results\$m\seed_$seed\metrics.json") { continue }
+    python IA-Proyecto-Etapa2/scripts/train.py train --model $m --seed $seed --predict-split test --save-model 2>&1 | Tee-Object -Append -FilePath "final.log"
+  }
+}
+```
+
+| Quién | Modelos |
+|---|---|
+| Dani (RTX 3080) | `qwen2.5-1.5b`, `deepseek-r1-distill-qwen-1.5b`, `gemma-4-e2b` |
+| Jimmy (RTX 2060) | `distilbert`, `bert-base`, `qwen2.5-0.5b` |
+| Fran | `bilstm` (3 semillas, 10 épocas), `tfidf-logreg`, y el baseline trivial (sección 4) |
+
+Mientras corre la cola **no cambies de rama ni hagas `pull` con código nuevo**: cada corrida lee el código del disco al arrancar, y las semillas quedarían con versiones distintas. Cambiar a una rama que solo toca `.md` es seguro.
+
+### Medir la longitud de los textos
+
+```powershell
+python IA-Proyecto-Etapa2/scripts/token_lengths.py
+```
+
+Ya está medido: `max_len` = 64 recorta como máximo el 0.15 % de los textos.
+
+### Si algo sale raro
+
+- **Texto en rojo al principio** (`Redirects are currently not supported`, `triton not found`, `NativeCommandError`): son avisos de PyTorch y de PowerShell, no errores. `score.weight MISSING` también es normal: es la capa de clasificación nueva.
+- **Caracteres raros en la consola** (`Ôûê`): solo se ve mal en pantalla. El log queda bien.
+- **Error de memoria (OutOfMemory):** agrega `--batch-size 4`.
+- **`Torch not compiled with CUDA enabled`:** `pip install torch --index-url https://download.pytorch.org/whl/cu128`.
+- **El proceso se detuvo de noche:** desactiva la suspensión de Windows y pausa las actualizaciones.
+- **Una semilla colapsó** (el Macro-F1 cae a unos 0.08 y se queda ahí): avisa al equipo antes de seguir; el arnés conserva el mejor checkpoint, pero hay que declararlo.
+
+## 4. Baseline trivial y evaluación
 
 ```bash
 cd IA-Proyecto-Etapa2
@@ -106,4 +179,4 @@ Resultados en `IA-Proyecto-Etapa2/results/`.
 
 ## Uso de IA
 
-Parte de los scripts de entorno y de partición/verificación fueron generados con asistencia de Claude. Cada integrante debe poder explicarlos. Ver el registro de uso de IA cuando se cree (`docs/ai_usage_log.md`).
+Parte de los scripts (entorno, datos, partición y verificación, arnés de entrenamiento, subconjunto S) y de la documentación se hicieron con asistencia de Claude. Cada integrante debe poder explicar lo que presenta. El registro está en `IA-Proyecto-Etapa2/docs/ai_usage_log.md`.
