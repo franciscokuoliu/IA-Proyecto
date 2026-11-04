@@ -642,7 +642,13 @@ def _load_model(family, model_id, n_classes, id2label, label2id, compute_dtype, 
     cuda = torch.cuda.is_available()
     device = pick_device(torch)
     if cuda:
-        load_kwargs = {"quantization_config": _nf4_config(compute_dtype), "device_map": "auto"}
+        # dtype: los modulos que no se cuantizan (normas, embeddings) se cargan en el dtype de
+        # computo. En GPUs Turing (fp16) evita que queden en bf16, que esa arquitectura no soporta.
+        load_kwargs = {
+            "quantization_config": _nf4_config(compute_dtype),
+            "device_map": "auto",
+            "dtype": compute_dtype,
+        }
         quant_label = "nf4"
     else:
         load_kwargs = {"dtype": compute_dtype}
@@ -659,6 +665,7 @@ def _load_model(family, model_id, n_classes, id2label, label2id, compute_dtype, 
             model = model.to(device)
         model.config.pad_token_id = tokenizer.pad_token_id
         model = _apply_lora(model, lora_r, ["score", "classifier"])
+        _trainable_to_fp32(model, compute_dtype)
         return model, "sequence-classification", quant_label
     except HarnessError:
         raise
@@ -677,6 +684,7 @@ def _load_model(family, model_id, n_classes, id2label, label2id, compute_dtype, 
             base.config.pad_token_id = tokenizer.pad_token_id
         base = _apply_lora(base, lora_r, [])
         model = _manual_head(base, _hidden_size(base.config), n_classes)
+        _trainable_to_fp32(model, compute_dtype)
         return model, "manual-last-nonpad", quant_label
 
 
@@ -691,6 +699,19 @@ def _nf4_config(compute_dtype):
         bnb_4bit_compute_dtype=compute_dtype,
         bnb_4bit_use_double_quant=True,
     )
+
+
+def _trainable_to_fp32(model, compute_dtype) -> None:
+    """Con fp16 (GPUs Turing: 1650, 2060) GradScaler no acepta gradientes en bf16
+    ("_amp_foreach_non_finite_check_and_unscale_cuda not implemented for BFloat16").
+    Si el checkpoint viene en bf16, la cabeza o los adaptadores pueden quedar en bf16:
+    los parametros entrenables se pasan a fp32. Con bf16 (Ampere) no se toca nada."""
+    torch = require_torch()
+    if compute_dtype != torch.float16:
+        return
+    for parameter in model.parameters():
+        if parameter.requires_grad and parameter.dtype != torch.float32:
+            parameter.data = parameter.data.to(torch.float32)
 
 
 def _apply_lora(model, rank: int, extra_modules: list[str]):
