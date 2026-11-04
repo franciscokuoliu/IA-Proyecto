@@ -19,6 +19,7 @@ Desde IA-Proyecto-Etapa2:
 Salidas (los ids NO se suben al repo, cada quien los regenera):
 
   splits/train_ids.csv, val_ids.csv, test_ids.csv, val_select_ids.csv   (columna id)
+  splits/train_S_ids.csv   subconjunto S de train (estratificado, semilla 42)
   splits/splits_report.json                                             (conteos y versiones)
   data/labels.csv                                                       (id,label con el nombre de la clase, para run_dummy.py)
 
@@ -107,6 +108,23 @@ def pick_val_select(val_df):
     return set(chosen.tolist())
 
 
+def pick_train_s(train_df):
+    """Subconjunto S: estratificado por emocion, semilla 42, salido solo de train.
+
+    Al ser un subconjunto de train hereda que ningun grupo de cuasi-duplicados
+    cruce hacia val o test. Todos los modelos entrenan con estos mismos ids.
+    """
+    if len(train_df) <= sc.TRAIN_S_SIZE:
+        return train_df
+    chosen, _ = train_test_split(
+        train_df["id"].to_numpy(),
+        train_size=sc.TRAIN_S_SIZE,
+        stratify=train_df["label"].to_numpy(),
+        random_state=sc.SEED,
+    )
+    return train_df[train_df["id"].isin(set(chosen.tolist()))]
+
+
 def class_summary(labels, n_classes: int) -> dict:
     counts = np.bincount(labels, minlength=n_classes)
     total = int(counts.sum())
@@ -143,11 +161,13 @@ def main(argv=None) -> int:
     select_ids = pick_val_select(df[val_mask])
     select_mask = df["id"].isin(select_ids).to_numpy()
 
+    train_df = df[train_mask]
     parts = {
-        "train": df[train_mask],
+        "train": train_df,
         "val": df[val_mask],
         "test": df[test_mask],
         "val_select": df[select_mask],
+        "train_S": pick_train_s(train_df),
     }
 
     args.splits_dir.mkdir(parents=True, exist_ok=True)
@@ -182,6 +202,7 @@ def main(argv=None) -> int:
         "test_fold": sc.TEST_FOLD,
         "val_fold": sc.VAL_FOLD,
         "val_select_size": sc.VAL_SELECT_SIZE,
+        "train_s_size": sc.TRAIN_S_SIZE,
         "labels": names,
         "dataset": dataset_fp,
         "splits": split_fp,
@@ -211,6 +232,7 @@ def main(argv=None) -> int:
             "test_fold": sc.TEST_FOLD,
             "val_fold": sc.VAL_FOLD,
             "val_select_size": sc.VAL_SELECT_SIZE,
+            "train_s_size": sc.TRAIN_S_SIZE,
             "dataset": dataset_fp,
             "splits": split_fp,
             "generated_with": versions,

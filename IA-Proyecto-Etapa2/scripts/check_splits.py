@@ -152,6 +152,30 @@ def main(argv=None) -> int:
                   f"peor desviacion {worst:.3f} pp ({cls})",
                   f"{cls} se desvia {worst:.3f} pp")
 
+    print("\n[3b] Subconjunto S")
+    s_path = args.splits_dir / "train_S_ids.csv"
+    s_ids = None
+    if not s_path.is_file():
+        rep.fail("train_S_ids.csv existe", f"falta {s_path}. Corre make_splits.py")
+    else:
+        s_ids = sc.read_ids(s_path)
+        s_set = set(s_ids)
+        expected_s = min(sc.TRAIN_S_SIZE, len(sets["train"]))
+        rep.check("S: sin ids repetidos", len(s_ids) == len(s_set), f"{len(s_ids):,} ids",
+                  "hay ids repetidos")
+        rep.check("S es subconjunto de train", s_set <= sets["train"], "",
+                  f"{len(s_set - sets['train']):,} ids fuera de train")
+        rep.check("S tiene el tamano esperado", len(s_set) == expected_s,
+                  f"{expected_s:,}", f"tiene {len(s_set):,}, se esperaban {expected_s:,}")
+        s_part = df[df["id"].isin(s_set)]
+        if len(s_part):
+            pct = np.bincount(s_part["label"], minlength=n_classes) / len(s_part) * 100
+            train_pct = np.bincount(parts["train"]["label"], minlength=n_classes) / len(parts["train"]) * 100
+            worst = float(np.abs(pct - train_pct).max())
+            cls = names[int(np.abs(pct - train_pct).argmax())]
+            rep.check(f"S: clases dentro de +-{args.tol_pp} pp de train", worst <= args.tol_pp,
+                      f"peor desviacion {worst:.3f} pp ({cls})", f"{cls} se desvia {worst:.3f} pp")
+
     print("\n[4] labels.csv")
     if not args.labels_csv.is_file():
         rep.fail("labels.csv existe", f"falta {args.labels_csv}. Corre make_splits.py")
@@ -210,6 +234,17 @@ def main(argv=None) -> int:
                       f"{e['n']:,} ids, huella {short(e['fingerprint'])}",
                       f"local n={l['n']:,} huella {short(l['fingerprint'])} vs "
                       f"referencia n={e['n']:,} huella {short(e['fingerprint'])}")
+        if s_ids is not None:
+            e = ref["splits"].get("train_S")
+            l = {"n": len(s_ids), "fingerprint": sc.fingerprint_ids(s_ids)}
+            if e is None:
+                rep.fail("subconjunto S: huella", "la referencia no trae train_S; regenerala")
+            else:
+                rep.check("subconjunto S: n y huella",
+                          l["n"] == e["n"] and l["fingerprint"] == e["fingerprint"],
+                          f"{e['n']:,} ids, huella {short(e['fingerprint'])}",
+                          f"local n={l['n']:,} huella {short(l['fingerprint'])} vs "
+                          f"referencia n={e['n']:,} huella {short(e['fingerprint'])}")
         report_path = args.splits_dir / "splits_report.json"
         if rep.failures and report_path.is_file():
             mine = json.loads(report_path.read_text(encoding="utf-8")).get("generated_with", {})

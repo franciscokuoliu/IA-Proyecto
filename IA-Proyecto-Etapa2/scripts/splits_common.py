@@ -33,6 +33,9 @@ N_FOLDS = 10  # un pliegue de test, uno de validacion y ocho de entrenamiento
 TEST_FOLD = 0
 VAL_FOLD = 1
 VAL_SELECT_SIZE = 10_000
+# Subconjunto S de entrenamiento (contrato, seccion 4): el mismo para todos los
+# modelos. Sale del tamano de la corrida del modelo mas lento; ver el contrato.
+TRAIN_S_SIZE = 32_000
 
 SPLIT_NAMES = ("train", "val", "test")
 ALL_SPLIT_FILES = ("train", "val", "test", "val_select")
