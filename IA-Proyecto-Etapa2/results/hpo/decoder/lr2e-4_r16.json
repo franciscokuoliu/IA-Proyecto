@@ -1,0 +1,15 @@
+{
+  "family": "decoder",
+  "trial": "lr2e-4_r16",
+  "model": "qwen2.5-1.5b",
+  "split": "val_select",
+  "macro_f1": 0.8738763370504659,
+  "weighted_f1": 0.8973389883065794,
+  "config": {
+    "learning_rate": 0.0002,
+    "lora_r": 16,
+    "fraction": 0.2,
+    "epochs": 1,
+    "name": "lr2e-4_r16"
+  }
+}

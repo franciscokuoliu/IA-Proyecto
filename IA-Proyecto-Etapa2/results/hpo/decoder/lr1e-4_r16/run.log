@@ -1,0 +1,9 @@
+step 50  macro_f1_val_select=0.183334  mejor=0.183334  paciencia=3
+step 100  macro_f1_val_select=0.258901  mejor=0.258901  paciencia=3
+step 150  macro_f1_val_select=0.386749  mejor=0.386749  paciencia=3
+step 200  macro_f1_val_select=0.453408  mejor=0.453408  paciencia=3
+segundos_por_paso=1.135483  muestras_por_segundo=28.177  segundos_por_evaluacion=152.064  evaluaciones=4
+entrenamiento_s: 835.413
+macro_f1=0.453408  weighted_f1=0.573512  n=10000  split=val_select  probabilidades=ok
+Escrito en C:\Users\danie\Documents\GitHub\IA-Proyecto\IA-Proyecto-Etapa2\results\hpo\decoder\lr1e-4_r16\metrics.json
+Aviso: run_metadata.json tiene claves fuera del esquema: device, memory_kind.
