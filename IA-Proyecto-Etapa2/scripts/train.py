@@ -143,6 +143,8 @@ def run_dir_for(args, spec: ModelSpec, trial: str | None) -> Path:
 
 def execute(args, spec: ModelSpec, trial: str | None = None) -> dict:
     set_seed(args.seed)
+    destination = run_dir_for(args, spec, trial)
+    save_dir = destination / "model" if getattr(args, "save_model", False) and spec.family != "tfidf" else None
     labels, train, validation, evaluation, eval_name, weights, train_path = prepare(args, spec)
     if spec.family == "tfidf":
         predicted, probabilities, elapsed, details = train_tfidf(
@@ -181,6 +183,7 @@ def execute(args, spec: ModelSpec, trial: str | None = None) -> dict:
                 args.max_steps,
                 args.glove,
                 args.dtype,
+                save_dir,
             )
         else:
             result = train_transformer(
@@ -199,6 +202,7 @@ def execute(args, spec: ModelSpec, trial: str | None = None) -> dict:
                 args.max_steps,
                 args.dtype,
                 args.lora_r,
+                save_dir,
             )
         predicted, probabilities, elapsed, details = (
             result.predicted,
@@ -213,7 +217,6 @@ def execute(args, spec: ModelSpec, trial: str | None = None) -> dict:
         raise HarnessError("Las predicciones no cubren todas las filas de la partición.")
     names_true = [labels[int(index)] for index in evaluation.y]
     names_pred = [labels[int(index)] for index in predicted]
-    destination = run_dir_for(args, spec, trial)
     destination.mkdir(parents=True, exist_ok=True)
     write_predictions(
         destination / "predictions.csv",
@@ -308,6 +311,11 @@ def add_train_args(parser: argparse.ArgumentParser, *, require_model: bool) -> N
     parser.add_argument("--model-id", default=None)
     parser.add_argument("--train-ids", type=Path, default=None)
     parser.add_argument("--output-root", type=Path, default=None)
+    parser.add_argument(
+        "--save-model",
+        action="store_true",
+        help="Guarda los parametros entrenables del mejor checkpoint en <corrida>/model/ (para el XAI).",
+    )
 
 
 def known_names() -> list[str]:
