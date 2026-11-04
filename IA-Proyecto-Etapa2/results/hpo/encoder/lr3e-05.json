@@ -1,0 +1,12 @@
+{
+  "family": "encoder",
+  "trial": "lr3e-05",
+  "model": "bert-base",
+  "split": "val_select",
+  "macro_f1": 0.9904923205266218,
+  "weighted_f1": 0.9919928822762438,
+  "config": {
+    "learning_rate": 3e-05,
+    "name": "lr3e-05"
+  }
+}

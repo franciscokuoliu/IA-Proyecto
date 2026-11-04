@@ -1,0 +1,17 @@
+step 250  macro_f1_val_select=0.918529  mejor=0.918529  paciencia=3
+step 500  macro_f1_val_select=0.969576  mejor=0.969576  paciencia=3
+step 750  macro_f1_val_select=0.981883  mejor=0.981883  paciencia=3
+step 1000  macro_f1_val_select=0.981313  mejor=0.981883  paciencia=2
+step 1250  macro_f1_val_select=0.986962  mejor=0.986962  paciencia=3
+step 1500  macro_f1_val_select=0.988731  mejor=0.988731  paciencia=3
+step 1750  macro_f1_val_select=0.986929  mejor=0.988731  paciencia=2
+step 2000  macro_f1_val_select=0.989130  mejor=0.989130  paciencia=3
+step 2250  macro_f1_val_select=0.990492  mejor=0.990492  paciencia=3
+step 2500  macro_f1_val_select=0.987846  mejor=0.990492  paciencia=2
+step 2750  macro_f1_val_select=0.989484  mejor=0.990492  paciencia=1
+step 3000  macro_f1_val_select=0.989774  mejor=0.990492  paciencia=0
+segundos_por_paso=0.261031  muestras_por_segundo=122.591  segundos_por_evaluacion=25.428  evaluaciones=12
+entrenamiento_s: 1088.362
+macro_f1=0.990492  weighted_f1=0.991993  n=10000  split=val_select  probabilidades=ok
+Escrito en E:\IA\IA-Proyecto\IA-Proyecto-Etapa2\results\hpo\encoder\lr3e-05\metrics.json
+Aviso: run_metadata.json tiene claves fuera del esquema: device, memory_kind.
