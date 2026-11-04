@@ -360,6 +360,27 @@ def _memory_kind() -> str | None:
     return {"cuda": "cuda_max_allocated", "mps": "mps_driver_allocated"}.get(device.type)
 
 
+def _save_trainable(model, save_dir, info: dict) -> None:
+    """Guarda los parametros entrenables del mejor checkpoint (para el XAI).
+
+    En los decoders son los adaptadores LoRA y la cabeza; en los encoders y el
+    BiLSTM, el modelo entero. Para recargar: reconstruir el modelo con los mismos
+    argumentos y hacer load_state_dict(..., strict=False) con trainable.pt.
+    """
+    if save_dir is None:
+        return
+    import json
+    from pathlib import Path
+
+    torch = require_torch()
+    save_dir = Path(save_dir)
+    save_dir.mkdir(parents=True, exist_ok=True)
+    state = {n: p.detach().cpu() for n, p in model.named_parameters() if p.requires_grad}
+    torch.save(state, save_dir / "trainable.pt")
+    info = {**info, "n_tensors": len(state), "n_values": int(sum(v.numel() for v in state.values()))}
+    (save_dir / "model_info.json").write_text(json.dumps(info, indent=2) + "\n", encoding="utf-8")
+
+
 def train_bilstm(
     train: Column,
     evaluation: Column,
@@ -376,6 +397,7 @@ def train_bilstm(
     max_steps: int | None,
     glove: str | None,
     dtype_name: str | None = None,
+    save_dir=None,
 ) -> TorchRun:
     torch = require_torch()
     compute_dtype, dtype_label = pick_dtype(torch, dtype_name)
@@ -402,6 +424,8 @@ def train_bilstm(
     elapsed = time.perf_counter() - started
     predicted, probabilities = predict_batches(model, eval_loader, compute_dtype)
     total, trainable = _counts(model)
+    _save_trainable(model, save_dir, {"family": "bilstm", "hidden": hidden, "dropout": dropout,
+                                      "max_len": max_len, "vocab": vocab.tokens})
     return TorchRun(
         predicted,
         probabilities,
@@ -550,6 +574,7 @@ def train_transformer(
     max_steps: int | None,
     dtype_name: str | None,
     lora_r: int,
+    save_dir=None,
 ) -> TorchRun:
     torch = require_torch()
     try:
@@ -588,6 +613,9 @@ def train_transformer(
     elapsed = time.perf_counter() - started
     predicted, probabilities = predict_batches(model, eval_loader, compute_dtype)
     total, trainable = _counts(model)
+    _save_trainable(model, save_dir, {"family": family, "model_id": model_id, "head": head_kind,
+                                      "quantization": quant, "lora_r": lora_r if family == "decoder" else None,
+                                      "max_len": max_len, "labels": labels})
     return TorchRun(
         predicted,
         probabilities,
