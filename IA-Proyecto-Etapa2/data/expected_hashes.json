@@ -5,6 +5,7 @@
  "test_fold": 0,
  "val_fold": 1,
  "val_select_size": 10000,
+ "train_s_size": 32000,
  "dataset": {
   "rows": 371527,
   "fingerprint_labeled": "d76889d68bd8ddc06f326df21129f4276c03848aa9f475d049c4c005cce7508d",
@@ -26,6 +27,10 @@
   "val_select": {
    "n": 10000,
    "fingerprint": "947847a5454113f3ef584bbc8a429e32e1178deb04ef128cc789399f9b7a182c"
+  },
+  "train_S": {
+   "n": 32000,
+   "fingerprint": "2d518490c80f10c8d77fdb13b0c1664c2f9c469a4d8b8286d1d54aea809e6ea5"
   }
  },
  "generated_with": {
