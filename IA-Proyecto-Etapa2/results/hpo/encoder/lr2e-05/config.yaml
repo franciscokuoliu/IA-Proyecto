@@ -1,0 +1,37 @@
+model: "bert-base"
+family: "encoder"
+model_id: "bert-base-uncased"
+seed: 42
+split: "val_select"
+train_ids: "train_S_ids.csv"
+n_train: 32000
+n_eval: 10000
+class_weight: [0.5336, 0.478669, 2.539683, 1.183344, 1.564486, 6.296734]
+labels: ["sadness", "joy", "love", "anger", "fear", "surprise"]
+epochs: 3
+max_steps: null
+limit: null
+fraction: null
+batch_size: 8
+grad_accum: 4
+effective_batch: 32
+learning_rate: 2e-05
+best_macro_f1_val_select: 0.9900647950135962
+steps: 3000
+trial: "lr2e-05"
+head: "sequence-classification"
+quantization: null
+lora_r: null
+lora_alpha: null
+dtype: "fp16"
+n_params: 109486854
+n_trainable_params: 109486854
+peak_vram_bytes: 2221247488
+device: "cuda"
+memory_kind: "cuda_max_allocated"
+seconds_per_step: 0.25131783160001697
+train_samples_per_s: 127.32880829136454
+eval_time_s: 23.85796705833248
+n_evals: 12
+train_samples: 96000
+train_seconds: 753.953494800051

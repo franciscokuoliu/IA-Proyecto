@@ -1,0 +1,37 @@
+model: "bilstm"
+family: "bilstm"
+model_id: null
+seed: 42
+split: "val_select"
+train_ids: "train_S_ids.csv"
+n_train: 6399
+n_eval: 10000
+class_weight: [0.533517, 0.47868, 2.539286, 1.183685, 1.563783, 6.310651]
+labels: ["sadness", "joy", "love", "anger", "fear", "surprise"]
+epochs: 10
+max_steps: null
+limit: null
+fraction: 0.2
+batch_size: 8
+grad_accum: 4
+effective_batch: 32
+learning_rate: 0.003
+best_macro_f1_val_select: 0.9073420156496822
+steps: 950
+trial: "lr0.003_h128_d0.5"
+hidden: 128
+dropout: 0.5
+vocab_size: 9309
+embeddings: "glove-300d-frozen"
+dtype: "fp32"
+n_params: 3234562
+n_trainable_params: 441862
+peak_vram_bytes: null
+device: "cpu"
+memory_kind: null
+seconds_per_step: 0.13841614157892765
+train_samples_per_s: 231.15649019474782
+eval_time_s: 8.359424678951894
+n_evals: 19
+train_samples: 30396
+train_seconds: 131.49533449998125

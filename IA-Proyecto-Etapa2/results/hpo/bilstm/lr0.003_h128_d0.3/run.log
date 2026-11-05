@@ -1,0 +1,26 @@
+step 50  macro_f1_val_select=0.140442  mejor=0.140442  paciencia=3
+step 100  macro_f1_val_select=0.289539  mejor=0.289539  paciencia=3
+step 150  macro_f1_val_select=0.387500  mejor=0.387500  paciencia=3
+step 200  macro_f1_val_select=0.541047  mejor=0.541047  paciencia=3
+step 250  macro_f1_val_select=0.663927  mejor=0.663927  paciencia=3
+step 300  macro_f1_val_select=0.791098  mejor=0.791098  paciencia=3
+step 350  macro_f1_val_select=0.834534  mejor=0.834534  paciencia=3
+step 400  macro_f1_val_select=0.886126  mejor=0.886126  paciencia=3
+step 450  macro_f1_val_select=0.896309  mejor=0.896309  paciencia=3
+step 500  macro_f1_val_select=0.913019  mejor=0.913019  paciencia=3
+step 550  macro_f1_val_select=0.926569  mejor=0.926569  paciencia=3
+step 600  macro_f1_val_select=0.917392  mejor=0.926569  paciencia=2
+step 650  macro_f1_val_select=0.921009  mejor=0.926569  paciencia=1
+step 700  macro_f1_val_select=0.927113  mejor=0.927113  paciencia=3
+step 750  macro_f1_val_select=0.938295  mejor=0.938295  paciencia=3
+step 800  macro_f1_val_select=0.933584  mejor=0.938295  paciencia=2
+step 850  macro_f1_val_select=0.930512  mejor=0.938295  paciencia=1
+step 900  macro_f1_val_select=0.947456  mejor=0.947456  paciencia=3
+step 950  macro_f1_val_select=0.940332  mejor=0.947456  paciencia=2
+step 1000  macro_f1_val_select=0.938706  mejor=0.947456  paciencia=1
+step 1050  macro_f1_val_select=0.939695  mejor=0.947456  paciencia=0
+segundos_por_paso=0.146560  muestras_por_segundo=218.309  segundos_por_evaluacion=9.246  evaluaciones=21
+entrenamiento_s: 348.067
+macro_f1=0.947456  weighted_f1=0.946488  n=10000  split=val_select  probabilidades=ok
+Escrito en C:\Users\MSI GL65\Documents\SCHOOL\IA\IA-Proyecto\IA-Proyecto-Etapa2\results\hpo\bilstm\lr0.003_h128_d0.3\metrics.json
+Aviso: run_metadata.json tiene claves fuera del esquema: device, memory_kind.

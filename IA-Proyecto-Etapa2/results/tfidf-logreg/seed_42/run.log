@@ -1,0 +1,4 @@
+entrenamiento_s: 9.804
+macro_f1=0.949275  weighted_f1=0.956446  n=37153  split=test  probabilidades=ok
+Escrito en C:\Users\MSI GL65\Documents\SCHOOL\IA\IA-Proyecto\IA-Proyecto-Etapa2\results\tfidf-logreg\seed_42\metrics.json
+Aviso: run_metadata.json tiene claves fuera del esquema: device, memory_kind.

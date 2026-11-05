@@ -1,0 +1,4 @@
+entrenamiento_s: 4.455
+macro_f1=0.852514  weighted_f1=0.853617  n=10000  split=val_select  probabilidades=ok
+Escrito en C:\Users\MSI GL65\Documents\SCHOOL\IA\IA-Proyecto\IA-Proyecto-Etapa2\results\hpo\tfidf\C0.1_ngram12\metrics.json
+Aviso: run_metadata.json tiene claves fuera del esquema: device, memory_kind.

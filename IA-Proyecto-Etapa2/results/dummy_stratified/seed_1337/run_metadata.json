@@ -2,8 +2,8 @@
   "gpu": null,
   "driver_version": null,
   "torch_version": null,
-  "train_time_s": 0.1032813999991049,
-  "samples_per_s": 2877768.8916162625,
+  "train_time_s": 0.08243959996616468,
+  "samples_per_s": 3605306.189282659,
   "peak_vram_bytes": null,
   "n_params": 0,
   "n_trainable_params": 0,
@@ -12,9 +12,9 @@
   "dtype": null,
   "model": "dummy_stratified",
   "seed": 1337,
-  "commit": "b702fd9fc7b2f36f7467781a6c0a6c816f30712d",
+  "commit": "c400f841332037448074f13094b83b1fd9de26d4",
   "libraries": {
-    "numpy": "2.3.2",
+    "numpy": "2.5.4",
     "scikit-learn": "1.9.1"
   }
 }

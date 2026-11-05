@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "report": "run",
+  "split": "val_select",
+  "n": 10000,
+  "predictions_file": "predictions.csv",
+  "labels": [
+    "sadness",
+    "joy",
+    "love",
+    "anger",
+    "fear",
+    "surprise"
+  ],
+  "primary_metric": "macro_f1",
+  "macro_f1": 0.8525137826336321,
+  "weighted_f1": 0.8536173505431907,
+  "per_class": {
+    "sadness": {
+      "precision": 0.9134756995581738,
+      "recall": 0.7941741357234315,
+      "f1": 0.8496575342465753,
+      "support": 3124
+    },
+    "joy": {
+      "precision": 0.8675998833479148,
+      "recall": 0.8543940264215968,
+      "f1": 0.860946317464911,
+      "support": 3482
+    },
+    "love": {
+      "precision": 0.6810810810810811,
+      "recall": 0.9603658536585366,
+      "f1": 0.7969639468690702,
+      "support": 656
+    },
+    "anger": {
+      "precision": 0.8585231193926847,
+      "recall": 0.8835227272727273,
+      "f1": 0.8708435421771089,
+      "support": 1408
+    },
+    "fear": {
+      "precision": 0.807032590051458,
+      "recall": 0.8835680751173709,
+      "f1": 0.8435679067682653,
+      "support": 1065
+    },
+    "surprise": {
+      "precision": 0.8222222222222222,
+      "recall": 0.9773584905660377,
+      "f1": 0.8931034482758621,
+      "support": 265
+    }
+  },
+  "confusion_matrix": {
+    "labels": [
+      "sadness",
+      "joy",
+      "love",
+      "anger",
+      "fear",
+      "surprise"
+    ],
+    "rows": "y_true",
+    "cols": "y_pred",
+    "matrix": [
+      [
+        2481,
+        308,
+        102,
+        108,
+        109,
+        16
+      ],
+      [
+        182,
+        2975,
+        141,
+        73,
+        88,
+        23
+      ],
+      [
+        4,
+        13,
+        630,
+        2,
+        6,
+        1
+      ],
+      [
+        26,
+        79,
+        35,
+        1244,
+        22,
+        2
+      ],
+      [
+        23,
+        49,
+        16,
+        22,
+        941,
+        14
+      ],
+      [
+        0,
+        5,
+        1,
+        0,
+        0,
+        259
+      ]
+    ]
+  },
+  "probability_check": {
+    "max_abs_sum_error": 4.440892098500626e-16,
+    "ok": true
+  },
+  "metadata": {
+    "gpu": "NVIDIA GeForce GTX 1650",
+    "driver_version": "596.21",
+    "torch_version": "2.15.0+cpu",
+    "train_time_s": 4.454663100012112,
+    "samples_per_s": 7183.483752096313,
+    "peak_vram_bytes": null,
+    "n_params": 343890,
+    "n_trainable_params": 343890,
+    "batch_size": null,
+    "max_len": null,
+    "dtype": null,
+    "model": "tfidf-logreg",
+    "seed": 42,
+    "commit": "87becccd4b804a5ebb641d9325c3b0a91a13d5de",
+    "libraries": {
+      "numpy": "2.5.4",
+      "pandas": "3.1.0",
+      "scikit-learn": "1.9.1",
+      "torch": "2.15.0+cpu",
+      "transformers": "5.22.1",
+      "peft": "0.21.2"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "family": "tfidf",
+  "trial": "C1.0_ngram11",
+  "model": "tfidf-logreg",
+  "split": "val_select",
+  "macro_f1": 0.9320250934271428,
+  "weighted_f1": 0.9420604448005688,
+  "config": {
+    "C": 1.0,
+    "ngram": [
+      1,
+      1
+    ],
+    "name": "C1.0_ngram11"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "family": "bilstm",
+  "trial": "lr0.003_h256_d0.3",
+  "model": "bilstm",
+  "split": "val_select",
+  "macro_f1": 0.9408486242824944,
+  "weighted_f1": 0.9440196310087701,
+  "config": {
+    "learning_rate": 0.003,
+    "hidden": 256,
+    "dropout": 0.3,
+    "fraction": 0.2,
+    "name": "lr0.003_h256_d0.3"
+  }
+}

@@ -1,0 +1,21 @@
+step 250  macro_f1_val_select=0.415512  mejor=0.415512  paciencia=3
+step 500  macro_f1_val_select=0.775602  mejor=0.775602  paciencia=3
+step 750  macro_f1_val_select=0.895721  mejor=0.895721  paciencia=3
+step 1000  macro_f1_val_select=0.931546  mejor=0.931546  paciencia=3
+step 1250  macro_f1_val_select=0.942266  mejor=0.942266  paciencia=3
+step 1500  macro_f1_val_select=0.958928  mejor=0.958928  paciencia=3
+step 1750  macro_f1_val_select=0.954456  mejor=0.958928  paciencia=2
+step 2000  macro_f1_val_select=0.967682  mejor=0.967682  paciencia=3
+step 2250  macro_f1_val_select=0.967670  mejor=0.967682  paciencia=2
+step 2500  macro_f1_val_select=0.976031  mejor=0.976031  paciencia=3
+step 2750  macro_f1_val_select=0.975804  mejor=0.976031  paciencia=2
+step 3000  macro_f1_val_select=0.978681  mejor=0.978681  paciencia=3
+step 3250  macro_f1_val_select=0.979269  mejor=0.979269  paciencia=3
+step 3500  macro_f1_val_select=0.969662  mejor=0.979269  paciencia=2
+step 3750  macro_f1_val_select=0.958625  mejor=0.979269  paciencia=1
+step 4000  macro_f1_val_select=0.973461  mejor=0.979269  paciencia=0
+segundos_por_paso=0.108541  muestras_por_segundo=294.820  segundos_por_evaluacion=7.026  evaluaciones=16
+entrenamiento_s: 548.922
+macro_f1=0.975570  weighted_f1=0.977573  n=37153  split=test  probabilidades=ok
+Escrito en C:\Users\MSI GL65\Documents\SCHOOL\IA\IA-Proyecto\IA-Proyecto-Etapa2\results\bilstm\seed_2026\metrics.json
+Aviso: run_metadata.json tiene claves fuera del esquema: device, memory_kind.
