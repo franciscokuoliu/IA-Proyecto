@@ -1,0 +1,26 @@
+{
+  "gpu": "NVIDIA GeForce GTX 1650",
+  "device": null,
+  "memory_kind": null,
+  "driver_version": "596.21",
+  "torch_version": "2.15.0+cpu",
+  "train_time_s": 3.113545000029262,
+  "samples_per_s": 10277.67384113583,
+  "peak_vram_bytes": null,
+  "n_params": 64350,
+  "n_trainable_params": 64350,
+  "batch_size": null,
+  "max_len": null,
+  "dtype": null,
+  "model": "tfidf-logreg",
+  "seed": 42,
+  "commit": "87becccd4b804a5ebb641d9325c3b0a91a13d5de",
+  "libraries": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "scikit-learn": "1.9.1",
+    "torch": "2.15.0+cpu",
+    "transformers": "5.22.1",
+    "peft": "0.21.2"
+  }
+}
