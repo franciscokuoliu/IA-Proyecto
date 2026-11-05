@@ -1,0 +1,37 @@
+model: "qwen2.5-1.5b"
+family: "decoder"
+model_id: "Qwen/Qwen2.5-1.5B"
+seed: 42
+split: "test"
+train_ids: "train_S_ids.csv"
+n_train: 32000
+n_eval: 37153
+class_weight: [0.5336, 0.478669, 2.539683, 1.183344, 1.564486, 6.296734]
+labels: ["sadness", "joy", "love", "anger", "fear", "surprise"]
+epochs: 3
+max_steps: null
+limit: null
+fraction: null
+batch_size: 8
+grad_accum: 4
+effective_batch: 32
+learning_rate: 0.0002
+best_macro_f1_val_select: 0.9896872163612526
+steps: 3000
+trial: null
+head: "sequence-classification"
+quantization: "nf4"
+lora_r: 16
+lora_alpha: 32
+dtype: "bf16"
+n_params: 892993024
+n_trainable_params: 4367360
+peak_vram_bytes: 2724652544
+device: "cuda"
+memory_kind: "cuda_max_allocated"
+seconds_per_step: 1.0264539682666751
+train_samples_per_s: 31.175289871046925
+eval_time_s: 148.67889360833456
+n_evals: 12
+train_samples: 96000
+train_seconds: 3079.3619048000255

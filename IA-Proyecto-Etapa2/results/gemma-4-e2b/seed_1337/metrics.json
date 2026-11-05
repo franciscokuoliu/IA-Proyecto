@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "report": "run",
+  "split": "test",
+  "n": 37153,
+  "predictions_file": "predictions.csv",
+  "labels": [
+    "sadness",
+    "joy",
+    "love",
+    "anger",
+    "fear",
+    "surprise"
+  ],
+  "primary_metric": "macro_f1",
+  "macro_f1": 0.9567164980141359,
+  "weighted_f1": 0.9642345024291478,
+  "per_class": {
+    "sadness": {
+      "precision": 0.9867456039586463,
+      "recall": 0.9623405722164771,
+      "f1": 0.9743902971074561,
+      "support": 11604
+    },
+    "joy": {
+      "precision": 0.970993193069307,
+      "recall": 0.9703176934374276,
+      "f1": 0.9706553257297507,
+      "support": 12937
+    },
+    "love": {
+      "precision": 0.9615541922290388,
+      "recall": 0.9643150123051681,
+      "f1": 0.9629326233872619,
+      "support": 2438
+    },
+    "anger": {
+      "precision": 0.9269992663242846,
+      "recall": 0.9657939996178101,
+      "f1": 0.9459990641085634,
+      "support": 5233
+    },
+    "fear": {
+      "precision": 0.9356841321082692,
+      "recall": 0.9519959575543203,
+      "f1": 0.9437695679398873,
+      "support": 3958
+    },
+    "surprise": {
+      "precision": 0.9420731707317073,
+      "recall": 0.943031536113937,
+      "f1": 0.9425521098118963,
+      "support": 983
+    }
+  },
+  "confusion_matrix": {
+    "labels": [
+      "sadness",
+      "joy",
+      "love",
+      "anger",
+      "fear",
+      "surprise"
+    ],
+    "rows": "y_true",
+    "cols": "y_pred",
+    "matrix": [
+      [
+        11167,
+        181,
+        25,
+        133,
+        90,
+        8
+      ],
+      [
+        67,
+        12553,
+        45,
+        157,
+        98,
+        17
+      ],
+      [
+        11,
+        34,
+        2351,
+        28,
+        12,
+        2
+      ],
+      [
+        41,
+        84,
+        8,
+        5054,
+        42,
+        4
+      ],
+      [
+        29,
+        58,
+        15,
+        62,
+        3768,
+        26
+      ],
+      [
+        2,
+        18,
+        1,
+        18,
+        17,
+        927
+      ]
+    ]
+  },
+  "probability_check": {
+    "max_abs_sum_error": 2.430620682503104e-07,
+    "ok": true
+  },
+  "metadata": {
+    "gpu": "NVIDIA GeForce RTX 3080",
+    "driver_version": "616.92",
+    "torch_version": "2.11.0+cu128",
+    "train_time_s": 9222.982742799999,
+    "samples_per_s": 14.713192347873024,
+    "peak_vram_bytes": 9234137088,
+    "n_params": 3942566438,
+    "n_trainable_params": 5366790,
+    "batch_size": 32,
+    "max_len": 64,
+    "dtype": "bf16",
+    "model": "gemma-4-e2b",
+    "seed": 1337,
+    "commit": "87becccd4b804a5ebb641d9325c3b0a91a13d5de",
+    "libraries": {
+      "numpy": "2.5.4",
+      "pandas": "3.1.0",
+      "scikit-learn": "1.9.1",
+      "torch": "2.11.0+cu128",
+      "transformers": "5.22.1",
+      "peft": "0.21.2"
+    }
+  }
+}

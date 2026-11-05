@@ -1,0 +1,17 @@
+step 250  macro_f1_val_select=0.839122  mejor=0.839122  paciencia=3
+step 500  macro_f1_val_select=0.969740  mejor=0.969740  paciencia=3
+step 750  macro_f1_val_select=0.977089  mejor=0.977089  paciencia=3
+step 1000  macro_f1_val_select=0.983265  mejor=0.983265  paciencia=3
+step 1250  macro_f1_val_select=0.984328  mejor=0.984328  paciencia=3
+step 1500  macro_f1_val_select=0.985545  mejor=0.985545  paciencia=3
+step 1750  macro_f1_val_select=0.986808  mejor=0.986808  paciencia=3
+step 2000  macro_f1_val_select=0.986611  mejor=0.986808  paciencia=2
+step 2250  macro_f1_val_select=0.987686  mejor=0.987686  paciencia=3
+step 2500  macro_f1_val_select=0.987909  mejor=0.987909  paciencia=3
+step 2750  macro_f1_val_select=0.988426  mejor=0.988426  paciencia=3
+step 3000  macro_f1_val_select=0.988019  mejor=0.988426  paciencia=2
+segundos_por_paso=0.991066  muestras_por_segundo=32.288  segundos_por_evaluacion=145.862  evaluaciones=12
+entrenamiento_s: 4723.572
+macro_f1=0.986458  weighted_f1=0.989260  n=37153  split=test  probabilidades=ok
+Escrito en C:\Users\danie\Documents\GitHub\IA-Proyecto\IA-Proyecto-Etapa2\results\deepseek-r1-distill-qwen-1.5b\seed_1337\metrics.json
+Aviso: run_metadata.json tiene claves fuera del esquema: device, memory_kind.

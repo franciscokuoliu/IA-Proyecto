@@ -1,0 +1,18 @@
+{
+  "family": "decoder",
+  "model_id": "google/gemma-4-E2B",
+  "head": "manual-last-nonpad",
+  "quantization": "nf4",
+  "lora_r": 16,
+  "max_len": 64,
+  "labels": [
+    "sadness",
+    "joy",
+    "love",
+    "anger",
+    "fear",
+    "surprise"
+  ],
+  "n_tensors": 202,
+  "n_values": 5366790
+}

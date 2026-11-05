@@ -1,0 +1,17 @@
+step 250  macro_f1_val_select=0.891637  mejor=0.891637  paciencia=3
+step 500  macro_f1_val_select=0.943643  mejor=0.943643  paciencia=3
+step 750  macro_f1_val_select=0.942581  mejor=0.943643  paciencia=2
+step 1000  macro_f1_val_select=0.947412  mejor=0.947412  paciencia=3
+step 1250  macro_f1_val_select=0.949518  mejor=0.949518  paciencia=3
+step 1500  macro_f1_val_select=0.953390  mejor=0.953390  paciencia=3
+step 1750  macro_f1_val_select=0.952681  mejor=0.953390  paciencia=2
+step 2000  macro_f1_val_select=0.952414  mejor=0.953390  paciencia=1
+step 2250  macro_f1_val_select=0.954706  mejor=0.954706  paciencia=3
+step 2500  macro_f1_val_select=0.955341  mejor=0.955341  paciencia=3
+step 2750  macro_f1_val_select=0.955406  mejor=0.955406  paciencia=3
+step 3000  macro_f1_val_select=0.955750  mejor=0.955750  paciencia=3
+segundos_por_paso=1.957645  muestras_por_segundo=16.346  segundos_por_evaluacion=222.906  evaluaciones=12
+entrenamiento_s: 8547.881
+macro_f1=0.955791  weighted_f1=0.965279  n=37153  split=test  probabilidades=ok
+Escrito en C:\Users\danie\Documents\GitHub\IA-Proyecto\IA-Proyecto-Etapa2\results\gemma-4-e2b\seed_2026\metrics.json
+Aviso: run_metadata.json tiene claves fuera del esquema: device, memory_kind.

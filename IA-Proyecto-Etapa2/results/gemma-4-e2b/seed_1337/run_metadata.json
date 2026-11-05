@@ -1,0 +1,26 @@
+{
+  "gpu": "NVIDIA GeForce RTX 3080",
+  "device": "cuda",
+  "memory_kind": "cuda_max_allocated",
+  "driver_version": "616.92",
+  "torch_version": "2.11.0+cu128",
+  "train_time_s": 9222.982742799999,
+  "samples_per_s": 14.713192347873024,
+  "peak_vram_bytes": 9234137088,
+  "n_params": 3942566438,
+  "n_trainable_params": 5366790,
+  "batch_size": 32,
+  "max_len": 64,
+  "dtype": "bf16",
+  "model": "gemma-4-e2b",
+  "seed": 1337,
+  "commit": "87becccd4b804a5ebb641d9325c3b0a91a13d5de",
+  "libraries": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "scikit-learn": "1.9.1",
+    "torch": "2.11.0+cu128",
+    "transformers": "5.22.1",
+    "peft": "0.21.2"
+  }
+}
