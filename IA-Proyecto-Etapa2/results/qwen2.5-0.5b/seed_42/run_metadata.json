@@ -1,0 +1,26 @@
+{
+  "gpu": "NVIDIA GeForce RTX 2060",
+  "device": "cuda",
+  "memory_kind": "cuda_max_allocated",
+  "driver_version": "617.42",
+  "torch_version": "2.9.1+cu128",
+  "train_time_s": 5089.675913000014,
+  "samples_per_s": 27.48662763976565,
+  "peak_vram_bytes": 1220263936,
+  "n_params": 317292928,
+  "n_trainable_params": 2168064,
+  "batch_size": 32,
+  "max_len": 64,
+  "dtype": "fp16",
+  "model": "qwen2.5-0.5b",
+  "seed": 42,
+  "commit": null,
+  "libraries": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "scikit-learn": "1.9.1",
+    "torch": "2.9.1+cu128",
+    "transformers": "5.22.1",
+    "peft": "0.21.2"
+  }
+}

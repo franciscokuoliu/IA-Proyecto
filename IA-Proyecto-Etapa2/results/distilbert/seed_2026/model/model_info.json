@@ -1,0 +1,18 @@
+{
+  "family": "encoder",
+  "model_id": "distilbert-base-uncased",
+  "head": "sequence-classification",
+  "quantization": null,
+  "lora_r": null,
+  "max_len": 64,
+  "labels": [
+    "sadness",
+    "joy",
+    "love",
+    "anger",
+    "fear",
+    "surprise"
+  ],
+  "n_tensors": 104,
+  "n_values": 66958086
+}

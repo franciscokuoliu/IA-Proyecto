@@ -1,0 +1,17 @@
+step 250  macro_f1_val_select=0.855088  mejor=0.855088  paciencia=3
+step 500  macro_f1_val_select=0.966671  mejor=0.966671  paciencia=3
+step 750  macro_f1_val_select=0.976316  mejor=0.976316  paciencia=3
+step 1000  macro_f1_val_select=0.982375  mejor=0.982375  paciencia=3
+step 1250  macro_f1_val_select=0.984562  mejor=0.984562  paciencia=3
+step 1500  macro_f1_val_select=0.984755  mejor=0.984755  paciencia=3
+step 1750  macro_f1_val_select=0.986392  mejor=0.986392  paciencia=3
+step 2000  macro_f1_val_select=0.988103  mejor=0.988103  paciencia=3
+step 2250  macro_f1_val_select=0.990341  mejor=0.990341  paciencia=3
+step 2500  macro_f1_val_select=0.989469  mejor=0.990341  paciencia=2
+step 2750  macro_f1_val_select=0.990010  mejor=0.990341  paciencia=1
+step 3000  macro_f1_val_select=0.990148  mejor=0.990341  paciencia=0
+segundos_por_paso=1.180946  muestras_por_segundo=27.097  segundos_por_evaluacion=135.169  evaluaciones=12
+entrenamiento_s: 5164.902
+macro_f1=0.986661  weighted_f1=0.989415  n=37153  split=test  probabilidades=ok
+Escrito en E:\IA\IA-Proyecto\IA-Proyecto-Etapa2\results\qwen2.5-0.5b\seed_1337\metrics.json
+Aviso: run_metadata.json tiene claves fuera del esquema: device, memory_kind.
