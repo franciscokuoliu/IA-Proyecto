@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "report": "run",
+  "split": "test",
+  "n": 37153,
+  "predictions_file": "predictions.csv",
+  "labels": [
+    "sadness",
+    "joy",
+    "love",
+    "anger",
+    "fear",
+    "surprise"
+  ],
+  "primary_metric": "macro_f1",
+  "macro_f1": 0.988925677930894,
+  "weighted_f1": 0.9920010707216822,
+  "per_class": {
+    "sadness": {
+      "precision": 0.9945703697319659,
+      "recall": 0.9944846604619096,
+      "f1": 0.9945275132503124,
+      "support": 11604
+    },
+    "joy": {
+      "precision": 0.993671862941812,
+      "recall": 0.995284841926258,
+      "f1": 0.994477698397374,
+      "support": 12937
+    },
+    "love": {
+      "precision": 0.994264645637034,
+      "recall": 0.9954881050041017,
+      "f1": 0.9948759991801599,
+      "support": 2438
+    },
+    "anger": {
+      "precision": 0.9864555513162915,
+      "recall": 0.9881521115994649,
+      "f1": 0.9873031026252983,
+      "support": 5233
+    },
+    "fear": {
+      "precision": 0.9863048440273903,
+      "recall": 0.9825669530065689,
+      "f1": 0.9844323503354006,
+      "support": 3958
+    },
+    "surprise": {
+      "precision": 0.9865424430641822,
+      "recall": 0.9694811800610377,
+      "f1": 0.9779374037968189,
+      "support": 983
+    }
+  },
+  "confusion_matrix": {
+    "labels": [
+      "sadness",
+      "joy",
+      "love",
+      "anger",
+      "fear",
+      "surprise"
+    ],
+    "rows": "y_true",
+    "cols": "y_pred",
+    "matrix": [
+      [
+        11540,
+        30,
+        3,
+        23,
+        7,
+        1
+      ],
+      [
+        26,
+        12876,
+        9,
+        16,
+        8,
+        2
+      ],
+      [
+        4,
+        1,
+        2427,
+        5,
+        0,
+        1
+      ],
+      [
+        20,
+        31,
+        1,
+        5171,
+        10,
+        0
+      ],
+      [
+        13,
+        20,
+        1,
+        26,
+        3889,
+        9
+      ],
+      [
+        0,
+        0,
+        0,
+        1,
+        29,
+        953
+      ]
+    ]
+  },
+  "probability_check": {
+    "max_abs_sum_error": 2.851138560799882e-07,
+    "ok": true
+  },
+  "metadata": {
+    "gpu": "NVIDIA GeForce RTX 2060",
+    "driver_version": "617.42",
+    "torch_version": "2.9.1+cu128",
+    "train_time_s": 576.5917129000009,
+    "samples_per_s": 231.05853065740396,
+    "peak_vram_bytes": 1367620608,
+    "n_params": 66958086,
+    "n_trainable_params": 66958086,
+    "batch_size": 32,
+    "max_len": 64,
+    "dtype": "fp16",
+    "model": "distilbert",
+    "seed": 42,
+    "commit": null,
+    "libraries": {
+      "numpy": "2.5.4",
+      "pandas": "3.1.0",
+      "scikit-learn": "1.9.1",
+      "torch": "2.9.1+cu128",
+      "transformers": "5.22.1",
+      "peft": "0.21.2"
+    }
+  }
+}

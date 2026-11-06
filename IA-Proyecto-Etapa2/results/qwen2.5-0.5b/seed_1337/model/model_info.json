@@ -1,0 +1,18 @@
+{
+  "family": "decoder",
+  "model_id": "Qwen/Qwen2.5-0.5B",
+  "head": "sequence-classification",
+  "quantization": "nf4",
+  "lora_r": 16,
+  "max_len": 64,
+  "labels": [
+    "sadness",
+    "joy",
+    "love",
+    "anger",
+    "fear",
+    "surprise"
+  ],
+  "n_tensors": 193,
+  "n_values": 2168064
+}
