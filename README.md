@@ -1,6 +1,6 @@
 # IA-Proyecto
 
-Proyecto semestral del curso de IA (Track B: Deep Learning, NLP). Integrantes: Francisco Kuo Liu, Jimmy Feng Liu y Danielo Wu Zhong. Benchmark controlado de 9 modelos para clasificación de emociones en 6 clases (dataset Kaggle "Emotions", derivado de CARER).
+Proyecto semestral del curso de IA (Track B: Deep Learning, NLP). Integrantes: Francisco Kuo Liu, Jimmy Feng Liu y Danielo Wu Zhong. Benchmark controlado de 8 modelos (más un baseline trivial) para clasificación de emociones en 6 clases (dataset Kaggle "Emotions", derivado de CARER).
 
 - `IA-Proyecto-Etapa1/`: documento y entregables de la Etapa 1.
 - `IA-Proyecto-Etapa2/`: modelado, XAI y evaluación. Las reglas del experimento están en `EXPERIMENT_CONTRACT.md`.
@@ -79,8 +79,9 @@ Debe terminar con `Listo: tus datos son identicos a la referencia del equipo`.
 
 ### Qué se versiona y qué no
 
-- Sí: scripts, `labels.json`, `data/DATASET_INFO.md` y `data/expected_hashes.json` (huellas SHA-256 de ids, etiquetas y grupos).
-- No: `data/raw/`, `salida/`, `splits/`, `data/labels.csv` (están en `.gitignore`).
+- Sí: scripts, `labels.json`, `data/DATASET_INFO.md` y `data/expected_hashes.json` (huellas SHA-256 de ids, etiquetas y grupos). También los resultados livianos de cada corrida (`metrics.json`, `config.yaml`, `run.log`, `run_metadata.json`, `model/model_info.json`) y las carpetas `results/hpo/`, `results/report/`, `results/errors/`, `results/pairs/` y `results/xai/`.
+- No: `data/raw/`, `salida/`, `splits/`, `data/labels.csv`, `predictions.csv` y los pesos (`*.pt`, `*.safetensors`). Todos están en `.gitignore`.
+- Ojo: `.gitignore` descarta **todos** los `*.csv`. Por eso las salidas nuevas (pares, XAI) son JSON, Markdown, PNG, PDF o HTML. Un CSV que de verdad quieras versionar necesita `git add -f`.
 
 ### Partición (determinista)
 
@@ -104,7 +105,7 @@ Requisito: `prepare_data.py` en verde (huella de S `2d518490c80f`). Todo desde l
 python IA-Proyecto-Etapa2/scripts/train.py train --model qwen2.5-1.5b --seed 42
 ```
 
-Modelos: `tfidf-logreg`, `bilstm`, `distilbert`, `bert-base`, `qwen2.5-0.5b`, `qwen2.5-1.5b`, `gemma-4-e2b`, `deepseek-r1-distill-qwen-1.5b` (`gemma-4-e4b` existe en el arnés, pero no se entrena mientras el equipo no confirme si entra al plan).
+Modelos: `tfidf-logreg`, `bilstm`, `distilbert`, `bert-base`, `qwen2.5-0.5b`, `qwen2.5-1.5b`, `gemma-4-e2b`, `deepseek-r1-distill-qwen-1.5b` (`gemma-4-e4b` existe en el arnés, pero quedó fuera del plan porque no cabe en la RTX 3080; contrato, sección 1).
 
 | Opción | Para qué |
 |---|---|
@@ -112,18 +113,32 @@ Modelos: `tfidf-logreg`, `bilstm`, `distilbert`, `bert-base`, `qwen2.5-0.5b`, `q
 | `--max-steps N` | Prueba rápida (2 pasos) para ver que todo funciona |
 | `--predict-split test` | Calificar en test. **Solo en las corridas finales**, una vez por configuración |
 | `--save-model` | Guarda los adaptadores (o el modelo, en encoders y BiLSTM) en `<corrida>/model/`. Se necesita para el XAI. Úsalo solo en las corridas finales |
+| `--glove RUTA` | Solo `bilstm`: archivo de vectores GloVe de 300 dimensiones (`glove.6B.300d.txt`, ver abajo). **Sin esta opción el BiLSTM usa vectores aleatorios congelados**, que no es la configuración del contrato (`config.yaml` diría `embeddings: random-frozen`) |
 | `--batch-size` | 8 por defecto; el lote efectivo siempre es 32 (se acumula el gradiente). Si hay error de memoria, baja a 4 |
 | `--output-root` | Carpeta de resultados. Para pruebas usa `IA-Proyecto-Etapa2/results/smoke` (Git la ignora). Ojo: una ruta relativa se cuenta desde donde corras el comando |
 
-No cambies `--max-len` (64 para todos). Cada corrida escribe en `IA-Proyecto-Etapa2/results/<modelo>/seed_<n>/`: `metrics.json`, `config.yaml`, `run.log`, `run_metadata.json` y, sin versionar, `predictions.csv` y `model/`.
+No cambies `--max-len` (64 para todos). Cada corrida escribe en `IA-Proyecto-Etapa2/results/<modelo>/seed_<n>/`: `metrics.json`, `config.yaml`, `run.log`, `run_metadata.json`, `model/` (de ahí solo `model_info.json` se versiona) y, sin versionar, `predictions.csv`.
+
+### BiLSTM: vectores GloVe
+
+El BiLSTM usa embeddings estáticos GloVe de 300 dimensiones, congelados. El archivo no está en el repo (pesa cerca de 1 GB y `.gitignore` **no** ignora los `.txt`, así que guárdalo fuera de la carpeta del proyecto):
+
+1. Descarga `glove.6B.zip` (Wikipedia 2014 + Gigaword 5, 6 000 M de tokens, vocabulario de 400 000 palabras, minúsculas, 822 MB) desde https://nlp.stanford.edu/projects/glove/ y descomprímelo. De ahí solo se usa `glove.6B.300d.txt`.
+2. Pásalo con `--glove`, tanto en la búsqueda de hiperparámetros como en las corridas finales:
+
+```powershell
+python IA-Proyecto-Etapa2/scripts/train.py train --model bilstm --seed 42 --predict-split test --save-model --glove C:\datos\glove\glove.6B.300d.txt
+```
+
+Cita: Pennington, Socher y Manning (2014), "GloVe: Global Vectors for Word Representation".
 
 ### Búsqueda de hiperparámetros (HPO)
 
 ```powershell
 python IA-Proyecto-Etapa2/scripts/train.py hpo --family decoder    # Dani, hecho: lr 2e-4, r 16
-python IA-Proyecto-Etapa2/scripts/train.py hpo --family encoder    # Jimmy (corre en BERT-base)
-python IA-Proyecto-Etapa2/scripts/train.py hpo --family tfidf      # Fran
-python IA-Proyecto-Etapa2/scripts/train.py hpo --family bilstm     # Fran
+python IA-Proyecto-Etapa2/scripts/train.py hpo --family encoder    # Jimmy, hecho (en BERT-base): lr 5e-5
+python IA-Proyecto-Etapa2/scripts/train.py hpo --family tfidf      # Fran, hecho: C 10, n-gramas (1, 2)
+python IA-Proyecto-Etapa2/scripts/train.py hpo --family bilstm --glove C:\datos\glove\glove.6B.300d.txt    # Fran, hecho: lr 3e-3, hidden 128, dropout 0.3
 ```
 
 Califica solo en `val_select` y guarda cada intento en `results/hpo/<familia>/`. Haz commit de esa carpeta al terminar.
@@ -146,7 +161,9 @@ foreach ($seed in 42,1337,2026) {
 |---|---|
 | Dani (RTX 3080) | `qwen2.5-1.5b`, `deepseek-r1-distill-qwen-1.5b`, `gemma-4-e2b` |
 | Jimmy (RTX 2060) | `distilbert`, `bert-base`, `qwen2.5-0.5b` |
-| Fran | `bilstm` (3 semillas, 10 épocas), `tfidf-logreg`, y el baseline trivial (sección 4) |
+| Fran | `bilstm` (3 semillas, 10 épocas, con `--glove`), `tfidf-logreg` y el baseline trivial (sección 4) |
+
+**Estado (2026-11-06):** las corridas finales de los ocho modelos están terminadas y sus resultados livianos están en `IA-Proyecto-Etapa2/results/`. Lo que sigue es el análisis (sección 5).
 
 Mientras corre la cola **no cambies de rama ni hagas `pull` con código nuevo**: cada corrida lee el código del disco al arrancar, y las semillas quedarían con versiones distintas. Cambiar a una rama que solo toca `.md` es seguro.
 
@@ -169,14 +186,43 @@ Ya está medido: `max_len` = 64 recorta como máximo el 0.15 % de los textos.
 
 ## 4. Baseline trivial y evaluación
 
+El baseline trivial (`DummyClassifier`: `most_frequent` una vez y `stratified` con las tres semillas) debe aprender las frecuencias de **S**, igual que los demás modelos. Desde `IA-Proyecto-Etapa2`:
+
 ```bash
 cd IA-Proyecto-Etapa2
-python scripts/run_dummy.py --help
+python scripts/run_dummy.py --samples data/labels.csv --train-ids splits/train_S_ids.csv --eval-ids splits/test_ids.csv --split test
 python scripts/evaluate.py --help     # subcomandos: score, aggregate, compare
 ```
 
-Resultados en `IA-Proyecto-Etapa2/results/`.
+Escribe en `results/dummy_most_frequent/` y `results/dummy_stratified/`. Si el informe agregado (`results/report/results_table.md`) avisa que el Dummy se entrenó con el train completo (297,220 filas), repite el primer comando: con S la comparación es justa. Los resultados de todos los modelos quedan en `IA-Proyecto-Etapa2/results/`.
+
+## 5. Análisis de resultados, errores y XAI
+
+Nada de esto entrena modelos (el XAI solo necesita una GPU para recalcular gradientes). Desde `IA-Proyecto-Etapa2`, con el entorno activado:
+
+| Quiero... | Comando | Salida (se versiona) |
+|---|---|---|
+| Tabla y figuras agregadas | `python scripts/make_report.py` | `results/report/` (`results_table.md`, `summary.json`, `table_*.tex`, `fig_*.png` y `.pdf`) |
+| Comparar los pares del contrato (bootstrap pareado) | `python scripts/compare_pairs.py` (un solo par: `--pairs distilbert:bert-base`) | `results/pairs/<a>__vs__<b>.json` |
+| Analizar errores | `python scripts/error_analysis.py` | `results/errors/` |
+| Comprobar que el XAI funciona (modelo de juguete, CPU, unos minutos) | `python scripts/test_xai_toy.py` | nada (usa una carpeta temporal) |
+| XAI del modelo real | `python scripts/xai.py --model bert-base --seed 42` | `results/xai/bert-base/seed_42/` |
+
+**Qué necesita cada uno.** `make_report.py` solo lee los archivos livianos que sí están en el repo. El análisis de errores y los pares necesitan los `predictions.csv` de los modelos que comparan (no se versionan), más `salida/cleaned_full_data.csv` (se regenera con `prepare_data.py`). El XAI necesita además los pesos de la corrida (`results/<modelo>/seed_<n>/model/trainable.pt`, solo en la máquina que entrenó), así que lo corre quien entrenó ese modelo. Si se queda sin memoria de GPU: `--ig-chunk 16 --batch-size 4`; para una prueba rápida: `--quick`.
+
+**Intercambiar predicciones.** Cada quien empaqueta las suyas y se las pasa a quien hace el análisis cruzado:
+
+```bash
+python scripts/share_predictions.py pack --out predicciones_jimmy.zip      # quien las tiene
+python scripts/share_predictions.py unpack predicciones_jimmy.zip          # quien las recibe
+```
+
+Guarda el zip fuera del repo (el `.gitignore` no ignora los `.zip`). `unpack` verifica la huella SHA-256 de cada archivo y nunca sobrescribe uno distinto sin `--force`.
+
+Las cifras del artículo salen de estos archivos, no de la memoria de nadie: si algo cambia en `results/`, se vuelve a correr `make_report.py` y se revisa el texto.
+
+El borrador de las secciones de la Etapa 2 del artículo (metodología final, resultados y limitaciones) está en `IA-Proyecto-Etapa2/articulo/secciones_etapa2.tex`; `borrador.tex` solo sirve para compilarlo (`pdflatex`, `bibtex`, `pdflatex`, `pdflatex`) y lee las tablas y figuras de `results/report/`. Cada `\todo{}` en rojo es algo pendiente de verificar o de llenar con resultados reales; antes de entregar no debe quedar ninguno.
 
 ## Uso de IA
 
-Parte de los scripts (entorno, datos, partición y verificación, arnés de entrenamiento, subconjunto S) y de la documentación se hicieron con asistencia de Claude. Cada integrante debe poder explicar lo que presenta. El registro está en `IA-Proyecto-Etapa2/docs/ai_usage_log.md`.
+Parte de los scripts (entorno, datos, partición y verificación, arnés de entrenamiento, subconjunto S, informe agregado, análisis de errores, comparaciones pareadas y XAI) y de la documentación se hicieron con asistencia de Claude. Cada integrante debe poder explicar lo que presenta. El registro está en `IA-Proyecto-Etapa2/docs/ai_usage_log.md`.

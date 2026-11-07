@@ -20,6 +20,7 @@ Mi regla fue sencilla: la IA propone, yo decido, y ninguna cifra entra al trabaj
 | Subconjunto S y tiempos | Calculó S con las mediciones de los tres | Llevé la propuesta al equipo y la defendí con sus límites |
 | Búsqueda de hiperparámetros | Interpretó los resultados | Lancé y vigilé la búsqueda en mi RTX 3080 y leí el log completo |
 | Documentación | Redactó el contrato (v0.3) y el README | Revisé lo escrito, exigí que reflejara lo que realmente ocurrió y lo corregí |
+| Cierre de la Etapa 2 | Escribió los scripts del informe agregado, del análisis de errores, del bootstrap pareado y de la explicabilidad (esta con una prueba sobre un modelo de juguete), y actualizó README y contrato (v0.4) | Decidí el alcance (XAI en BERT-base y no en los decoders, sin medición de latencia, sin E4B) y repartí el trabajo entre los tres |
 
 El script de limpieza (`dataset_cleaner.py`) lo escribió Jimmy Feng Liu, y la base del arnés, Francisco Kuo Liu (commit `b702fd9`). Lo que usaron de IA lo declaran ellos.
 
@@ -33,7 +34,7 @@ El script de limpieza (`dataset_cleaner.py`) lo escribió Jimmy Feng Liu, y la b
 
 **Decisión y razón.** Primero seguí el plan B y lo llevé al Mac, para aprovechar la máquina. Cuando vi lo lento que procesaba, propuse sacarlo del plan principal: esperarlo sería un cuello de botella enorme para una entrega que cierra el domingo 8 de noviembre, y ponía en riesgo todos los demás modelos. La IA agregó un argumento metodológico que comparto: compararlo en bf16 contra E2B en NF4 mezclaría el efecto de la escala con el de la cuantización.
 
-**Estado.** Yo confirmo que sale. Falta la confirmación de Francisco y Jimmy, y por eso el contrato lo registra como propuesta. Si se confirma, hay que corregir también el artículo de la Etapa 1, que lo menciona.
+**Estado.** Cerrado el 2026-11-06: E4B sale del plan y los otros ocho modelos terminaron sin él. El contrato (v0.4) lo registra como decisión. Hay que corregir también el artículo de la Etapa 1, que lo menciona.
 
 ### 2. Cuánto entrena cada modelo (el subconjunto S)
 
@@ -59,6 +60,20 @@ Para que el entrenamiento de Jimmy arrancara, se pasaron a fp32 los parámetros 
 
 Pedí que el dataset no se versione y que cualquiera lo regenere con un comando, con huellas SHA-256 que confirman que los tres tenemos exactamente lo mismo; que los resultados pesados no entren a Git; un comando de reinicio para probar el flujo desde cero; commits convencionales; y que el uso de IA se declare aparte, para no llenar el historial de ruido. Con eso un tercero puede reproducir el trabajo sin preguntarnos nada.
 
+### 6. Qué explicamos con XAI
+
+**Situación.** La explicabilidad pide recalcular gradientes con los pesos de cada modelo, y esos pesos están solo en la máquina de quien lo entrenó.
+
+**Alternativas.** Explicar un decoder (Qwen2.5-1.5B) o explicar BERT-base.
+
+**Decisión y razón.** BERT-base (y DistilBERT si alcanza el tiempo), corrido por Jimmy, que tiene los pesos. BERT-base es el mejor modelo en Macro-F1 y cabe en una RTX 2060. Los decoders son cuantizados y de atención causal, y explicarlos costaba más tiempo del que queda. El costo es que el artículo no puede decir nada sobre qué usan los decoders, y lo declara como limitación.
+
+### 7. Recortar la medición de latencia
+
+**Situación.** El plan pedía medir la latencia de todos los modelos en una sola GPU, lo que exige juntar los checkpoints de las tres máquinas.
+
+**Decisión y razón.** Se recorta. El costo se reporta con parámetros, VRAM de entrenamiento y tiempo de entrenamiento, cada uno con su GPU y sin compararlos entre GPUs distintas. No cabía antes del domingo, y el artículo lo declara como limitación.
+
 ## Errores encontrados y qué aprendimos
 
 | Error | Consecuencia | Cómo lo detectamos | Lección |
@@ -68,6 +83,9 @@ Pedí que el dataset no se versione y que cualquiera lo regenere con un comando,
 | LoRA no encontraba las capas de atención de Gemma 4 | La corrida fallaba al iniciar | Error de PEFT al cargar | Aplicar LoRA solo a las capas de lenguaje, no a la torre de visión |
 | El escalador de gradiente fallaba con bf16 en la RTX 2060 | Las corridas de Qwen2.5-0.5B no arrancaban | Error reportado por Jimmy | Declarar el dtype por modelo y comprobar el efecto en las otras máquinas |
 | La velocidad de Gemma E2B salió distinta en dos mediciones (2.11 contra 3.15 segundos por paso) | Cambia entre 7 y 10 horas el tiempo estimado | Comparar mis mediciones | Sin resolver; se usó la cifra conservadora |
+| `prepare_data.py` no incluía `train_S_ids.csv` en la lista de particiones que decide si un paso ya está hecho | Con particiones viejas, sin S, el paso 3 se omitía y el error aparecía después, en la verificación | Revisión de los scripts antes de la entrega | Un archivo nuevo del flujo también va en las listas que deciden si un paso se omite. Corregido en esta entrega |
+| El README no pasaba `--glove` en los comandos del BiLSTM | Sin esa opción el arnés usa vectores aleatorios congelados, que no es lo que describe el contrato | Comparar el README con los `config.yaml` de las corridas de Francisco, que sí usaron GloVe | Los comandos documentados se comprueban contra lo que las corridas guardaron. Corregido en esta entrega |
+| El baseline Dummy se corrió con el train completo y no con S | No veía los mismos datos que el resto de los modelos | El informe agregado lo avisa | Se repite con S (Francisco) |
 
 Dos hallazgos más de la revisión de hoy, que corrigen el artículo de la Etapa 1: el dataset viene sin mayúsculas ni puntuación (ningún texto las tiene), y DeepSeek-R1-Distill-Qwen-1.5B se destiló sobre Qwen2.5-Math-1.5B y no sobre Qwen2.5-1.5B, de modo que su par con Qwen no aísla solo el objetivo de entrenamiento.
 
@@ -79,7 +97,7 @@ Dos hallazgos más de la revisión de hoy, que corrigen el artículo de la Etapa
 
 ## Versión corta para los entregables
 
-> Usamos Claude (Anthropic) como asistente durante todo el proyecto: en la Etapa 1 para estructurar el alcance y redactar borradores de la revisión de literatura, y en la Etapa 2 como agente de programación para el pipeline de datos, la corrección de fallos del arnés, el cálculo del subconjunto de entrenamiento y la redacción de la documentación. Las decisiones críticas (qué modelos entran, el tamaño del subconjunto, el tratamiento de las diferencias de hardware) las tomamos nosotros y se justifican en el contrato experimental. Verificamos por nuestra cuenta cada cifra reportada con las corridas guardadas en el repositorio, comprobamos cada cambio de código en nuestras máquinas y registramos los errores de la IA que detectamos. El detalle de cada integrante está en `docs/ai_usage_log.md`.
+> Usamos Claude (Anthropic) como asistente durante todo el proyecto: en la Etapa 1 para estructurar el alcance y redactar borradores de la revisión de literatura, y en la Etapa 2 como agente de programación para el pipeline de datos, la corrección de fallos del arnés, el cálculo del subconjunto de entrenamiento, los scripts de análisis (informe agregado, errores, comparaciones pareadas y explicabilidad) y la redacción de la documentación. Las decisiones críticas (qué modelos entran, el tamaño del subconjunto, el tratamiento de las diferencias de hardware) las tomamos nosotros y se justifican en el contrato experimental. Verificamos por nuestra cuenta cada cifra reportada con las corridas guardadas en el repositorio, comprobamos cada cambio de código en nuestras máquinas y registramos los errores de la IA que detectamos. El detalle de cada integrante está en `docs/ai_usage_log.md`.
 
 ## Sesiones de Francisco Kuo Liu
 

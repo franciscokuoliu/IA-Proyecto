@@ -2,7 +2,7 @@
 
 Benchmark de reconocimiento de emociones en texto (CARER, 6 clases).
 Integrantes: Francisco Kuo Liu, Jimmy Feng Liu y Danielo Wu Zhong.
-Versión: 0.3 (2026-11-04). Fase 0 cerrada salvo las verificaciones de literatura y la confirmación del equipo sobre Gemma 4 E4B. Pasa a 1.0 cuando se resuelvan las marcas **[POR DEFINIR]**.
+Versión: 0.4 (2026-11-06). Fase 0 cerrada y corridas finales terminadas (ocho modelos con tres semillas; TF-IDF y Dummy most-frequent son deterministas y tienen una sola corrida). Siguen abiertas las verificaciones de literatura, la revisión de los 30 pares de la limpieza y el XAI sobre BERT-base. Pasa a 1.0 cuando se resuelvan las marcas **[POR DEFINIR]**.
 
 Este documento fija las reglas que valen para los tres integrantes y para todos los modelos. Una regla solo cambia por commit, con la razón escrita en el "Historial de cambios" (sección 16). Nadie ajusta una regla de forma local en su máquina.
 
@@ -26,9 +26,9 @@ Ejes de estudio: familia arquitectural, escala de parámetros y objetivo de entr
 
 **Regla de pares controlados.** Dentro de un par, todo es idéntico salvo la variable bajo estudio: misma partición, mismo conjunto de entrenamiento (S), mismo `max_len`, misma loss, mismo optimizador y planificación, mismos módulos y rango de LoRA, mismo régimen de cuantización y mismo dtype de cómputo. Si el hardware de una máquina impide cumplirlo, el modelo se corre en otra máquina antes de romper el par.
 
-**Propuesta de Danielo, pendiente de confirmación de Francisco y Jimmy: Gemma 4 E4B queda fuera del plan principal.** E4B no cabe en la RTX 3080 (10 GB) ni en 4 bits: solo sus tablas de embeddings ocupan unos 6.5 GB y bitsandbytes no las cuantiza. El estimado total en 4 bits es de 8.77 GB (medido con `scripts/inspect_model.py`), sin margen para activaciones ni optimizador. En la Mac M5 (24 GB de memoria unificada) sí corrió un paso de prueba, en bf16 sin cuantizar y con unos 19.6 GB de memoria. Esa corrida es de otro régimen (bf16 sin cuantizar contra NF4 en E2B), así que compararlas mezclaría escala con cuantización. Por eso se propone que el par E2B vs E4B no forme parte del estudio y que E4B se reporte solo como hallazgo de viabilidad; si sobra tiempo podría correrse como extra, etiquetado aparte (`device: mps`) y fuera de la frontera de Pareto. **[POR DEFINIR]**: confirmación explícita de Francisco y Jimmy (Danielo, responsable de E4B, ya confirmó). Un motivo práctico adicional es que la Mac procesa E4B tan lento que sería un cuello de botella para la fecha de entrega. Mientras no se confirme, E4B no se entrena, y si el equipo decide mantenerlo, vuelve el régimen B de la versión 0.2 y hay que reabrir las secciones 1 y 11.
+**Decisión (Danielo, 2026-11-06): Gemma 4 E4B queda fuera del plan.** E4B no cabe en la RTX 3080 (10 GB) ni en 4 bits: solo sus tablas de embeddings ocupan unos 6.5 GB y bitsandbytes no las cuantiza. El estimado total en 4 bits es de 8.77 GB (medido con `scripts/inspect_model.py`), sin margen para activaciones ni optimizador. En la Mac M5 (24 GB de memoria unificada) sí corrió un paso de prueba, en bf16 sin cuantizar y con unos 19.6 GB, pero esa corrida es de otro régimen (bf16 sin cuantizar contra NF4 en E2B), así que compararlas mezclaría escala con cuantización. Por eso el par E2B vs E4B no forma parte del estudio y E4B se reporta solo como hallazgo de viabilidad. Además, la Mac lo procesa tan lento que sería un cuello de botella para la fecha de entrega. Las corridas finales de los otros ocho modelos terminaron sin E4B. Si el equipo decidiera retomarlo, vuelve el régimen B de la versión 0.2 y hay que reabrir las secciones 1 y 11.
 
-**Excepción declarada: par de objetivo de entrenamiento.** DeepSeek-R1-Distill-Qwen-1.5B no se destiló sobre Qwen2.5-1.5B, sino sobre **Qwen2.5-Math-1.5B** (según las páginas de terceros consultadas el 2026-11-04). Por eso el par Qwen2.5-1.5B contra DeepSeek no aísla solo el objetivo de entrenamiento: también cambia el modelo base, que está especializado en matemáticas. Hay que declararlo en el artículo como confusor. **[POR DEFINIR]**: citar la fuente primaria (tarjeta oficial del modelo o artículo de DeepSeek-R1).
+**Excepción declarada: par de objetivo de entrenamiento.** DeepSeek-R1-Distill-Qwen-1.5B no se destiló sobre Qwen2.5-1.5B, sino sobre **Qwen2.5-Math-1.5B** (fuente primaria: DeepSeek-AI, 2025, arXiv:2501.12948, sección 2.4; verificada el 2026-11-06). Por eso el par Qwen2.5-1.5B contra DeepSeek no aísla solo el objetivo de entrenamiento: también cambia el modelo base, que está especializado en matemáticas. Hay que declararlo en el artículo como confusor.
 
 **Excepción declarada: par de escala de Qwen.** Qwen2.5-0.5B se entrena en la RTX 2060 de Jimmy con fp16, y Qwen2.5-1.5B en la RTX 3080 con bf16. Eso rompe la regla de dtype idéntico dentro del par; se declara como posible confusor (decisión de Danielo, 2026-11-04).
 ---
@@ -99,7 +99,7 @@ Son estimados: las corridas reales pueden variar alrededor de 15 %. La evaluaci�
 - Cada familia usa su tokenizador nativo sobre el texto original (WordPiece en BERT/DistilBERT, BPE en Qwen, Gemma y DeepSeek).
 - `max_len` común para todos los modelos: el mayor de los percentiles 99 de longitud en tokens entre los tokenizadores, redondeado a múltiplo de 8. Medido con `scripts/token_lengths.py` sobre 20,000 textos de S: el p99 máximo es 57 tokens (BERT), y con 64 el peor tokenizador recorta el 0.15 % de los textos (Qwen, Gemma y DeepSeek recortan 0.07 %; el BiLSTM, que cuenta palabras, 0.02 %). **Valor fijado: 64.** Truncado a la derecha, padding dinámico por lote.
 - TF-IDF: `TfidfVectorizer` ajustado solo con train. Configuración inicial: n-gramas (1, 2), `min_df` y `max_features` definidos en la búsqueda (sección 9).
-- BiLSTM: vocabulario construido solo con train. Embeddings estáticos pre-entrenados (por defecto GloVe 300d), congelados. Nota: el artículo de la Etapa 1 menciona "embeddings estáticos" y también "embeddings contextualizados" para esta línea base. Se unifica a estáticos y se corrige el artículo.
+- BiLSTM: vocabulario construido solo con train. Embeddings estáticos pre-entrenados (GloVe de 300 dimensiones, que se pasa con `--glove`; sin esa opción el arnés usa vectores aleatorios congelados), congelados. Nota: el artículo de la Etapa 1 menciona "embeddings estáticos" y también "embeddings contextualizados" para esta línea base. Se unifica a estáticos y se corrige el artículo.
 
 ---
 
@@ -168,8 +168,12 @@ Acotada, sistemática y documentada. Cada intento se guarda en `results/hpo/<fam
 | lr 1e-4, r 16 | 0.453 | Aprende más lento |
 | lr 2e-4, r 32 | 0.245 | Colapsó desde el paso 100 |
 
-Configuración elegida: **lr 2e-4, r 16** (alpha 32), que coincide con los valores por defecto del catálogo. Dos advertencias para el artículo: (1) el punto elegido está cerca del borde de estabilidad, porque lr 3e-4 y r 32 colapsaron; en las corridas finales (unos 3,000 pasos, calentamiento de unos 180) el arranque es más suave, pero hay que revisar en el log de cada semilla que no colapse; (2) con una sola época se favorecen los lr altos. Resultados en `results/hpo/decoder/`. Pendientes: encoders (Jimmy), TF-IDF y BiLSTM (Fran).
-- La configuración elegida en Qwen2.5-1.5B se reutiliza en el resto de los decoders para mantener los pares controlados. Si un modelo diverge (loss que explota o no baja), se ajusta solo el lr, se documenta y se declara como posible confusor.
+Configuración elegida: **lr 2e-4, r 16** (alpha 32), que coincide con los valores por defecto del catálogo. Dos advertencias para el artículo: (1) el punto elegido está cerca del borde de estabilidad, porque lr 3e-4 y r 32 colapsaron; en las corridas finales (unos 3,000 pasos, calentamiento de unos 180) el arranque es más suave, y los logs de las doce corridas de decoders no muestran colapso (la mayor caída del Macro-F1 de val de selección respecto de su mejor valor fue de 0.0024); (2) con una sola época se favorecen los lr altos. Resultados en `results/hpo/decoder/`.
+
+**Las otras familias (Macro-F1 en la val de selección, una semilla).** Encoders (BERT-base, S completo, 3 épocas): lr 5e-5 dio 0.9921 (elegido), 3e-5 dio 0.9905 y 2e-5 dio 0.9901; DistilBERT hereda lr 5e-5. TF-IDF (S completo): C 10 con n-gramas (1,2) dio 0.9480 (elegido) y el peor intento, C 0.1 con (1,2), dio 0.8525. BiLSTM (20 % de S, 10 épocas): lr 3e-3, hidden 128 y dropout 0.3 dio 0.9475 (elegido) y el peor intento dio 0.9059. Detalle en `results/hpo/` y en `results/report/results_table.md`.
+
+**Advertencia de borde de rejilla.** Los ganadores de encoders, TF-IDF y BiLSTM quedaron en el extremo de su rejilla (lr 5e-5; C 10 y n-gramas (1,2); lr 3e-3, hidden 128 y dropout 0.3), así que no se puede afirmar que sean el óptimo real. Las rejillas se fijaron en la Fase 0 y no se ampliaron por falta de tiempo antes de la entrega; se declara como limitación.
+- La configuración elegida en Qwen2.5-1.5B se reutiliza en el resto de los decoders para mantener los pares controlados. Si un modelo diverge (loss que explota o no baja), se ajusta solo el lr, se documenta y se declara como posible confusor. No hizo falta: los cuatro decoders corrieron con lr 2e-4 y r 16.
 - Se declara el criterio de parada de la búsqueda (presupuesto agotado) y por qué se paró ahí. Variar r además responde a la limitación que el propio artículo reconoce: que r = 16 fijo a priori podría ser una restricción de capacidad.
 
 ---
@@ -184,6 +188,15 @@ Configuración elegida: **lr 2e-4, r 16** (alpha 32), que coincide con los valor
 - Comparaciones por pares (eje controlado): bootstrap pareado sobre el test (1,000 remuestreos, mismos IDs para ambos modelos), con intervalo de confianza del 95 % de la diferencia de Macro-F1. Una diferencia se considera informativa solo si el intervalo excluye el cero. No se usa una prueba sobre las semillas porque n = 3 no alcanza.
 - Se reportan siempre tres referencias: baseline trivial (Dummy), baseline clásico (TF-IDF + LogReg) y baseline de literatura. Los números de literatura se incluyen solo cuando su origen fue verificado; si no, se recalcula o se marca como propio.
 
+### Análisis posteriores a las corridas
+
+Estos pasos leen `results/` y no cambian ningún resultado.
+
+- **Informe agregado.** `scripts/make_report.py` genera `results/report/` (tablas y figuras). Es la fuente de las cifras del artículo.
+- **Pares.** `scripts/compare_pairs.py` aplica el bootstrap pareado de arriba a cada semilla del par (semilla k de A contra la k de B, 1,000 remuestreos, semilla 42) y guarda `results/pairs/<a>__vs__<b>.json`. Una diferencia se considera sistemática solo si el IC excluye el cero con el mismo signo en las tres semillas.
+- **Errores.** `scripts/error_analysis.py` mide errores por clase, confusiones, confianza, longitud y errores compartidos o exclusivos entre modelos. Decir que un error es "ruido de etiqueta" es una hipótesis hasta revisar a mano una muestra (mínimo 30 textos que fallan todos los modelos).
+- **XAI (`scripts/xai.py`).** Se explica BERT-base (semilla 42) y, si alcanza el tiempo, DistilBERT. No se explican los decoders (decisión de Danielo, 2026-11-06): son cuantizados y con atención causal, y explicarlos costaría mucho más; se declara como limitación. El método principal es Integrated Gradients (Sundararajan et al., 2017) sobre los embeddings de entrada, con baseline [PAD] y 64 puntos de Gauss-Legendre, contrastado con la atención de [CLS] y el attention rollout (Abnar y Zuidema, 2020), que no se toman como explicación por sí solas (Jain y Wallace, 2019). Antes de interpretar se comprueba que IG cumple la completitud (error relativo medio menor a 5 %) y que las atribuciones cambian con una cabeza o un modelo aleatorio (Adebayo et al., 2018). La fidelidad se mide quitando, o dejando solo, las k palabras más atribuidas frente a k palabras al azar (DeYoung et al., 2020). `scripts/test_xai_toy.py` valida el código con un modelo diminuto de pistas conocidas; no valida a BERT-base.
+
 ---
 
 ## 11. Costo y hardware
@@ -191,10 +204,10 @@ Configuración elegida: **lr 2e-4, r 16** (alpha 32), que coincide con los valor
 Las tres máquinas tienen GPUs distintas, así que tiempos y latencias medidos en cada una no son comparables entre sí.
 
 - **Se reporta por corrida y por máquina** (dato descriptivo): GPU, versión de driver, torch, tiempo total de entrenamiento, muestras/s, VRAM pico de entrenamiento (con `max_memory_allocated`, reiniciando el contador antes de entrenar), parámetros totales y entrenables, tamaño de lote, `max_len` y dtype. Todo queda en `run_metadata.json`.
-- **Costo para la frontera de Pareto:** parámetros entrenables, VRAM pico de inferencia y **latencia unificada**, todos medidos en la misma máquina de referencia (RTX 3080) con un benchmark común. Cada integrante comparte los adaptadores o checkpoints finales (`--save-model`, son pequeños) y se corre el benchmark una sola vez para todos.
-- **Protocolo de latencia:** 500 muestras fijas del test (`splits/latency_ids.csv`), lote 1 y lote 32, 50 pasos de calentamiento, `torch.cuda.synchronize()`, se reportan mediana y p95 en ms. La tokenización se mide aparte. Se mide el modelo tal como fue evaluado (base cuantizada más adaptador). Los modelos de CPU (Dummy, TF-IDF) se miden en la CPU de la máquina de referencia.
+- **Costo (decisión de Danielo, 2026-11-06, en lugar del plan de la versión 0.3):** por modelo se reportan los parámetros totales y entrenables, la VRAM pico de entrenamiento y el tiempo de entrenamiento por corrida, cada uno con la GPU donde se midió. No se comparan tiempos ni VRAM entre GPUs distintas. Los parámetros de los decoders cuantizados salen del conteo publicado del modelo base, porque el arnés cuenta cada par de pesos de 4 bits como un elemento (`results/report/summary.json`, campo `n_params_source`).
+- **Recortado:** el benchmark de latencia unificada (500 muestras del test en la RTX 3080) y la VRAM de inferencia no se hicieron, por falta de tiempo antes de la entrega. El artículo debe decir que no hay medición de latencia.
 - **Tiempo de entrenamiento:** se declara por máquina y no se compara entre GPUs distintas.
-- **Un solo régimen (si se confirma la propuesta de la sección 1):** GPUs NVIDIA, decoders en QLoRA NF4, con bf16 en Ampere y fp16 en Turing. La Pareto se calcula con corridas medidas en la RTX 3080.
+- **Un solo régimen (confirmado):** GPUs NVIDIA, decoders en QLoRA NF4, con bf16 en Ampere y fp16 en Turing. TF-IDF y BiLSTM corrieron en CPU.
 - **Mac M5 (fuera del experimento principal):** el arnés soporta MPS en bf16 sin cuantizar. Se usó para la prueba de viabilidad de Gemma 4 E4B (sección 1). Las corridas en MPS se etiquetan `device: mps`, no entran a la Pareto, y su memoria (`memory_kind: mps_driver_allocated`) es un orden de magnitud, no comparable con `max_memory_allocated`.
 - **Costo de la evaluación periódica:** evaluar la val de selección cada 1/4 de época tarda de 130 a 215 s en los decoders y pesa cerca de un tercio de cada corrida. Es parte del tiempo declarado.
 ---
@@ -212,14 +225,22 @@ Las tres máquinas tienen GPUs distintas, así que tiempos y latencias medidos e
     data/                    DATASET_INFO.md y expected_hashes.json (huellas); sin el CSV
     splits/                  ids de cada partición y S (no versionados, se regeneran)
     src/harness/             arnés de entrenamiento
-    scripts/                 prepare_data.py, train.py, evaluate.py, check_splits.py, token_lengths.py
+    scripts/                 prepare_data.py, train.py, evaluate.py, check_splits.py, token_lengths.py,
+                             make_report.py, compare_pairs.py, error_analysis.py, share_predictions.py,
+                             xai.py, test_xai_toy.py (y de apoyo: download_data.py, dataset_cleaner.py,
+                             make_splits.py, splits_common.py, run_dummy.py, inspect_model.py)
     results/<modelo>/seed_<n>/   metrics.json, config.yaml, run.log, run_metadata.json,
-                                 predictions.csv (no versionado) y model/ (adaptadores, con --save-model)
+                                 predictions.csv (no versionado) y model/ (adaptadores, con --save-model;
+                                 solo model_info.json se versiona)
     results/hpo/<familia>/   un resumen y una carpeta por intento
+    results/report/          tablas y figuras agregadas (make_report.py)
+    results/pairs/           bootstrap pareado de los pares (compare_pairs.py)
+    results/errors/          análisis de errores (error_analysis.py)
+    results/xai/<modelo>/seed_<n>/   explicabilidad (xai.py)
     docs/ai_usage_log.md
 ```
 
-- Cada corrida guarda el hash del commit, su configuración completa y las versiones de las librerías.
+- Cada corrida guarda el hash del commit, su configuración completa y las versiones de las librerías. Excepción: las corridas finales de Jimmy (DistilBERT, BERT-base y Qwen2.5-0.5B) quedaron con `commit: null` en `run_metadata.json`. El código de entrenamiento (`src/` y `scripts/train.py`) no cambió en el repositorio desde `87beccc`, el commit que registran las corridas de Danielo; falta confirmar con Jimmy qué versión tenía en su copia.
 - Los tres integrantes hacen commits de su propio trabajo desde el inicio. La autoría individual se determina por commits.
 - No se versionan datasets, checkpoints pesados ni dependencias instaladas (`.venv`). Los adaptadores se comparten por un medio externo.
 - `docs/ai_usage_log.md`: nota corta por sesión de trabajo con IA (qué se pidió, qué se verificó a mano). Alimenta la declaración de uso de IA obligatoria.
@@ -237,12 +258,12 @@ Nadie entrena un modelo final hasta completar los pasos 1 a 6.
 5. Hecho. `evaluate.py` y formato de predicciones, probados con `DummyClassifier`.
 6. Hecho. Prueba de humo del entorno en las tres máquinas. En la 3080, la prueba de viabilidad de Gemma 4 E4B dio que no cabe (sección 1).
 7. Hecho. Throughput (sección 4), S = 32,000 y `max_len` = 64. Queda por aclarar la velocidad de Gemma 4 E2B, medida de dos formas (10.2 y 15.1 muestras/s); se usó la conservadora.
-8. En curso. Verificaciones de literatura: la base de DeepSeek-R1-Distill resultó ser Qwen2.5-Math-1.5B (falta la fuente primaria). Falta verificar el origen de las cifras de la tabla de baselines publicados sobre CARER del artículo de la Etapa 1: cita a Saravia 2018 y Zhang 2024, pero otra tabla del mismo artículo da 0.647 de Macro-F1 para el BiLSTM de Saravia (la primera dice cerca de 84 %), y Zhang 2024 se resume como "Standard Sentiment Corpora", no CARER. No usar esas cifras hasta verificarlas.
-9. Pendiente. Congelar el contrato como v1.0: requiere cerrar el paso 8, la confirmación de Francisco y Jimmy sobre E4B y la revisión de los 30 pares de la limpieza.
+8. En curso (Francisco). Verificaciones de literatura: la base de DeepSeek-R1-Distill resultó ser Qwen2.5-Math-1.5B (fuente primaria verificada el 2026-11-06: DeepSeek-AI, 2025, sección 2.4). Falta verificar el origen de las cifras de la tabla de baselines publicados sobre CARER del artículo de la Etapa 1: cita a Saravia 2018 y Zhang 2024, pero otra tabla del mismo artículo da 0.647 de Macro-F1 para el BiLSTM de Saravia (la primera dice cerca de 84 %), y Zhang 2024 se resume como "Standard Sentiment Corpora", no CARER. No usar esas cifras hasta verificarlas.
+9. Pendiente. Congelar el contrato como v1.0: requiere cerrar el paso 8 y la revisión de los 30 pares de la limpieza (Jimmy).
 
-Correcciones pendientes al artículo de la Etapa 1: el dataset (20,000 instancias en el texto, frente a 371,527 filas limpias); "Gemma-2" en el texto, cuando el modelo es Gemma 4; Gemma 4 E4B, si se confirma que sale; el texto en minúsculas y sin puntuación; los módulos de LoRA de DeepSeek (el artículo los extiende a las capas feed-forward, el contrato usa los mismos que los demás); y la base de DeepSeek.
+Correcciones pendientes al artículo de la Etapa 1: el dataset (20,000 instancias en el texto, frente a 371,527 filas limpias); "Gemma-2" en el texto, cuando el modelo es Gemma 4; Gemma 4 E4B, que sale del plan; el texto en minúsculas y sin puntuación; los módulos de LoRA de DeepSeek (el artículo los extiende a las capas feed-forward, el contrato usa los mismos que los demás); y la base de DeepSeek.
 
-Estado de la ejecución al 2026-11-04: HPO de decoders terminado (sección 9). Siguen el HPO de encoders, TF-IDF y BiLSTM, y luego las corridas finales con tres semillas, `--predict-split test` y `--save-model`.
+Estado de la ejecución al 2026-11-06: la búsqueda de hiperparámetros de las cuatro familias y las corridas finales de los ocho modelos están terminadas (secciones 9 y 10; resultados en `results/`). Pendientes: repetir el Dummy con S (Francisco), el XAI sobre BERT-base (Jimmy), los pares que necesitan predicciones de dos máquinas, la revisión manual de los errores compartidos, las verificaciones de literatura y la revisión de los 30 pares de la limpieza.
 ---
 
 ## 14. Reglas anti-fuga (resumen)
@@ -265,15 +286,18 @@ Estado de la ejecución al 2026-11-04: HPO de decoders terminado (sección 9). S
 | Cabeza de clasificación en decoders | Generación de la etiqueta como texto | Da probabilidades por clase (calibración, baja confianza en Etapa 3) y permite la loss ponderada sin depender de prompt ni de parseo |
 | QLoRA NF4 en todos los decoders | Mezclar LoRA 16 bits y QLoRA según la GPU | El régimen de memoria se confundiría con la escala y la familia |
 | Misma configuración de LoRA en todos los decoders | Módulos distintos para DeepSeek | Aislar el efecto del objetivo de entrenamiento exige configuración idéntica |
-| Benchmark de latencia en una sola GPU | Latencias medidas en cada máquina | GPUs distintas hacen incomparables los tiempos |
+| Sin latencia unificada: el costo es parámetros, VRAM y tiempo de entrenamiento, cada uno con su GPU | Benchmark de latencia en una sola GPU, o latencias medidas en cada máquina | No cupo antes de la entrega, y medir en cada máquina daría cifras incomparables |
 | Bootstrap pareado sobre el test | Prueba t sobre 3 semillas | Con n = 3 la prueba no tiene poder; el bootstrap usa las miles de muestras de test |
 | Tres semillas para todos los neuronales | Solo para decoders | Los encoders y el BiLSTM son baratos y así el ± es comparable entre familias |
 | Val de selección de 10K | Val completa en cada evaluación | Evaluar 39K muestras cada cuarto de época es caro y no cambia la decisión de parada |
 | `max_len` común | `max_len` por modelo | Mantiene la entrada idéntica entre modelos; es un parámetro más del control |
-| Gemma 4 E4B fuera del plan principal (propuesta, pendiente de confirmación) | E4B en la Mac en bf16 (régimen B) con E2B de puente | Mezcla escala con cuantización, usa otra máquina y no entra a la Pareto |
+| Gemma 4 E4B fuera del plan (decidido por Danielo, 2026-11-06) | E4B en la Mac en bf16 (régimen B) con E2B de puente | Mezcla escala con cuantización, usa otra máquina y no cabe en la RTX 3080 |
 | S = 32,000 | Más muestras | Es lo que cabe en unas 8 h de entrenamiento del modelo más lento (E2B) con 3 semillas y 3 épocas, para cerrar el domingo 2026-11-08 |
 | `max_len` = 64 | 128 | Recorta 0.15 % en el peor tokenizador, y menos longitud baja el costo |
 | HPO de decoders con 20 % de S y 1 época | HPO completo | Cabe en el tiempo; sesgo hacia lr altos declarado en la sección 9 |
+| XAI sobre BERT-base (y DistilBERT si alcanza el tiempo) | XAI sobre un decoder cuantizado | BERT-base es el mejor en Macro-F1 y se puede explicar en una RTX 2060; los decoders tienen atención causal y pesos NF4, y explicarlos costaría mucho más. Se declara como limitación |
+| Integrated Gradients con verificaciones (completitud, cordura, fidelidad) | Mostrar solo la atención | La atención por sí sola no es una explicación (Jain y Wallace, 2019); IG tiene propiedades que se pueden comprobar |
+| Baseline trivial (Dummy) entrenado con S | Dummy entrenado con el train completo | Debe ver la misma información que el resto. Los primeros Dummy usaron el train completo y se repiten con S |
 
 ---
 
@@ -284,3 +308,4 @@ Estado de la ejecución al 2026-11-04: HPO de decoders terminado (sección 9). S
 | 0.1 | | Borrador inicial | |
 | 0.2 | 2026-11-02 | Gemma 4 E4B no cabe en 10 GB: se agrega el régimen B (Mac M5, bf16 sin cuantizar) con E2B como puente, se aclara que la Pareto es solo del régimen A y se registra el costo de memoria en MPS | Dani |
 | 0.3 | 2026-11-04 | Se propone retirar el régimen B y el par E2B vs E4B (E4B quedaría como hallazgo de viabilidad, pendiente de confirmación del equipo); se corrigen filas (371,527) y método real de limpieza; se fijan S = 32,000, `max_len` = 64 y las mediciones de Fase 0; se registra el resultado del HPO de decoders (lr 2e-4, r 16); se marca el estado de la Fase 0 y los pendientes | Dani |
+| 0.4 | 2026-11-06 | Se cierra Gemma 4 E4B (fuera); se registran el HPO de encoders, TF-IDF y BiLSTM con la advertencia de borde de rejilla y la ausencia de colapsos en las corridas finales; se recorta la latencia unificada; se agregan los análisis posteriores (informe, pares, errores, XAI); se corrige la nota de GloVe del BiLSTM; se verifica en la fuente primaria que DeepSeek-R1-Distill-Qwen-1.5B parte de Qwen2.5-Math-1.5B; se actualizan la estructura del repositorio y el estado de la ejecución | Dani |
