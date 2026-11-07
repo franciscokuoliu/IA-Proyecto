@@ -1,0 +1,22 @@
+% Generado por scripts/make_report.py. No editar a mano.
+\begin{tabular}{@{}lrrrr@{}}
+\toprule
+Model & Macro-F1 (test) & Params & VRAM (GB) & Time (min) \\
+\midrule
+BERT-base & 0.9895 $\pm$ 0.0005 & 109.5M & 2.2 & 16.6 \\
+DistilBERT & 0.9891 $\pm$ 0.0003 & 67.0M & 1.4 & 9.6 \\
+\midrule
+Qwen2.5-1.5B & 0.9887 $\pm$ 0.0012 & 1.54B$^{\dagger}$ & 2.7 & 72.7 \\
+Qwen2.5-0.5B & 0.9877 $\pm$ 0.0010 & 0.49B$^{\dagger}$ & 1.2 & 85.5 \\
+DeepSeek-R1-Distill-1.5B & 0.9874 $\pm$ 0.0008 & 1.54B$^{\dagger}$ & 2.7 & 79.0 \\
+\midrule
+BiLSTM + GloVe & 0.9786 $\pm$ 0.0028 & 7.0M & -- & 9.6 \\
+\midrule
+Gemma 4 E2B & 0.9544 $\pm$ 0.0032 & 5.1B$^{\dagger}$ & 9.2 & 149.4 \\
+\midrule
+TF-IDF + LogReg & 0.9493 & 344K & -- & 0.2 \\
+\midrule
+Dummy (stratified) & 0.1662 $\pm$ 0.0026 & -- & -- & $<$0.1 \\
+Dummy (most frequent) & 0.0861 & -- & -- & $<$0.1 \\
+\bottomrule
+\end{tabular}

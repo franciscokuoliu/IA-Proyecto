@@ -1,0 +1,524 @@
+{
+  "qwen2.5-1.5b": {
+    "seeds": [
+      42,
+      1337,
+      2026
+    ],
+    "n_test": 37153,
+    "errors_per_seed": [
+      327,
+      269,
+      342
+    ],
+    "n_persistent": 130,
+    "n_single_seed": 268,
+    "macro_f1_recomputed": [
+      0.9884255425099576,
+      0.9899785187669986,
+      0.9877172802631131
+    ],
+    "per_class": {
+      "sadness": {
+        "support": 11604,
+        "recall": 0.9948868206365621,
+        "precision": 0.9944012173763244,
+        "pred_over_true": 1.0004883373549351
+      },
+      "joy": {
+        "support": 12937,
+        "recall": 0.9934296977660972,
+        "precision": 0.9954045541384829,
+        "pred_over_true": 0.9980160263842724
+      },
+      "love": {
+        "support": 2438,
+        "recall": 0.9974022422750889,
+        "precision": 0.9950893466102851,
+        "pred_over_true": 1.0023243095433416
+      },
+      "anger": {
+        "support": 5233,
+        "recall": 0.985986368558507,
+        "precision": 0.984043229497775,
+        "pred_over_true": 1.0019746480667557
+      },
+      "fear": {
+        "support": 3958,
+        "recall": 0.980882600640054,
+        "precision": 0.9833671057075313,
+        "pred_over_true": 0.9974734714502274
+      },
+      "surprise": {
+        "support": 983,
+        "recall": 0.9867751780264497,
+        "precision": 0.9729187562688064,
+        "pred_over_true": 1.0142421159715158
+      }
+    },
+    "top_pairs": [
+      {
+        "true": "joy",
+        "pred": "anger",
+        "count": 96
+      },
+      {
+        "true": "joy",
+        "pred": "sadness",
+        "count": 87
+      },
+      {
+        "true": "anger",
+        "pred": "fear",
+        "count": 87
+      },
+      {
+        "true": "fear",
+        "pred": "anger",
+        "count": 87
+      },
+      {
+        "true": "fear",
+        "pred": "surprise",
+        "count": 72
+      }
+    ],
+    "confidence": [
+      {
+        "bin": "< 0.50",
+        "n": 165,
+        "error_rate": 0.6727272727272727
+      },
+      {
+        "bin": "0.50 - 0.70",
+        "n": 453,
+        "error_rate": 0.5099337748344371
+      },
+      {
+        "bin": "0.70 - 0.90",
+        "n": 651,
+        "error_rate": 0.391705069124424
+      },
+      {
+        "bin": "0.90 - 0.99",
+        "n": 950,
+        "error_rate": 0.1863157894736842
+      },
+      {
+        "bin": ">= 0.99",
+        "n": 109240,
+        "error_rate": 0.0015012815818381546
+      }
+    ],
+    "share_errors_conf_ge_0.9": 0.36353944562899787,
+    "length": [
+      {
+        "words": "<= 11",
+        "n": 10536,
+        "error_rate": 0.011009870918754746
+      },
+      {
+        "words": "12 - 17",
+        "n": 8680,
+        "error_rate": 0.007642089093701997
+      },
+      {
+        "words": "18 - 25",
+        "n": 8825,
+        "error_rate": 0.0069121813031161475
+      },
+      {
+        "words": "> 25",
+        "n": 9112,
+        "error_rate": 0.007609013754755633
+      }
+    ],
+    "text_type": [
+      {
+        "subset": "Contiene feel / feeling / felt",
+        "n": 36591,
+        "error_rate": 0.003880735700035528,
+        "share_of_typical_errors": 0.3888888888888889
+      },
+      {
+        "subset": "No contiene feel",
+        "n": 562,
+        "error_rate": 0.3036773428232503,
+        "share_of_typical_errors": 0.6111111111111112
+      },
+      {
+        "subset": "Empieza con \"when\"",
+        "n": 168,
+        "error_rate": 0.3551587301587302,
+        "share_of_typical_errors": 0.22592592592592592
+      }
+    ],
+    "high_confidence_persistent_ids": [
+      "a7b9b65cc72aa836bab5b9cbb5179a78",
+      "94720d50a8b7ccba035a6d5b56a48344",
+      "8e818f18c403677b76bafa0012c1c056",
+      "507ee2ee32d01a45ef8b60cf71c2c4f3",
+      "bf295f38e738cdd0a9413b5bef94a355",
+      "cc9ea27a63e8e67ceb3ea6e7b816045c",
+      "ef2f46f788fbaa3e81199b94b109d7e3",
+      "9e4be15156c6028a896f0df2276b16a2"
+    ]
+  },
+  "deepseek-r1-distill-qwen-1.5b": {
+    "seeds": [
+      42,
+      1337,
+      2026
+    ],
+    "n_test": 37153,
+    "errors_per_seed": [
+      350,
+      399,
+      349
+    ],
+    "n_persistent": 177,
+    "n_single_seed": 251,
+    "macro_f1_recomputed": [
+      0.9876736295232266,
+      0.9864575353970784,
+      0.9879850912840081
+    ],
+    "per_class": {
+      "sadness": {
+        "support": 11604,
+        "recall": 0.9938239687464093,
+        "precision": 0.9924270674966295,
+        "pred_over_true": 1.0014075606112836
+      },
+      "joy": {
+        "support": 12937,
+        "recall": 0.9916776171703898,
+        "precision": 0.9946761771850933,
+        "pred_over_true": 0.9969853907397387
+      },
+      "love": {
+        "support": 2438,
+        "recall": 0.9961717254580257,
+        "precision": 0.9949474259183395,
+        "pred_over_true": 1.0012305168170632
+      },
+      "anger": {
+        "support": 5233,
+        "recall": 0.9848397987132939,
+        "precision": 0.9822120576837557,
+        "pred_over_true": 1.0026753296388304
+      },
+      "fear": {
+        "support": 3958,
+        "recall": 0.976755937342092,
+        "precision": 0.9827147941026945,
+        "pred_over_true": 0.9939363314805457
+      },
+      "surprise": {
+        "support": 983,
+        "recall": 0.9938962360122076,
+        "precision": 0.9647794601711652,
+        "pred_over_true": 1.0301797219396405
+      }
+    },
+    "top_pairs": [
+      {
+        "true": "joy",
+        "pred": "sadness",
+        "count": 137
+      },
+      {
+        "true": "joy",
+        "pred": "anger",
+        "count": 101
+      },
+      {
+        "true": "anger",
+        "pred": "fear",
+        "count": 96
+      },
+      {
+        "true": "sadness",
+        "pred": "anger",
+        "count": 92
+      },
+      {
+        "true": "fear",
+        "pred": "surprise",
+        "count": 91
+      }
+    ],
+    "confidence": [
+      {
+        "bin": "< 0.50",
+        "n": 197,
+        "error_rate": 0.7309644670050761
+      },
+      {
+        "bin": "0.50 - 0.70",
+        "n": 520,
+        "error_rate": 0.525
+      },
+      {
+        "bin": "0.70 - 0.90",
+        "n": 726,
+        "error_rate": 0.39944903581267216
+      },
+      {
+        "bin": "0.90 - 0.99",
+        "n": 1032,
+        "error_rate": 0.22286821705426357
+      },
+      {
+        "bin": ">= 0.99",
+        "n": 108984,
+        "error_rate": 0.0014772810687807385
+      }
+    ],
+    "share_errors_conf_ge_0.9": 0.3561020036429873,
+    "length": [
+      {
+        "words": "<= 11",
+        "n": 10536,
+        "error_rate": 0.011990635282207037
+      },
+      {
+        "words": "12 - 17",
+        "n": 8680,
+        "error_rate": 0.008870967741935484
+      },
+      {
+        "words": "18 - 25",
+        "n": 8825,
+        "error_rate": 0.008234183191690274
+      },
+      {
+        "words": "> 25",
+        "n": 9112,
+        "error_rate": 0.009877085162423178
+      }
+    ],
+    "text_type": [
+      {
+        "subset": "Contiene feel / feeling / felt",
+        "n": 36591,
+        "error_rate": 0.004691499731263608,
+        "share_of_typical_errors": 0.41194029850746267
+      },
+      {
+        "subset": "No contiene feel",
+        "n": 562,
+        "error_rate": 0.3457888493475682,
+        "share_of_typical_errors": 0.5880597014925373
+      },
+      {
+        "subset": "Empieza con \"when\"",
+        "n": 168,
+        "error_rate": 0.3948412698412698,
+        "share_of_typical_errors": 0.20597014925373133
+      }
+    ],
+    "high_confidence_persistent_ids": [
+      "ef2f46f788fbaa3e81199b94b109d7e3",
+      "a7b9b65cc72aa836bab5b9cbb5179a78",
+      "cc9ea27a63e8e67ceb3ea6e7b816045c",
+      "bf295f38e738cdd0a9413b5bef94a355",
+      "f3441abb1df14ad6923ff7565336c5e3",
+      "507ee2ee32d01a45ef8b60cf71c2c4f3",
+      "8e818f18c403677b76bafa0012c1c056",
+      "2b5362d33fc0fac19b7dbea4ac44e050"
+    ]
+  },
+  "gemma-4-e2b": {
+    "seeds": [
+      42,
+      1337,
+      2026
+    ],
+    "n_test": 37153,
+    "errors_per_seed": [
+      1365,
+      1333,
+      1294
+    ],
+    "n_persistent": 870,
+    "n_single_seed": 372,
+    "macro_f1_recomputed": [
+      0.9506863420570207,
+      0.9567164980141359,
+      0.9557911862873048
+    ],
+    "per_class": {
+      "sadness": {
+        "support": 11604,
+        "recall": 0.9633172469263472,
+        "precision": 0.9875143555463942,
+        "pred_over_true": 0.9754969550729633
+      },
+      "joy": {
+        "support": 12937,
+        "recall": 0.9710649042797145,
+        "precision": 0.9700401523731083,
+        "pred_over_true": 1.0010564015356471
+      },
+      "love": {
+        "support": 2438,
+        "recall": 0.9633579436696746,
+        "precision": 0.9741462740218443,
+        "pred_over_true": 0.9889253486464314
+      },
+      "anger": {
+        "support": 5233,
+        "recall": 0.9641378431747245,
+        "precision": 0.9296155263481145,
+        "pred_over_true": 1.0371361233199567
+      },
+      "fear": {
+        "support": 3958,
+        "recall": 0.9529223513559036,
+        "precision": 0.9333498308999423,
+        "pred_over_true": 1.0209701869631127
+      },
+      "surprise": {
+        "support": 983,
+        "recall": 0.9315022041369956,
+        "precision": 0.912624584717608,
+        "pred_over_true": 1.02068497795863
+      }
+    },
+    "top_pairs": [
+      {
+        "true": "sadness",
+        "pred": "joy",
+        "count": 530
+      },
+      {
+        "true": "joy",
+        "pred": "anger",
+        "count": 466
+      },
+      {
+        "true": "sadness",
+        "pred": "anger",
+        "count": 378
+      },
+      {
+        "true": "joy",
+        "pred": "fear",
+        "count": 290
+      },
+      {
+        "true": "anger",
+        "pred": "joy",
+        "count": 256
+      }
+    ],
+    "confidence": [
+      {
+        "bin": "< 0.50",
+        "n": 930,
+        "error_rate": 0.7784946236559139
+      },
+      {
+        "bin": "0.50 - 0.70",
+        "n": 1755,
+        "error_rate": 0.7270655270655271
+      },
+      {
+        "bin": "0.70 - 0.90",
+        "n": 1606,
+        "error_rate": 0.6581569115815691
+      },
+      {
+        "bin": "0.90 - 0.99",
+        "n": 1467,
+        "error_rate": 0.42535787321063395
+      },
+      {
+        "bin": ">= 0.99",
+        "n": 105701,
+        "error_rate": 0.0029422616626143556
+      }
+    ],
+    "share_errors_conf_ge_0.9": 0.2342184368737475,
+    "length": [
+      {
+        "words": "<= 11",
+        "n": 10536,
+        "error_rate": 0.03613009364717793
+      },
+      {
+        "words": "12 - 17",
+        "n": 8680,
+        "error_rate": 0.035023041474654376
+      },
+      {
+        "words": "18 - 25",
+        "n": 8825,
+        "error_rate": 0.03558073654390935
+      },
+      {
+        "words": "> 25",
+        "n": 9112,
+        "error_rate": 0.036435469710272166
+      }
+    ],
+    "text_type": [
+      {
+        "subset": "Contiene feel / feeling / felt",
+        "n": 36591,
+        "error_rate": 0.03225747679301832,
+        "share_of_typical_errors": 0.8923636363636364
+      },
+      {
+        "subset": "No contiene feel",
+        "n": 562,
+        "error_rate": 0.267497034400949,
+        "share_of_typical_errors": 0.10763636363636364
+      },
+      {
+        "subset": "Empieza con \"when\"",
+        "n": 168,
+        "error_rate": 0.2916666666666667,
+        "share_of_typical_errors": 0.03709090909090909
+      }
+    ],
+    "high_confidence_persistent_ids": [
+      "7876fc5a83423cb8b003ccfee89816ae",
+      "e157bb44d266e2e9f6a6593bba5106d0",
+      "a7b9b65cc72aa836bab5b9cbb5179a78",
+      "d1ac01b4dec5d1539a49b2f1fd96b94a",
+      "94720d50a8b7ccba035a6d5b56a48344",
+      "d620c561528badfe4be5a7736f2d3d34",
+      "cdd408199707b89c0482d4a8bd841ff0",
+      "a457fd15b47fa53d3470b4c41c34b5df"
+    ]
+  },
+  "cross_model": {
+    "models": [
+      "qwen2.5-1.5b",
+      "deepseek-r1-distill-qwen-1.5b",
+      "gemma-4-e2b"
+    ],
+    "n_common": 37153,
+    "consensus_errors": 132,
+    "unanimous_same_wrong_class": 91,
+    "consensus_by_subset": [
+      {
+        "subset": "Contiene feel / feeling / felt",
+        "n": 36591,
+        "consensus_errors": 39
+      },
+      {
+        "subset": "No contiene feel",
+        "n": 562,
+        "consensus_errors": 93
+      },
+      {
+        "subset": "Empieza con \"when\"",
+        "n": 168,
+        "consensus_errors": 36
+      }
+    ]
+  }
+}

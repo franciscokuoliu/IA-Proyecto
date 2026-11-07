@@ -1,0 +1,11 @@
+% Generado por scripts/make_report.py. No editar a mano.
+\begin{tabular}{@{}llrr@{}}
+\toprule
+Family (tuned on) & Selected configuration & Trials & Val. Macro-F1 \\
+\midrule
+BiLSTM & lr = $3\times10^{-3}$, hidden = 128, dropout = 0.3 & 8 & 0.9475 \\
+Decoders (Qwen2.5-1.5B) & lr = $2\times10^{-4}$, LoRA $r$ = 16 & 5 & 0.8739 \\
+Encoders (BERT-base) & lr = $5\times10^{-5}$ & 3 & 0.9921 \\
+TF-IDF & $C$ = 10.0, n-gram = 1--2 & 6 & 0.9480 \\
+\bottomrule
+\end{tabular}

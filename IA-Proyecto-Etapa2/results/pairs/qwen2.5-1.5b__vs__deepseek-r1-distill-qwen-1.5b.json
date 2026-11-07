@@ -1,0 +1,45 @@
+{
+  "a": "qwen2.5-1.5b",
+  "b": "deepseek-r1-distill-qwen-1.5b",
+  "split": "test",
+  "difference": "a_minus_b",
+  "metric": "macro_f1",
+  "n_resamples": 1000,
+  "confidence": 0.95,
+  "bootstrap_seed": 42,
+  "per_seed": {
+    "42": {
+      "macro_f1_a": 0.9884255425099576,
+      "macro_f1_b": 0.9876736295232265,
+      "point_estimate": 0.0007519129867311625,
+      "ci_low": -0.0003550321454263926,
+      "ci_high": 0.001855685146230329,
+      "informative": false,
+      "n": 37153
+    },
+    "1337": {
+      "macro_f1_a": 0.9899785187669986,
+      "macro_f1_b": 0.9864575353970784,
+      "point_estimate": 0.0035209833699202386,
+      "ci_low": 0.0024172385374616272,
+      "ci_high": 0.004714724257693131,
+      "informative": true,
+      "n": 37153
+    },
+    "2026": {
+      "macro_f1_a": 0.9877172802631131,
+      "macro_f1_b": 0.9879850912840081,
+      "point_estimate": -0.00026781102089501463,
+      "ci_low": -0.0020050554315505613,
+      "ci_high": 0.0013581005638460862,
+      "informative": false,
+      "n": 37153
+    }
+  },
+  "summary": {
+    "n_seeds": 3,
+    "mean_difference": 0.0013350284452521288,
+    "n_informative": 1,
+    "same_sign": false
+  }
+}
