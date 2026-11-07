@@ -364,15 +364,19 @@ def cross_model_report(models: list, n_examples: int, width: int) -> tuple:
     summ["consensus_by_subset"] = sub
 
     # 5. muestra para auditoria manual
-    if len(cand):
+    audit = np.where(cons)[0]
+    if len(audit):
         rng = np.random.default_rng(42)
-        pick = sorted(int(j) for j in rng.choice(cand, size=min(30, len(cand)), replace=False))
+        pick = sorted(int(j) for j in rng.choice(audit, size=min(30, len(audit)), replace=False))
         L += ["## 5. Muestra para auditoría manual", "",
-              f"{len(pick)} textos al azar (semilla 42) de la sección 3. Para cada uno, anotar a mano: **A** = etiqueta dudosa o "
+              f"{len(pick)} textos al azar (semilla 42) entre los {len(audit):,} errores de consenso (los que fallan todos los "
+              "modelos, sección 1). Para cada uno, anotar a mano: **A** = etiqueta dudosa o "
               "ambigua, **B** = el modelo se equivoca claramente, **C** = no se puede decidir. El conteo A/B/C es la evidencia "
               "para hablar (o no) de ruido de etiqueta en el artículo.", ""]
         for j in pick:
-            L.append(f"- [ ] `{order[j]}` real = **{y_true[j]}**, modelos = **{modal[0][j]}**: "
+            wrong = {str(modal[k][j]) for k in range(len(models))} - {str(y_true[j])}
+            predicted = " / ".join(sorted(wrong)) or "?"
+            L.append(f"- [ ] `{order[j]}` real = **{y_true[j]}**, predicciones erradas = **{predicted}**: "
                      f"\"{quote(models[0].text[idx[0][j]], width)}\"")
         L.append("")
     return "\n".join(L), summ
