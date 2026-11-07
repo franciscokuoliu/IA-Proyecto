@@ -1,10 +1,10 @@
 estrategia: stratified
 semilla: 42
 split: test
-n_train: 297220
+n_train: 32000
 n_eval: 37153
 clase_mayoritaria_train: joy
-conteos_train: {"sadness": 92835, "joy": 103490, "love": 19502, "anger": 41861, "fear": 31668, "surprise": 7864}
+conteos_train: {"sadness": 9995, "joy": 11142, "love": 2100, "anger": 4507, "fear": 3409, "surprise": 847}
 conteos_eval: {"sadness": 11604, "joy": 12937, "love": 2438, "anger": 5233, "fear": 3958, "surprise": 983}
-macro_f1=0.163490  weighted_f1=0.252680  n=37153  split=test  probabilidades=ok
+macro_f1=0.169028  weighted_f1=0.257797  n=37153  split=test  probabilidades=ok
 Escrito en C:\Users\MSI GL65\Documents\SCHOOL\IA\IA-Proyecto\IA-Proyecto-Etapa2\results\dummy_stratified\seed_42\metrics.json
