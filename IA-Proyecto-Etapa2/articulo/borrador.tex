@@ -1,0 +1,56 @@
+% Borrador de las secciones de la Etapa 2 (solo para compilar y revisar).
+% El texto vive en secciones_etapa2.tex. Para el artículo final, esas secciones se pegan (o se incluyen con \input)
+% en el documento principal, y se reemplaza el resumen. Compilar desde esta carpeta:
+%   pdflatex borrador && bibtex borrador && pdflatex borrador && pdflatex borrador
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+% Marca visible para lo que falta. Antes de entregar no debe quedar ninguna.
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{[TODO: #1]}}}
+\begin{document}
+
+\title{A Comparative Evaluation of Encoder and Decoder Language Models with Parameter-Efficient Fine-Tuning (PEFT/LoRA)
+for Multi-Class Text Emotion Recognition
+}
+
+\author{\IEEEauthorblockN{Francisco Kuo Liu}
+\IEEEauthorblockA{\textit{School of Computer Engineering} \\
+\textit{Instituto Tecnológico de Costa Rica}\\
+Cartago, Costa Rica \\
+fkuo@estudiantec.cr}
+\and
+\IEEEauthorblockN{Jimmy Feng Liu}
+\IEEEauthorblockA{\textit{School of Computer Engineering} \\
+\textit{Instituto Tecnológico de Costa Rica}\\
+Cartago, Costa Rica \\
+jfeng@estudiantec.cr}
+\and
+\IEEEauthorblockN{Danielo Wu Zhong}
+\IEEEauthorblockA{\textit{School of Computer Engineering} \\
+\textit{Instituto Tecnológico de Costa Rica}\\
+Cartago, Costa Rica \\
+dwu@estudiantec.cr}
+}
+
+\maketitle
+
+\begin{abstract}
+We present a controlled benchmark of eight models for six-class emotion recognition on a leakage-controlled version of a CARER-derived corpus. All models train on the same 32,000-text subset and are scored once on the same 37,153 test texts: a TF-IDF baseline, a BiLSTM with GloVe, two fully fine-tuned encoders (DistilBERT, BERT-base), and four decoders adapted with QLoRA (Qwen2.5-0.5B, Qwen2.5-1.5B, Gemma 4 E2B, DeepSeek-R1-Distill-Qwen-1.5B). BERT-base is the best model (Macro-F1 $0.9895 \pm 0.0005$ over three seeds), and the top five models lie within $0.0021$ of each other. A paired bootstrap finds a systematic $0.034$ gap between Qwen2.5-1.5B and Gemma 4 E2B and no consistent difference between Qwen2.5-1.5B and its reasoning-distilled counterpart. Qwen2.5-1.5B and its distilled counterpart make about 60\% of their errors on the 1.5\% of test texts that lack the dominant ``feel'' phrasing. \todo{Add one sentence with the explainability result once scripts/xai.py has run.}
+\end{abstract}
+
+\begin{IEEEkeywords}
+Text Emotion Recognition, Large Language Models, LoRA, PEFT, Macro-F1, Multi-class Classification.
+\end{IEEEkeywords}
+
+\input{secciones_etapa2}
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}

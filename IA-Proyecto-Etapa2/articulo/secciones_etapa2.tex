@@ -1,0 +1,118 @@
+% Secciones de la Etapa 2 (borrador). Reemplazan "Proposed Experimental Methodology" del artículo de la Etapa 1.
+% Requiere el macro \todo{...} (definido en borrador.tex). Las tablas y figuras salen de ../results/report/
+% (scripts/make_report.py): si cambian los resultados se regenera ese informe y se recompila.
+
+\section{Experimental Methodology}
+\label{sec:method2}
+
+\subsection{Data and Partitions}
+We use the Kaggle ``Emotions'' dataset, a derivative of CARER \cite{saravia2018carer}, with six classes (sadness, joy, love, anger, fear, surprise). The downloaded file has 416,809 rows, and its SHA-256 digest is verified on every download. Cleaning has one purpose: no text, and no near copy of a text, may appear in two partitions. Texts are normalized only to compare them, and the original text is the one used for training. Rows whose normalized text appears with different labels are removed entirely (44,650 rows, 22,295 distinct texts), because neither label can be trusted. Exact duplicates with the same label are collapsed to one copy (632 copies removed). Near duplicates are detected with TF-IDF cosine similarity and a 0.90 threshold, over candidate pairs generated from rare terms: 5,536 pairs form 3,220 groups of two or more texts, 16 of them with mixed labels. Groups are not removed, because each group is assigned to a single partition. The result has 371,527 rows. Cleaning removed proportionally more minority-class rows (about 34\% of surprise, 29\% of love, and 17\% of fear relative to the original file), so the final distribution is sadness 31.2\%, joy 34.8\%, love 6.6\%, anger 14.1\%, fear 10.7\%, and surprise 2.7\%. We also found that every text is lowercase and has no punctuation or apostrophes (0.000\% of texts contain either), so, contrary to our Stage~1 plan, case and punctuation cues are not available to any model.
+
+The partition is a stratified, group-aware 10-fold split (\texttt{StratifiedGroupKFold}, seed 42) over the near-duplicate groups: fold 0 is the test set (37,153 texts), fold 1 is validation (37,154), and the remaining eight folds are training (297,220). Automatic checks must pass before any training: empty intersections, no repeated normalized text across partitions, no split group, and class proportions within $\pm 0.5$ percentage points of the global ones. A stratified sample of 10,000 validation texts (the selection set) drives early stopping. All models train on the same stratified subset $S$ of 32,000 training texts (11\% of the training fold). Its size was set by the slowest model (Gemma 4 E2B, three seeds, three epochs, about eight hours) so that every model sees exactly the same data. The test set is scored once per final configuration.
+
+\subsection{Models}
+Table~\ref{tab:taxonomy2} lists the eight models and the four controlled pairs that isolate one factor each: scale in encoders (DistilBERT vs. BERT-base), scale in decoders (Qwen2.5-0.5B vs. Qwen2.5-1.5B), family (Qwen2.5-1.5B vs. Gemma 4 E2B), and training objective (Qwen2.5-1.5B vs. DeepSeek-R1-Distill-Qwen-1.5B). Gemma 4 E4B, part of the Stage~1 plan, was dropped: even in 4-bit it needs an estimated 8.77~GB (its embedding tables, about 6.5~GB, are not quantized by bitsandbytes), which leaves no room for activations and optimizer state in 10~GB, and running it unquantized on another machine would confound scale with quantization.
+
+\begin{table}[htbp]
+\centering
+\caption{Models and the controlled pairs they form.}
+\label{tab:taxonomy2}
+\footnotesize
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.44\linewidth}>{\raggedright\arraybackslash}p{0.17\linewidth}>{\raggedright\arraybackslash}p{0.3\linewidth}@{}}
+\toprule
+\textbf{Model} & \textbf{Family} & \textbf{Pair (factor)} \\
+\midrule
+Dummy (two strategies), TF-IDF + LogReg & Baselines & Trivial and classical reference \\
+BiLSTM + GloVe & Recurrent & Recurrent baseline \\
+DistilBERT & Encoder & vs. BERT-base (scale) \\
+BERT-base & Encoder & vs. DistilBERT (scale) \\
+Qwen2.5-0.5B & Decoder & vs. Qwen2.5-1.5B (scale) \\
+Qwen2.5-1.5B & Decoder & vs. the other three decoders \\
+Gemma 4 E2B & Decoder & vs. Qwen2.5-1.5B (family) \\
+DeepSeek-R1-Distill-Qwen-1.5B & Decoder & vs. Qwen2.5-1.5B (objective) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textit{Baselines.} The trivial baseline predicts the most frequent class or samples from the training class frequencies (three seeds). The classical baseline is TF-IDF with word 1--2-grams and multinomial logistic regression with class weights, fitted on training data only. The recurrent baseline is a BiLSTM (hidden size 128, dropout 0.3) over a vocabulary built from training texts only (21,897 entries), with frozen GloVe 300-dimensional vectors \cite{pennington2014glove} \todo{Fran: confirm the exact GloVe file used (6B tokens?)}.
+
+\textit{Encoders} are fully fine-tuned with the sequence-classification head of the Transformers library over the [CLS] representation. \textit{Decoders} use a sequence-classification head over the last non-padding token (a manual linear head with the same design for Gemma 4, because the library has no such class), with no text generation and no prompt template: the raw text goes in and six logits come out. All decoders use QLoRA with 4-bit NormalFloat base weights and identical adapters: rank $r=16$, $\alpha=32$, dropout 0.05, on the $W_q, W_k, W_v, W_o$ projections (for Gemma 4, only in the language layers), with the head trained in full. This differs from the Stage~1 plan, which gave DeepSeek extra feed-forward modules; we use identical adapters so the pair isolates one factor. One factor remains confounded: DeepSeek-R1-Distill-Qwen-1.5B was distilled into Qwen2.5-Math-1.5B, not into Qwen2.5-1.5B \cite{deepseekai2025r1}, so that pair varies the base model as well as the training objective.
+
+\subsection{Training Protocol and Hyperparameter Search}
+All neural models use AdamW (weight decay 0.01), 6\% linear warmup followed by linear decay, gradient clipping at 1.0, an effective batch of 32 (with gradient accumulation), and inputs truncated to 64 tokens (the worst tokenizer truncates 0.15\% of texts). The loss is cross-entropy with class weights $w_c = N/(K n_c)$ computed on $S$; evaluation metrics are never weighted. Models train for at most three epochs (ten for the BiLSTM), are evaluated on the selection set every quarter epoch, and stop early when Macro-F1 does not improve in three evaluations; the best checkpoint is restored. Every neural model is trained with seeds 42, 1337, and 2026, which control head initialization, data order, and dropout but not the partition. Precision is bf16 on the RTX 3080 and fp16 on the RTX 2060; the BiLSTM and TF-IDF run on CPU.
+
+Hyperparameters are searched on the selection set only, never on the test set (Table~\ref{tab:hpo}). The decoder search ran on 20\% of $S$ for one epoch, changing one factor at a time around the center point (learning rate in $\{10^{-4}, 2\times10^{-4}, 3\times10^{-4}\}$, rank in $\{8, 16, 32\}$ with $\alpha = 2r$); learning rate $3\times10^{-4}$ and rank 32 collapsed to a single predicted class. The configuration chosen on Qwen2.5-1.5B is reused for every decoder, and the encoder learning rate chosen on BERT-base is reused for DistilBERT. The winners for encoders, TF-IDF, and the BiLSTM sit at the edge of their grids, so we cannot claim they are the true optimum.
+
+\begin{table*}[t]
+\centering
+\caption{Hyperparameter search results (selection-set Macro-F1, one seed). Decoders were tuned on 20\% of $S$ for one epoch; the other families on the full $S$ (BiLSTM on 20\% of $S$).}
+\label{tab:hpo}
+\small
+\input{../results/report/table_hpo.tex}
+\end{table*}
+
+\subsection{Evaluation and Statistics}
+Macro-F1 over the six classes is the primary metric, with per-class F1 and the $6\times6$ confusion matrix; we report the mean and sample standard deviation over three seeds (TF-IDF and the most-frequent baseline are deterministic and have one run). Controlled pairs are compared with a paired bootstrap on the test set: 1,000 resamples of the same text ids for both models, and a 95\% percentile interval for the difference in Macro-F1, computed per seed (seed $k$ of model A against seed $k$ of model B). A difference counts as systematic only if the interval excludes zero with the same sign in all three seeds. We do not run a test over three seeds, which has no power.
+
+\subsection{Explainability Protocol}
+We explain BERT-base (seed 42) and, time permitting, DistilBERT; decoders are not explained, which is a stated limitation. Our main method is Integrated Gradients \cite{sundararajan2017axiomatic} over the input word embeddings, with a [PAD] baseline and 64 Gauss-Legendre steps, contrasted with the last-layer [CLS] attention and attention rollout \cite{abnar2020quantifying}. Attention is reported only as a contrast, not as an explanation by itself \cite{jain2019attention,wiegreffe2019attention}. Before interpreting any attribution we check that the attributions sum to the output difference (completeness) and that they change when the classification head or the whole model is randomized \cite{adebayo2018sanity}. Faithfulness is measured by removing, or keeping only, the $k$ most attributed words against $k$ random words \cite{deyoung2020eraser}, and attributed words are compared with class-marker words obtained by log-odds with an informative prior \cite{monroe2008fightin}. The code was validated on a tiny model with known cues before running it on BERT-base.
+
+\section{Results and Analysis}
+\label{sec:results2}
+
+\subsection{Overall Comparison}
+Table~\ref{tab:main} and Fig.~\ref{fig:macrof1} show the final results on the 37,153 test texts. BERT-base reaches the highest Macro-F1 ($0.9895 \pm 0.0005$), with DistilBERT $0.0004$ behind at 61\% of the parameters and 58\% of the training time. The top five models, two encoders and three decoders, lie within $0.0021$ Macro-F1 of each other, a range comparable to the seed-to-seed standard deviation of the decoders (0.0008 to 0.0012). The BiLSTM with GloVe follows at $0.9786 \pm 0.0028$. Gemma 4 E2B ($0.9544 \pm 0.0032$) and TF-IDF with logistic regression ($0.9493$) are clearly lower, and the trivial baselines sit at $0.1662$ (stratified) and $0.0861$ (most frequent). A linear model on word n-grams therefore comes within four points of the best model, and the task as framed here is close to saturated.
+
+\begin{table*}[t]
+\centering
+\caption{Test Macro-F1 (mean $\pm$ sample standard deviation over three seeds) and cost per model. VRAM is the training peak; time is per run on the machine that trained it (RTX 2060 for encoders and Qwen2.5-0.5B, RTX 3080 for the other decoders, CPU for BiLSTM and TF-IDF), so costs are not comparable across GPUs. $^{\dagger}$Published parameter count of the base model; the harness counts each 4-bit weight pair as one element and under-reports. The Dummy rows were trained on the full training fold and are being repeated with $S$.}
+\label{tab:main}
+\small
+\input{../results/report/table_main.tex}
+\end{table*}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\linewidth]{../results/report/fig_macro_f1.pdf}
+\caption{Test Macro-F1 per model: points are seeds, the mark is the mean, and the line is $\pm1$ standard deviation. The Dummy baselines fall outside the plotted range (Table~\ref{tab:main}).}
+\label{fig:macrof1}
+\end{figure}
+
+\subsection{Controlled Pairs}
+Table~\ref{tab:pairs} reports the paired bootstrap. Qwen2.5-1.5B beats Gemma 4 E2B by $0.034$ Macro-F1 on average, and the interval excludes zero in all three seeds with the same sign: the family gap is systematic, although it includes any residual difference between our manual Gemma head and the library head used for Qwen. Between Qwen2.5-1.5B and DeepSeek-R1-Distill-Qwen-1.5B the mean difference is $0.0013$, the interval excludes zero in only one seed, and the sign changes: there is no consistent difference attributable to the training objective, and this pair is also confounded by the base model. \todo{Add DistilBERT vs. BERT-base and Qwen2.5-0.5B vs. Qwen2.5-1.5B once the bootstrap is run: they need the predictions of two machines (scripts/share\_predictions.py). Point estimates only: scale gaps of 0.0004 (encoders) and 0.0010 (decoders), the latter confounded by fp16 vs. bf16.}
+
+\begin{table*}[t]
+\centering
+\caption{Paired bootstrap over the test set (1,000 resamples, 95\% interval, per seed): mean difference in Macro-F1 of A minus B, number of seeds whose interval excludes zero, and whether the sign is the same in all seeds.}
+\label{tab:pairs}
+\small
+\input{../results/report/table_pairs.tex}
+\end{table*}
+
+\subsection{Per-Class Results and Error Analysis}
+Table~\ref{tab:perclass} shows that for every neural model the three lowest F1 scores are surprise, fear, and anger, while love, despite being a minority class (6.6\%), is among the easiest; Gemma 4 E2B loses most on surprise ($0.9222$ against $0.9798$ for Qwen2.5-1.5B). We analyzed the errors of the three decoders trained on the RTX 3080 (a text counts as an error of a model if it fails it in most seeds). Qwen2.5-1.5B and DeepSeek-R1-Distill-Qwen-1.5B make 270 and 335 typical errors (0.73\% and 0.90\% of the test set) and share many of them (Jaccard 0.54), whereas Gemma 4 E2B makes 1,375 (3.70\%), and 86.7\% of its errors are made by no other decoder, which points to a model limitation more than to a property of the data. At the other end, 132 texts (0.36\%) are misclassified by all three decoders. The corpus is made almost entirely of tweets built around ``feel'' (98.5\% of the test texts); the 562 texts without that word (1.5\%) have error rates of 27\% to 35\% for the three decoders, against 0.4\% to 3.2\% for the rest, and they hold 70.5\% of the consensus errors. We read the consensus errors as ambiguous or possibly mislabeled texts, but that is a hypothesis: a manual audit of 30 sampled texts is pending \todo{Audit the 30 texts listed in results/errors/cross\_model.md and report the A/B/C counts, or remove the label-noise reading.}
+
+\begin{table*}[t]
+\centering
+\caption{Per-class F1 on the test set (mean over three seeds).}
+\label{tab:perclass}
+\small
+\input{../results/report/table_perclass.tex}
+\end{table*}
+
+\subsection{Cost}
+Fig.~\ref{fig:cost} plots Macro-F1 against training VRAM and parameters. QLoRA trains between 2.2M and 5.4M parameters (below 0.5\% of the base model), and the decoders peak at 1.2 to 2.7~GB of training VRAM, except Gemma 4 E2B, which needs 9.2~GB and 149 minutes per run for the lowest decoder accuracy. Encoders reach the best Macro-F1 at 1.4 to 2.2~GB and under 17 minutes per run. These numbers come from different GPUs, so we report them per model and do not compare them across machines; we did not measure inference latency.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.8\textwidth]{../results/report/fig_cost_perf.pdf}
+\caption{Macro-F1 against training VRAM (left) and total parameters (right). Costs come from different GPUs and are descriptive only.}
+\label{fig:cost}
+\end{figure*}
+
+\subsection{Explainability of BERT-base}
+\todo{Fill in from results/xai/bert-base/seed\_42/xai\_report.md after running scripts/xai.py: (1) completeness error and sanity-check correlations; (2) faithfulness (comprehensiveness and sufficiency of IG vs. random words, Fig. from fig\_xai\_faithfulness); (3) most attributed words per class and how often the top word is a class marker; (4) agreement of IG with attention rollout and [CLS] attention; (5) two or three examples, including errors. Write the interpretation from the real numbers only.}
+
+\section{Limitations}
+\label{sec:limits2}
+The training subset $S$ is 11\% of the training fold, so the results describe a low-data regime and we did not run a learning curve. The hyperparameter search covers one model per family and its winners for encoders, TF-IDF, and the BiLSTM sit at the grid edge; the decoder search used one epoch, which favors high learning rates. Our learning rate for decoders ($2\times10^{-4}$) lies close to the instability region (rates of $3\times10^{-4}$ and rank 32 collapsed in the search), although none of the twelve final decoder runs collapsed. Machines differ in precision (fp16 on the RTX 2060, bf16 on the RTX 3080), which confounds the Qwen2.5-0.5B vs. 1.5B pair, and costs are not comparable across GPUs. Parameter counts of quantized decoders come from published figures, because the harness under-counts them. The runs of one team member did not record the commit hash. The Dummy baselines must be repeated on $S$. The dataset is almost entirely ``i feel \dots'' tweets, lowercase and unpunctuated, so results may not transfer to other registers, and top models differ by less than the noise of a three-seed estimate. Finally, explainability covers encoders only and one seed.
