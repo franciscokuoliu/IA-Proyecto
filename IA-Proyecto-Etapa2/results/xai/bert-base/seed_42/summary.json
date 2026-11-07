@@ -1,0 +1,658 @@
+{
+  "model": "bert-base",
+  "model_id": "bert-base-uncased",
+  "seed": 42,
+  "split": "test",
+  "device": "cuda",
+  "torch": "2.9.1+cu128",
+  "transformers": "5.22.1",
+  "n_sample": 600,
+  "n_errors": 40,
+  "n_errors_total": 287,
+  "settings": {
+    "n_per_class": 100,
+    "ig_steps": 64,
+    "ks": [
+      1,
+      2,
+      3,
+      5
+    ],
+    "n_random": 5,
+    "marker_top": 50,
+    "baseline": "pad_per_word",
+    "target": "predicted_class"
+  },
+  "checks": {
+    "pred_agreement": 1.0,
+    "pred_disagree": 0,
+    "pred_total": 640,
+    "completeness": {
+      "n": 600,
+      "mean_rel_error": 0.01593341456491191,
+      "median_rel_error": 0.002267486268734753,
+      "p95_rel_error": 0.06368534316063877,
+      "baseline_same_class": 0.15833333333333333
+    },
+    "sanity": {
+      "n": 100,
+      "random_head": {
+        "spearman_mean": -0.12016401773791435,
+        "top1_same": 0.2
+      },
+      "random_model": {
+        "spearman_mean": -0.05330958625749677,
+        "top1_same": 0.04
+      }
+    }
+  },
+  "faithfulness": {
+    "ig": {
+      "1": {
+        "n": 600,
+        "comp_drop": {
+          "n": 600,
+          "mean": 0.7484763160844644,
+          "ci": 0.03302563727184676
+        },
+        "comp_flip": {
+          "n": 600,
+          "mean": 0.75,
+          "ci": 0.034677141947148764
+        },
+        "suff_drop": {
+          "n": 600,
+          "mean": 0.013928243468205134,
+          "ci": 0.00919370814228562
+        },
+        "suff_keep": {
+          "n": 600,
+          "mean": 0.985,
+          "ci": 0.009734337619040606
+        }
+      },
+      "2": {
+        "n": 599,
+        "comp_drop": {
+          "n": 599,
+          "mean": 0.8381863684705979,
+          "ci": 0.026061038636200125
+        },
+        "comp_flip": {
+          "n": 599,
+          "mean": 0.8397328881469115,
+          "ci": 0.02940344833925754
+        },
+        "suff_drop": {
+          "n": 599,
+          "mean": 0.0009390171959324552,
+          "ci": 0.0025037134171190124
+        },
+        "suff_keep": {
+          "n": 599,
+          "mean": 0.996661101836394,
+          "ci": 0.004623606018415022
+        }
+      },
+      "3": {
+        "n": 597,
+        "comp_drop": {
+          "n": 597,
+          "mean": 0.8625123590680223,
+          "ci": 0.023637705080143546
+        },
+        "comp_flip": {
+          "n": 597,
+          "mean": 0.8659966499162479,
+          "ci": 0.027349467528647392
+        },
+        "suff_drop": {
+          "n": 597,
+          "mean": -0.000288159104447868,
+          "ci": 0.002299565520774178
+        },
+        "suff_keep": {
+          "n": 597,
+          "mean": 0.998324958123953,
+          "ci": 0.003283082077051926
+        }
+      },
+      "5": {
+        "n": 569,
+        "comp_drop": {
+          "n": 569,
+          "mean": 0.890207504241454,
+          "ci": 0.020763966380773477
+        },
+        "comp_flip": {
+          "n": 569,
+          "mean": 0.8963093145869947,
+          "ci": 0.025071523835494
+        },
+        "suff_drop": {
+          "n": 569,
+          "mean": -0.0007094164200533044,
+          "ci": 0.002320598677547458
+        },
+        "suff_keep": {
+          "n": 569,
+          "mean": 0.9982425307557118,
+          "ci": 0.003444639718804921
+        }
+      },
+      "aopc": 0.8348456369661347
+    },
+    "rollout": {
+      "1": {
+        "n": 600,
+        "comp_drop": {
+          "n": 600,
+          "mean": 0.1687473297615846,
+          "ci": 0.02972779355160777
+        },
+        "comp_flip": {
+          "n": 600,
+          "mean": 0.16666666666666666,
+          "ci": 0.029845331834528404
+        },
+        "suff_drop": {
+          "n": 600,
+          "mean": 0.6379917179048061,
+          "ci": 0.03385217310645878
+        },
+        "suff_keep": {
+          "n": 600,
+          "mean": 0.355,
+          "ci": 0.038320987680748084
+        }
+      },
+      "2": {
+        "n": 599,
+        "comp_drop": {
+          "n": 599,
+          "mean": 0.30779305762161996,
+          "ci": 0.03630602539690167
+        },
+        "comp_flip": {
+          "n": 599,
+          "mean": 0.3088480801335559,
+          "ci": 0.03703093619170755
+        },
+        "suff_drop": {
+          "n": 599,
+          "mean": 0.4932803198670306,
+          "ci": 0.037330744716006684
+        },
+        "suff_keep": {
+          "n": 599,
+          "mean": 0.5075125208681135,
+          "ci": 0.040070656406422135
+        }
+      },
+      "3": {
+        "n": 597,
+        "comp_drop": {
+          "n": 597,
+          "mean": 0.409684657651176,
+          "ci": 0.03833699017650143
+        },
+        "comp_flip": {
+          "n": 597,
+          "mean": 0.4103852596314908,
+          "ci": 0.03949235063607665
+        },
+        "suff_drop": {
+          "n": 597,
+          "mean": 0.3970048878859835,
+          "ci": 0.03715369040938111
+        },
+        "suff_keep": {
+          "n": 597,
+          "mean": 0.6063651591289783,
+          "ci": 0.03922354358965436
+        }
+      },
+      "5": {
+        "n": 569,
+        "comp_drop": {
+          "n": 569,
+          "mean": 0.5659012878297293,
+          "ci": 0.038492747075834055
+        },
+        "comp_flip": {
+          "n": 569,
+          "mean": 0.5606326889279437,
+          "ci": 0.04081642684215371
+        },
+        "suff_drop": {
+          "n": 569,
+          "mean": 0.23674809733677413,
+          "ci": 0.03336320544689162
+        },
+        "suff_keep": {
+          "n": 569,
+          "mean": 0.7627416520210897,
+          "ci": 0.0349849603553428
+        }
+      },
+      "aopc": 0.36303158321602746
+    },
+    "cls": {
+      "1": {
+        "n": 600,
+        "comp_drop": {
+          "n": 600,
+          "mean": 0.4480954597890377,
+          "ci": 0.03918109047768541
+        },
+        "comp_flip": {
+          "n": 600,
+          "mean": 0.45,
+          "ci": 0.03984100286365756
+        },
+        "suff_drop": {
+          "n": 600,
+          "mean": 0.41910834903518357,
+          "ci": 0.038203369328394875
+        },
+        "suff_keep": {
+          "n": 600,
+          "mean": 0.565,
+          "ci": 0.03970192024052037
+        }
+      },
+      "2": {
+        "n": 599,
+        "comp_drop": {
+          "n": 599,
+          "mean": 0.6210967628705084,
+          "ci": 0.03678677644183659
+        },
+        "comp_flip": {
+          "n": 599,
+          "mean": 0.6243739565943238,
+          "ci": 0.03881554757039103
+        },
+        "suff_drop": {
+          "n": 599,
+          "mean": 0.16032718099616405,
+          "ci": 0.028672850745993135
+        },
+        "suff_keep": {
+          "n": 599,
+          "mean": 0.8363939899833055,
+          "ci": 0.029649034658199815
+        }
+      },
+      "3": {
+        "n": 597,
+        "comp_drop": {
+          "n": 597,
+          "mean": 0.7006151169987779,
+          "ci": 0.0335398265192627
+        },
+        "comp_flip": {
+          "n": 597,
+          "mean": 0.6968174204355109,
+          "ci": 0.03690154614299476
+        },
+        "suff_drop": {
+          "n": 597,
+          "mean": 0.08244364595093719,
+          "ci": 0.021405286216262354
+        },
+        "suff_keep": {
+          "n": 597,
+          "mean": 0.916247906197655,
+          "ci": 0.022240127654451727
+        }
+      },
+      "5": {
+        "n": 569,
+        "comp_drop": {
+          "n": 569,
+          "mean": 0.759428470855438,
+          "ci": 0.030957261656064897
+        },
+        "comp_flip": {
+          "n": 569,
+          "mean": 0.7574692442882249,
+          "ci": 0.03524908235256694
+        },
+        "suff_drop": {
+          "n": 569,
+          "mean": 0.02505683385634464,
+          "ci": 0.01263245079981727
+        },
+        "suff_keep": {
+          "n": 569,
+          "mean": 0.9736379613356766,
+          "ci": 0.013175592338060961
+        }
+      },
+      "aopc": 0.6323089526284404
+    },
+    "random": {
+      "1": {
+        "n": 600,
+        "comp_drop": {
+          "n": 600,
+          "mean": 0.07207740287979446,
+          "ci": 0.010281460857573602
+        },
+        "comp_flip": {
+          "n": 600,
+          "mean": 0.07300000000000001,
+          "ci": 0.010524498298766291
+        },
+        "suff_drop": {
+          "n": 600,
+          "mean": 0.7537514215310415,
+          "ci": 0.0189741365804456
+        },
+        "suff_keep": {
+          "n": 600,
+          "mean": 0.24699999999999997,
+          "ci": 0.02402382740402878
+        }
+      },
+      "2": {
+        "n": 599,
+        "comp_drop": {
+          "n": 599,
+          "mean": 0.13665962373474005,
+          "ci": 0.014653123271947168
+        },
+        "comp_flip": {
+          "n": 599,
+          "mean": 0.13856427378964942,
+          "ci": 0.015212808165530682
+        },
+        "suff_drop": {
+          "n": 599,
+          "mean": 0.6824980624331058,
+          "ci": 0.021104249758154177
+        },
+        "suff_keep": {
+          "n": 599,
+          "mean": 0.31519198664440734,
+          "ci": 0.023672411437220736
+        }
+      },
+      "3": {
+        "n": 597,
+        "comp_drop": {
+          "n": 597,
+          "mean": 0.1840751284929975,
+          "ci": 0.017944990541082347
+        },
+        "comp_flip": {
+          "n": 597,
+          "mean": 0.1855946398659966,
+          "ci": 0.018328986536779855
+        },
+        "suff_drop": {
+          "n": 597,
+          "mean": 0.6304705932411916,
+          "ci": 0.02224582751214242
+        },
+        "suff_keep": {
+          "n": 597,
+          "mean": 0.36683417085427134,
+          "ci": 0.023935525753998228
+        }
+      },
+      "5": {
+        "n": 569,
+        "comp_drop": {
+          "n": 569,
+          "mean": 0.2684401857412972,
+          "ci": 0.020888384456709447
+        },
+        "comp_flip": {
+          "n": 569,
+          "mean": 0.26959578207381374,
+          "ci": 0.021354418576632596
+        },
+        "suff_drop": {
+          "n": 569,
+          "mean": 0.5374611678148615,
+          "ci": 0.023972095111621912
+        },
+        "suff_keep": {
+          "n": 569,
+          "mean": 0.4601054481546573,
+          "ci": 0.025010324283108572
+        }
+      },
+      "aopc": 0.1653130852122073
+    }
+  },
+  "cues": {
+    "n": 600,
+    "marker_hit": {
+      "ig": 0.775,
+      "rollout": 0.19833333333333333,
+      "cls": 0.46166666666666667
+    },
+    "marker_chance": 0.11636067389468926,
+    "stopword_top1_ig": 0.0,
+    "stopword_chance": 0.5341011697473493,
+    "top1_offset_from_feel": {
+      "before_feel": 0.006666666666666667,
+      "feel_itself": 0.025,
+      "no_feel_word": 0.016666666666666666,
+      "plus_1": 0.3333333333333333,
+      "plus_2": 0.20333333333333334,
+      "plus_3": 0.415
+    },
+    "agreement_with_ig": {
+      "rollout": {
+        "top1": 0.215,
+        "spearman": 0.1740338141444878
+      },
+      "cls": {
+        "top1": 0.5183333333333333,
+        "spearman": 0.2724845516632355
+      }
+    }
+  },
+  "attention": {
+    "special_mass_cls_last": 0.20225283271322647,
+    "special_mass_rollout": 0.5971531662841638
+  },
+  "error_examples": [
+    {
+      "true": "joy",
+      "pred": "sadness",
+      "p_pred": 0.9987624883651733,
+      "text": "when my boyfriend once again told me that he loved me after a period in which he felt very depressive",
+      "top_pred": [
+        "depressive (+3.91)",
+        "loved (+1.12)",
+        "felt (+0.58)"
+      ],
+      "top_true": [
+        "loved (+0.42)",
+        "boyfriend (+0.31)",
+        "after (+0.04)"
+      ]
+    },
+    {
+      "true": "anger",
+      "pred": "sadness",
+      "p_pred": 0.7911017537117004,
+      "text": "when i got home i found that the electrical supply had been disconnected despite my having paid zesco the full bill a few days earlier",
+      "top_pred": [
+        "disconnected (+2.00)",
+        "found (+0.36)",
+        "supply (+0.29)"
+      ],
+      "top_true": [
+        "when (+0.18)",
+        "been (+0.16)",
+        "had (+0.16)"
+      ]
+    },
+    {
+      "true": "fear",
+      "pred": "joy",
+      "p_pred": 0.7302425503730774,
+      "text": "introducing myself at a first tutorial this year at university",
+      "top_pred": [
+        "tutorial (+0.93)",
+        "this (+0.36)",
+        "year (+0.26)"
+      ],
+      "top_true": [
+        "introducing (+1.37)",
+        "myself (+0.81)",
+        "first (+0.48)"
+      ]
+    },
+    {
+      "true": "fear",
+      "pred": "surprise",
+      "p_pred": 0.6015519499778748,
+      "text": "i was feeling really overwhelmed trying to remember all the names of the members but i think i learned at least names or so so i think within a couple of weeks i will know the members pretty well",
+      "top_pred": [
+        "overwhelmed (+2.93)",
+        "feeling (+2.72)",
+        "really (+0.39)"
+      ],
+      "top_true": [
+        "overwhelmed (+2.37)",
+        "feeling (+0.59)",
+        "know (+0.41)"
+      ]
+    },
+    {
+      "true": "anger",
+      "pred": "sadness",
+      "p_pred": 0.5466517806053162,
+      "text": "i felt unfairly treated at an airport",
+      "top_pred": [
+        "unfairly (+0.67)",
+        "i (+0.55)",
+        "airport (+0.51)"
+      ],
+      "top_true": [
+        "unfairly (+0.75)",
+        "an (+0.67)",
+        "at (+0.47)"
+      ]
+    },
+    {
+      "true": "anger",
+      "pred": "fear",
+      "p_pred": 0.49775373935699463,
+      "text": "i trusted a friend of mine",
+      "top_pred": [
+        "trusted (+2.97)",
+        "i (+0.36)",
+        "friend (+0.13)"
+      ],
+      "top_true": [
+        "a (+0.72)",
+        "of (+0.39)",
+        "i (+0.13)"
+      ]
+    },
+    {
+      "true": "joy",
+      "pred": "sadness",
+      "p_pred": 0.6532911062240601,
+      "text": "i feel so robbed of such a precious life gift",
+      "top_pred": [
+        "robbed (+8.23)",
+        "i (+0.75)",
+        "a (-0.22)"
+      ],
+      "top_true": [
+        "precious (+7.10)",
+        "feel (+2.78)",
+        "so (+0.92)"
+      ]
+    },
+    {
+      "true": "anger",
+      "pred": "joy",
+      "p_pred": 0.7490552067756653,
+      "text": "my grandmother is a highly authoritative person",
+      "top_pred": [
+        "authoritative (+4.00)",
+        "highly (+0.00)",
+        "my (-0.16)"
+      ],
+      "top_true": [
+        "a (+0.75)",
+        "person (+0.55)",
+        "grandmother (+0.48)"
+      ]
+    },
+    {
+      "true": "love",
+      "pred": "anger",
+      "p_pred": 0.9905230402946472,
+      "text": "i wasnt feeling that horny just annoyed about work and i guess he wasnt either",
+      "top_pred": [
+        "annoyed (+4.48)",
+        "feeling (+0.96)",
+        "about (+0.55)"
+      ],
+      "top_true": [
+        "horny (+3.82)",
+        "that (+0.99)",
+        "guess (+0.45)"
+      ]
+    },
+    {
+      "true": "surprise",
+      "pred": "fear",
+      "p_pred": 0.7391823530197144,
+      "text": "i feel overwhelmed by my circumstance in all of my mere human ness i will remember that god has landed here",
+      "top_pred": [
+        "overwhelmed (+1.25)",
+        "by (+0.94)",
+        "feel (+0.67)"
+      ],
+      "top_true": [
+        "overwhelmed (+3.29)",
+        "feel (+1.69)",
+        "by (+0.27)"
+      ]
+    },
+    {
+      "true": "sadness",
+      "pred": "joy",
+      "p_pred": 0.588423490524292,
+      "text": "im over it and i want fall and im feeling angsty and gloomy and bleh",
+      "top_pred": [
+        "feeling (+3.37)",
+        "im (+0.47)",
+        "and (+0.17)"
+      ],
+      "top_true": [
+        "gloomy (+2.91)",
+        "and (+0.27)",
+        "it (-0.02)"
+      ]
+    },
+    {
+      "true": "sadness",
+      "pred": "joy",
+      "p_pred": 0.9723434448242188,
+      "text": "i cant help feeling this way",
+      "top_pred": [
+        "feeling (+3.54)",
+        "help (+0.16)",
+        "i (-0.17)"
+      ],
+      "top_true": [
+        "way (-0.02)",
+        "i (-0.07)",
+        "help (-0.16)"
+      ]
+    }
+  ]
+}
