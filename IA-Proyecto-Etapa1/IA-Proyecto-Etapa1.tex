@@ -104,7 +104,7 @@ These foundational techniques can be broadly categorized into keyword-based, cor
 \subsection{The Shift to Generative Decoders}
 
 The rise of generative Large Language Models (LLMs) has fundamentally changed how we approach text classification in NLP \cite{chakriswaran2019emotion}. 
-Traditionally, affective computing tasks relied on discriminative models like BERT or GRU variants that learn a direct mapping function $f(X) \to Y$ 
+Traditionally, affective computing tasks relied on discriminative models that learn a direct mapping function $f(X) \to Y$ 
 from input text $X$ to a predefined set of labels $Y$ \cite{saravia2018carer}. In contrast, autoregressive decoder architectures treat classification 
 as a conditional text generation problem. They model the probability of generating a target class token $y$ given a prompt sequence $X$:
 
@@ -113,7 +113,7 @@ as a conditional text generation problem. They model the probability of generati
 \end{equation}
 
 \noindent This shift offers significant benefits, especially when it comes to leveraging broad contextual knowledge and picking up on subtle 
-emotional tone that standard encoder representations often miss \cite{saravia2018carer}.
+emotional tone in short informal text \cite{kratzwald2018deep}.
 
 \subsubsection{Zero-Shot and Few-Shot Prompting Paradigms}
 A key feature of generative decoders is their ability to handle downstream classification without updating model weights, 
@@ -151,18 +151,15 @@ Sentiment analysis and emotion recognition overlap significantly in computationa
 complexity. Distinguishing basic sentiment classification from fine-grained emotion recognition makes it easier to pinpoint the key 
 challenges facing modern NLP.
 
-\subsubsection{Established Baselines in Binary Sentiment Analysis}
-Binary sentiment classification, which sorts text into simple positive or negative categories, is a well-established task. 
-Earlier studies applying fine-tuned Encoders like BERT alongside GRU variants reached near-peak performance on benchmarks such as 
-SST-2 and IMDb \cite{zhang2024comparative}. Because these datasets rely on balanced classes and explicit sentiment words, 
-standard supervised models handle well-structured text with high reliability.
+\subsubsection{Published Recurrent Results}
+Binary sentiment classification, which sorts text into positive or negative categories, is a different task from six-class emotion recognition.
+Zhang \cite{zhang2024comparative} compares RNN, GRU, and LSTM variants, including bidirectional models, on a Kaggle Twitter set of six emotions after downsampling every class to the same size (20\% of the data held out for testing). BERT and DistilBERT are named in the introduction of that paper; the trained models are recurrent. On the balanced sample, Table 1 reports a two-layer Bi-LSTM at test accuracy 0.9321 and F1 0.93 after 200 epochs, and a two-layer Bi-GRU at accuracy 0.8833 and F1 0.88. Those accuracies describe the balanced sample.
 
 \subsubsection{Open Challenge 1: Fine-Grained Multi-Class Emotion Mapping}
-Moving beyond binary sentiment requires mapping text to specific psychological states, such as Ekman's six core emotions: 
-anger, fear, joy, love, sadness, and surprise. As categorized in emotion detection surveys \cite{maruf2024challenges}, adopting a discrete theoretical model simplifies categorical boundaries but introduces challenges when modeling overlapping affective states. Distinct emotions like fear and surprise frequently share identical keywords, meaning the model must rely on broader context rather than individual terms to tell them apart \cite{kratzwald2018deep}. Modern decoder architectures capture these subtle contextual shifts well, but mapping their outputs into discrete emotion categories without misclassifications remains difficult \cite{cheng2026personality}.
+Moving beyond binary sentiment requires mapping text to specific psychological states. This work uses six categories: joy, sadness, anger, fear, love, and surprise. Saravia et al. \cite{saravia2018carer} evaluate a different inventory: Plutchik's eight emotions in the main experiment, and Ekman's six (anger, disgust, fear, joy, sadness, and surprise) in a second one. As categorized in emotion detection surveys \cite{maruf2024challenges}, adopting a discrete theoretical model simplifies categorical boundaries but introduces challenges when modeling overlapping affective states. Distinct emotions like fear and surprise frequently share identical keywords, meaning the model must rely on broader context rather than individual terms to tell them apart \cite{kratzwald2018deep}. Modern decoder architectures capture these subtle contextual shifts well, but mapping their outputs into discrete emotion categories without misclassifications remains difficult \cite{cheng2026personality}.
 
 \subsubsection{Open Challenge 2: Extreme Class Imbalance in Affective Corpora}
-A major bottleneck in emotion datasets like the CARER benchmark is severe class imbalance \cite{saravia2018carer}. Everyday language features common emotions like joy or sadness far more often than high-intensity states like surprise or fear. Standard cross-entropy loss naturally focuses on majority-class errors, which leads to high overall accuracy but poor recall on minority categories \cite{maruf2024challenges}. While sampling methods and weighted losses help traditional encoders, managing severe imbalance within Parameter-Efficient Fine-Tuning (PEFT) frameworks, where base weights remain frozen, is still an ongoing challenge for Macro-F1 optimization \cite{nwaiwu2025peft}.
+A major bottleneck in the hashtag corpus of Saravia et al. \cite{saravia2018carer} is severe class imbalance: sadness has 214,454 tweets and joy 167,027, while disgust has 8,934 and anticipation 3,975. Fear, at 102,460, is one of the larger classes in that table. In the six-class corpus used here, joy and sadness still dominate love and surprise. Standard cross-entropy loss naturally focuses on majority-class errors, which leads to high overall accuracy but poor recall on minority categories \cite{maruf2024challenges}. While sampling methods and weighted losses help traditional encoders, managing severe imbalance within Parameter-Efficient Fine-Tuning (PEFT) frameworks, where base weights remain frozen, is still an ongoing challenge for Macro-F1 optimization \cite{nwaiwu2025peft}.
 
 \subsubsection{Open Challenge 3: Ambiguity in Digital Text}
 Short online texts introduce noise that degrades classification accuracy. Much of this noise is produced by the way people write, there are writing styles that can lead to misinterpretations in literary readings \cite{maruf2024challenges}. The main causes of ambiguity in affective corpora include:
@@ -180,7 +177,7 @@ strict memory limits remains a major objective for practical emotion recognition
 \label{sec:ejeB}
 
 \subsection{Full Fine-Tuning vs. PEFT Paradigms}
-Supervised Fine-Tuning (SFT) has historically served as the standard paradigm for adapting pre-trained language models to downstream tasks. In full parameter fine-tuning (FFT), every weight matrix $\Theta$ across all model layers is updated via backpropagation. For compact encoder architectures such as DistilBERT ($\approx 66\text{M}$ parameters) and BERT-Base ($\approx 110\text{M}$ parameters), full parameter updates are computationally lightweight, requiring under $2\text{ GB}$ of VRAM during training \cite{zhang2024comparative}. Consequently, FFT remains a highly effective baseline for standard encoder-based classification tasks.
+Supervised Fine-Tuning (SFT) has historically served as the standard paradigm for adapting pre-trained language models to downstream tasks. In full parameter fine-tuning (FFT), every weight matrix $\Theta$ across all model layers is updated via backpropagation. This work applies that update to the compact encoders DistilBERT ($\approx 66\text{M}$ parameters) and BERT-Base ($\approx 110\text{M}$ parameters). Zhang \cite{zhang2024comparative} reports accuracy and F1 for recurrent models on a balanced sample. FFT remains the training setup used here for the encoder baselines.
 
 However, as model scales transition toward intermediate and large-scale generative decoders (e.g., Qwen-2.5-1.5B/7B, Gemma-2-2B/9B, and DeepSeek-R1-Distill-1.5B/7B), full parameter updates become computationally prohibitive \cite{liu-etal-2026-look}. In 16-bit floating-point precision (FP16/BF16), storing a 7-billion parameter model consumes approximately $14\text{ GB}$ of static memory. During full fine-tuning, the memory footprint scales drastically when factoring in first- and second-order optimizer states (such as AdamW tracking momentum and variance for every weight), gradient buffers, and activation caching:
 \begin{equation}
@@ -258,7 +255,7 @@ The three adaptation strategies considered in this work occupy distinct points a
 \end{itemize}
 
 \subsubsection{Architectural Compatibility Across Model Families}
-Because LoRA and QLoRA target the same class of linear projection matrices described in Section~\ref{sec:ejeB}.B, both methods apply uniformly across the encoder and decoder architectures evaluated in this work. The attention projections $W_q, W_k, W_v, W_o$ are present in BERT-based encoders as well as in the Qwen, Gemma, and DeepSeek decoders, so the adaptation mechanism itself does not need to change across families. What differs in practice is how much quantization matters: for the encoder baselines (DistilBERT, BERT-Base), which are fully fine-tuned under $2\text{ GB}$ of VRAM \cite{zhang2024comparative}, quantization offers little practical benefit, while for the decoder models, whose base weights alone approach or exceed the available VRAM on the team's lower-end GPUs, QLoRA is what makes training feasible at all \cite{wang2025peft}.
+Because LoRA and QLoRA target the same class of linear projection matrices described in Section~\ref{sec:ejeB}.B, both methods apply uniformly across the encoder and decoder architectures evaluated in this work. The attention projections $W_q, W_k, W_v, W_o$ are present in BERT-based encoders as well as in the Qwen, Gemma, and DeepSeek decoders, so the adaptation mechanism itself does not need to change across families. What differs in practice is how much quantization matters. The encoder baselines (DistilBERT, BERT-Base) are fully fine-tuned. For the decoder models, whose base weights alone approach or exceed the available VRAM on the team's lower-end GPUs, QLoRA is what makes training feasible at all \cite{wang2025peft}.
 
 \subsection{Theoretical Limitations and Underlying Assumptions}
 
@@ -323,7 +320,7 @@ constrained to a $10\text{ GB}$ peak VRAM budget.
 To evaluate multi-class text emotion recognition under realistic conditions, we utilize the CARER benchmark dataset (hosted as the "Emotions: Where Words Paint the Colors of Feelings" corpus on Kaggle). The corpus consists of short, self-reported English social media posts and personal narratives annotated for affective state.
 
 \subsubsection{Class Distribution and Imbalance}
-The dataset comprises $20,000$ short text instances categorized into six distinct emotional classes based on psychological models of primary emotion: \textit{joy}, \textit{sadness}, \textit{anger}, \textit{fear}, \textit{love}, and \textit{surprise}. As illustrated in Table~\ref{tab:carer_distribution}, the dataset exhibits severe class imbalance.
+The dataset comprises $20,000$ short text instances categorized into six distinct emotional classes: \textit{joy}, \textit{sadness}, \textit{anger}, \textit{fear}, \textit{love}, and \textit{surprise}. As illustrated in Table~\ref{tab:carer_distribution}, the dataset exhibits severe class imbalance. These counts belong to the working corpus of this study. They are not Table 3 of Saravia et al. \cite{saravia2018carer}, which lists eight hashtag-labeled emotions: sadness (214,454), joy (167,027), fear (102,460), anger (102,289), surprise (46,101), trust (19,222), disgust (8,934), and anticipation (3,975).
 
 \begin{table}[htbp]
 \centering
@@ -363,47 +360,44 @@ classification performance across underrepresented emotion classes.
 
 \subsection{Reported Metrics and Published Baselines}
 
-Evaluating fine-grained emotion recognition models on imbalanced corpora requires selecting evaluation metrics that accurately reflect 
-performance across all target categories while accounting for resource consumption \cite{saravia2018carer, zhang2024comparative}.
+Evaluating fine-grained emotion recognition on imbalanced corpora requires a metric that reflects every class. Saravia et al. \cite{saravia2018carer} use F1 for that reason. Zhang \cite{zhang2024comparative} reports accuracy, precision, recall, and F1 on a class-balanced sample. Resource consumption is measured separately in this study \cite{nwaiwu2025peft}.
 
 \subsubsection{Evaluation Metrics}
 To measure both classification performance and operational cost, models are evaluated across a standardized set of metrics:
 
 \begin{itemize}
-    \item \textbf{Macro-F1 ($\mathbf{F_1^{\text{macro}}}$):} Serves as the primary quality metric. By calculating the unweighted mean of $F_1$ scores across all six emotion categories, Macro-F1 treats every class equally, making it sensitive to poor performance on underrepresented classes like \textit{surprise} or \textit{love} \cite{saravia2018carer, maruf2024challenges}.
+    \item \textbf{Macro-F1 ($\mathbf{F_1^{\text{macro}}}$):} Serves as the primary quality metric. By calculating the unweighted mean of $F_1$ scores across all six emotion categories, Macro-F1 treats every class equally, making it sensitive to poor performance on underrepresented classes like \textit{surprise} or \textit{love}. Saravia et al. motivate F1 by dataset imbalance \cite{saravia2018carer}. The average they print for their CARER model is 0.79. Weighting the per-class scores in their Table 4 by the class counts in their Table 3 reproduces 0.79; the unweighted mean of those rounded scores is 0.69. This work reports that unweighted mean. The same minority-class failure mode is described in later surveys \cite{maruf2024challenges}.
     \item \textbf{Weighted-F1 ($\mathbf{F_1^{\text{weighted}}}$):} Computes the average $F_1$ score weighted by class support. While provided for comparison, it can mask weak performance on minority categories when majority classes achieve high precision and recall \cite{chakriswaran2019emotion}.
     \item \textbf{Inference Latency and Memory Footprint:} Measures average prediction time per sample (in milliseconds) alongside peak GPU memory utilization (in gigabytes) to quantify operational deployment overhead \cite{nwaiwu2025peft}.
 \end{itemize}
 
 \subsubsection{Published Baselines and Benchmark References}
-To establish performance bounds, our results are benchmarked against traditional baselines and previously published transformer 
-results on the CARER dataset structure \cite{saravia2018carer, zhang2024comparative}:
+Table~\ref{tab:published_baselines} records the figures these two papers print. Saravia et al. \cite{saravia2018carer} evaluate hashtag-labeled tweets, with average F1 on Plutchik's eight emotions (their Table 4) and accuracy on Ekman's six (their Table 5). Zhang \cite{zhang2024comparative} evaluates recurrent models on a balanced six-emotion Twitter sample (their Tables 1 and 3). DistilBERT and BERT-Base are models trained in this study; the published numbers below are pattern-based and recurrent results.
 
 \begin{table}[htbp]
 \centering
-\caption{Representative Performance Baselines on CARER}
+\caption{Figures printed by Saravia et al. (2018) and Zhang (2024). The F1 average in Saravia et al. follows class support. Zhang's accuracy is measured after balancing the classes.}
 \label{tab:published_baselines}
-\fontsize{8pt}{10pt}\selectfont
-\begin{tabularx}{\columnwidth}{@{} l c c X @{}}
+\fontsize{7pt}{8.5pt}\selectfont
+\begin{tabularx}{\columnwidth}{@{} >{\raggedright\arraybackslash}X c c @{}}
 \toprule
-\textbf{Model} & \textbf{Macro-F1} & \textbf{Weighted-F1} & \textbf{Characteristics} \\
+\textbf{Model and setting} & \textbf{Metric} & \textbf{Result} \\
 \midrule
-TF-IDF + LogReg & $\sim 78.5\%$ & $\sim 82.1\%$ & Fast CPU baseline; no context \\
-BiLSTM & $\sim 84.2\%$ & $\sim 86.0\%$ & Recurrent baseline \cite{saravia2018carer} \\
-DistilBERT & $\sim 89.8\%$ & $\sim 91.2\%$ & Efficient encoder \cite{zhang2024comparative} \\
-BERT-base & $\sim 91.5\%$ & $\sim 92.6\%$ & Strong encoder baseline \cite{zhang2024comparative} \\
+n-gram TF-IDF, 8 emotions \cite{saravia2018carer} & F1 avg. & 0.63 \\
+DeepMoji (Bi-LSTM stack), 8 emotions \cite{saravia2018carer} & F1 avg. & 0.59 \\
+CARER (patterns + CNN), 8 emotions \cite{saravia2018carer} & F1 avg. & 0.79 \\
+DeepMoji (Bi-LSTM stack), Ekman 6 \cite{saravia2018carer} & Accuracy & 0.63 \\
+BiGRNN, enriched patterns, Ekman 6 \cite{saravia2018carer} & Accuracy & 0.68 \\
+CARER$_{EK}$, Ekman 6 \cite{saravia2018carer} & Accuracy & 0.81 \\
+Two-layer Bi-GRU, balanced 6-class \cite{zhang2024comparative} & Acc. / F1 & 0.8833 / 0.88 \\
+Two-layer Bi-LSTM, 200 epochs, balanced 6-class \cite{zhang2024comparative} & Acc. / F1 & 0.9321 / 0.93 \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-Traditional non-neural and recurrent baselines establish the lower performance boundary \cite{saravia2018carer, kratzwald2018deep}. 
-While lightweight and fast to train, they struggle to capture the complex pragmatic cues and implicit emotional expressions present 
-in digital text \cite{chakriswaran2019emotion}. Encoder-based architectures like BERT-Base set a strong performance baseline for 
-discriminative models \cite{zhang2024comparative}. 
+On the eight-emotion task, Saravia et al. also report F1 averages of 0.60 for bag-of-words TF-IDF, 0.65 for a CNN with tweet word vectors, 0.52 for EmoNet, and 0.67 for their smaller pattern set (CARER$\beta$). On Ekman's six emotions, the same paper reports accuracies of 0.53 (RNN with word2vec), 0.69 (CNN with tweet word vectors), 0.72 (CARER$\beta$), and 0.58 (EmoNet). Zhang's Table 1 also lists weaker recurrent runs on the balanced sample, including a single-layer GRU at accuracy 0.7867 (F1 0.79) and a single-layer RNN at accuracy 0.3013 (F1 0.30).
 
-Our experimental framework builds directly upon these references, testing whether parameter-efficient generative decoders 
-(such as Qwen2.5, Gemma-2, and DeepSeek-R1-Distill) can match or surpass these established encoder boundaries while operating under 
-strict hardware and parameter budgets \cite{nwaiwu2025peft, mohammed2026deepfake}.
+These figures come from different label sets and sampling choices than the imbalanced six-class split used here, so they are external reference points rather than a Macro-F1 ceiling for DistilBERT or BERT-Base. The encoders trained in this study supply that internal reference. The comparison with parameter-efficient decoders (Qwen2.5, Gemma 4, and DeepSeek-R1-Distill) is then made under a shared hardware budget \cite{nwaiwu2025peft, mohammed2026deepfake}.
 
 \begin{table*}[t]
 \centering
@@ -416,7 +410,7 @@ strict hardware and parameter budgets \cite{nwaiwu2025peft, mohammed2026deepfake
 \textbf{Reference} & \textbf{Year} & \textbf{Technique} & \textbf{Dataset / Environment} & \textbf{Primary Metric} & \textbf{Reported Result} & \textbf{Identified Limitation} \\
 \midrule
 
-Saravia et al. \cite{saravia2018carer} & 2018 & BiLSTM + Contextual Word Embeddings & CARER (Emotion Benchmark) & Macro-F1 & 0.647 (Benchmark Baseline) & Limited long-range semantic capacity; struggles with severe class imbalance. \\
+Saravia et al. \cite{saravia2018carer} & 2018 & Enriched graph patterns plus word embeddings, classified with a CNN (CARER). Comparisons include a BiGRNN and DeepMoji, a Bi-LSTM stack & Hashtag-labeled English tweets. Main set: Plutchik's 8 emotions. Second set: Ekman's 6 & F1 average (8 classes); accuracy (6 classes) & CARER F1 average 0.79; CARER$_{EK}$ accuracy 0.81. DeepMoji: F1 average 0.59 and accuracy 0.63. BiGRNN accuracy 0.68 & Hashtag noise and severe skew (anticipation 3,975 against sadness 214,454). The published F1 average matches a support-weighted mean of the per-class scores. \\
 \addlinespace
 
 Kratzwald et al. \cite{kratzwald2018deep} & 2018 & Deep Learning (BiLSTM / CNN) & Financial \& Customer Reviews & Classification Accuracy & 82.4\% Accuracy & High dependence on task-specific fine-tuning; poor zero-shot generalization. \\
@@ -425,7 +419,7 @@ Kratzwald et al. \cite{kratzwald2018deep} & 2018 & Deep Learning (BiLSTM / CNN) 
 Chakriswaran et al. \cite{chakriswaran2019emotion} & 2019 & Lexicon-Based \& Deep Learning Survey & Multimodal / Microblogs & Accuracy / F1-Score & Qualitative SOTA Overview & Highlights systemic issues with informal slang, sarcasm, and class skew. \\
 \addlinespace
 
-Zhang \cite{zhang2024comparative} & 2024 & BERT, RNN, GRU Full Fine-Tuning & Standard Sentiment Corpora & Accuracy / Macro-F1 & BERT outperforms RNN/GRU ($>90\%$) & Full fine-tuning requires substantial memory; limited to fixed context lengths. \\
+Zhang \cite{zhang2024comparative} & 2024 & RNN, GRU, and LSTM, including two-layer bidirectional variants. BERT and DistilBERT appear only as related work & Kaggle six-emotion Twitter set, downsampled to equal class counts; 20\% test split & Accuracy, precision, recall, F1 & Two-layer Bi-LSTM: accuracy 0.9321 and F1 0.93 (200 epochs). Two-layer Bi-GRU: accuracy 0.8833 and F1 0.88 & Single balanced sample. The reported F1 describes that balanced test split. The measured models are recurrent. \\
 \addlinespace
 
 Nwaiwu \cite{nwaiwu2025peft} & 2025 & LoRA, $(IA)^3$, ReFT Evaluation & Low-Resource Text Benchmarks & Macro-F1 / Memory Footprint & LoRA achieves $\sim 98\%$ of full fine-tuning & Performance varies significantly across adapter target modules and target tasks. \\
@@ -502,7 +496,7 @@ While the CARER benchmark provides a structured framework for evaluating multi-c
 several intrinsic dataset limitations and distributional biases must be acknowledged to contextualize model performance.
 
 \subsubsection{Linguistic and Register Constraints}
-The dataset consists exclusively of English-language text compiled from social media posts and self-reported affective narratives \cite{saravia2018carer}. 
+The dataset consists of English-language Twitter text. In Saravia et al. \cite{saravia2018carer}, labels are emotion hashtags used as distant supervision. 
 This introduces specific domain boundaries:
 
 \begin{itemize}
@@ -511,7 +505,7 @@ This introduces specific domain boundaries:
 \end{itemize}
 
 \subsubsection{Annotation Granularity and Cultural Bias}
-The corpus adopts a discrete taxonomy of six primary emotion categories based on psychological models of affect \cite{saravia2018carer}. 
+The corpus used in this work adopts six categories: joy, sadness, anger, fear, love, and surprise. Saravia et al. \cite{saravia2018carer} report experiments on Plutchik's eight emotions and on Ekman's six (anger, disgust, fear, joy, sadness, and surprise). 
 This introduces structural simplifications:
 
 \begin{itemize}
@@ -589,7 +583,7 @@ We select nine distinct models to evaluate performance across recurrent baseline
 
 \begin{itemize}
     \item \textbf{Baseline Models:} We implement a TF-IDF + Logistic Regression model operating on standard n-gram features as a non-neural benchmark. For a recurrent baseline, we train a BiLSTM model using static word embeddings to capture sequential text structures.
-    \item \textbf{Encoder Transformers:} We select DistilBERT ($\approx 66\text{M}$ parameters) and BERT-Base ($\approx 110\text{M}$ parameters) for full supervised fine-tuning (SFT) \cite{zhang2024comparative}. Because of their small memory footprints, all parameters across all transformer layers are updated directly using standard cross-entropy loss.
+    \item \textbf{Encoder Transformers:} We select DistilBERT ($\approx 66\text{M}$ parameters) and BERT-Base ($\approx 110\text{M}$ parameters) for full supervised fine-tuning (SFT). Because these encoders are the compact models in the comparison, all of their parameters are updated with standard cross-entropy loss.
     \item \textbf{Decoder Transformers:} Our decoder models include Qwen2.5-0.5B, Qwen2.5-1.5B, Gemma 4 E2B, Gemma 4 E4B, and DeepSeek-R1-Distill-Qwen-1.5B \cite{gemmateam2026gemma4}. To perform fine-tuning within consumer GPU memory limits (such as an NVIDIA RTX 3080 with 10 GB VRAM), the base model weights $\Theta_0$ remain frozen while downstream adaptation is handled through Low-Rank Adaptation (LoRA) \cite{nwaiwu2025peft}.
 \end{itemize}
 
@@ -646,7 +640,7 @@ Because parameter-efficient fine-tuning has been shown to introduce measurable i
 Pairwise comparisons that isolate a single axis, such as DistilBERT against BERT-Base for parameter scale or Qwen2.5-1.5B against DeepSeek-R1-Distill-Qwen-1.5B for training objective, are evaluated with a paired significance test on a per-sample basis, following the same paired-testing approach used to validate PEFT robustness claims in the reviewed literature \cite{wu2025advlora}. Given the small number of classes and runs involved, results are cross-checked with a non-parametric alternative when the normality of the underlying score distribution cannot be assumed, in line with the Kruskal-Wallis and post-hoc testing procedure used to evaluate LLM-based emotion classification differences in related work \cite{yang2023context}. A difference between two configurations is treated as informative only when it clears this statistical threshold, rather than being read directly off the raw Macro-F1 gap.
 
 \subsection{Explicit Baseline Target for Evaluation (Axis C)}
-To establish a clear target for competitive task performance, our primary empirical goal is to equal or surpass the Macro-F1 baseline of \textbf{89.8\%} established by fully fine-tuned DistilBERT and \textbf{91.5\%} set by BERT-Base evaluated against the contextualized affect representations introduced by the CARER framework \cite{saravia2018carer}. We aim to achieve this threshold using LoRA-adapted generative decoders operating under a strict 10 GB VRAM envelope.
+The external figures in Table~\ref{tab:published_baselines} are not the Macro-F1 target. Saravia et al. \cite{saravia2018carer} report an F1 average of 0.79 on eight emotions and an accuracy of 0.81 on Ekman's six. Zhang \cite{zhang2024comparative} reports a test accuracy of 0.9321 and an F1 of 0.93 for a two-layer Bi-LSTM after balancing a six-emotion Twitter set. The encoders trained in this study are the internal reference, and the LoRA-adapted decoders are compared with them under a shared 10 GB VRAM envelope.
 
 \subsection{Methodological Risks and Data Partition Integrity (Track B)}
 A major risk in multi-class text emotion benchmarks is partition contamination arising from near-duplicate social media posts across community mirrors. To eliminate dataset leakage, we implement strict SHA-256 string hashing and deduplication across raw text strings prior to splitting. Stratified partitioning (80\% train, 10\% validation, 10\% test) is executed once, ensuring zero overlap between training sequences and evaluation metrics.
