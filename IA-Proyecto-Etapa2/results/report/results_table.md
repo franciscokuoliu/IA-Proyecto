@@ -14,7 +14,7 @@
 | BiLSTM + GloVe | BiLSTM + GloVe | 0.9786 ± 0.0028 | 0.9814 ± 0.0033 | 7.0M | 442K | - | 9.6 (9.1–10.2) | CPU (fp32) | 3 |
 | Gemma 4 E2B | Decoder (QLoRA, 4-bit) | 0.9544 ± 0.0032 | 0.9642 ± 0.0010 | 5.1B † | 5.4M | 9.2 | 149.4 | RTX 3080 (bf16) | 3 |
 | TF-IDF + LogReg | TF-IDF + LogReg | 0.9493 (1 corrida) | 0.9564 (1 corrida) | 344K | 344K | - | 0.2 | CPU | 1 |
-| Dummy (stratified) | Dummy | 0.1662 ± 0.0026 | 0.2544 ± 0.0024 | - | - | - | <0.1 | CPU | 3 |
+| Dummy (stratified) | Dummy | 0.1696 ± 0.0014 | 0.2579 ± 0.0001 | - | - | - | <0.1 | CPU | 3 |
 | Dummy (most frequent) | Dummy | 0.0861 (1 corrida) | 0.3482 (1 corrida) | - | - | - | <0.1 | CPU | 1 |
 
 - Macro-F1 y exactitud: media ± desviación estándar muestral (ddof=1) sobre las semillas [42, 1337, 2026]. La exactitud se calcula desde la matriz de confusión (no es una métrica oficial del arnés).
@@ -27,7 +27,6 @@
 - Tiempos y VRAM: no son comparables entre GPU distintas (contrato, sección 11). VRAM pico es de entrenamiento (`cuda_max_allocated`), no de inferencia. Los modelos en CPU no tienen VRAM.
 - Entre paréntesis, rango de tiempos cuando una corrida difiere más de 10% de la media (una corrida que paró antes por paciencia dura menos).
 
-- Dummy (stratified) y Dummy (most frequent) se entrenaron con n_train=297,220 (train completo), no con el subconjunto S (32,000); repetirlos con S para que la comparación sea justa.
 
 ## 2. Resultados por semilla
 
@@ -55,10 +54,10 @@
 | Gemma 4 E2B | 1337 | 0.9567 | 0.9588 | 3000 | no | 153.7 | 87beccc |
 | Gemma 4 E2B | 2026 | 0.9558 | 0.9557 | 3000 | no | 142.5 | 87beccc |
 | TF-IDF + LogReg | 42 | 0.9493 | - | - | - | 0.2 | c400f84 |
-| Dummy (stratified) | 42 | 0.1635 | - | - | - | 0.0 | c400f84 |
-| Dummy (stratified) | 1337 | 0.1663 | - | - | - | 0.0 | c400f84 |
-| Dummy (stratified) | 2026 | 0.1687 | - | - | - | 0.0 | c400f84 |
-| Dummy (most frequent) | 42 | 0.0861 | - | - | - | 0.0 | c400f84 |
+| Dummy (stratified) | 42 | 0.1690 | - | - | - | 0.0 | 8e2b858 |
+| Dummy (stratified) | 1337 | 0.1712 | - | - | - | 0.0 | 8e2b858 |
+| Dummy (stratified) | 2026 | 0.1687 | - | - | - | 0.0 | 8e2b858 |
+| Dummy (most frequent) | 42 | 0.0861 | - | - | - | 0.0 | 8e2b858 |
 
 - `Paró por paciencia`: el entrenamiento terminó antes del máximo de pasos porque val_select no mejoró en 3 evaluaciones seguidas; se restaura el mejor checkpoint.
 - `Commit: no registrado`: la corrida no guardó el hash del commit en sus metadatos (declararlo en la sección de reproducibilidad).
@@ -75,7 +74,7 @@
 | BiLSTM + GloVe | 0.9834 | 0.9852 | 0.9864 | 0.9728 | 0.9751 | 0.9691 |
 | Gemma 4 E2B | 0.9753 | 0.9706 | 0.9687 | 0.9466 | 0.9430 | 0.9222 |
 | TF-IDF + LogReg | 0.9607 | 0.9641 | 0.9449 | 0.9460 | 0.9454 | 0.9346 |
-| Dummy (stratified) | 0.3123 | 0.3469 | 0.0673 | 0.1394 | 0.1063 | 0.0248 |
+| Dummy (stratified) | 0.3149 | 0.3509 | 0.0699 | 0.1455 | 0.1085 | 0.0282 |
 | Dummy (most frequent) | 0.0000 | 0.5166 | 0.0000 | 0.0000 | 0.0000 | 0.0000 |
 
 - Soporte en test: sadness 11,604, joy 12,937, love 2,438, anger 5,233, fear 3,958, surprise 983.
@@ -156,6 +155,12 @@ Configuración: modelo `tfidf-logreg`, n_train=32,000.
 
 | Par (A − B) | Semilla | Macro-F1 A | Macro-F1 B | Δ (A − B) | IC 95% | ¿Informativa? |
 |---|---|---|---|---|---|---|
+| DistilBERT − BERT-base | 42 | 0.9889 | 0.9898 | -0.0009 | [-0.0019, +0.0001] | no (incluye 0) |
+| DistilBERT − BERT-base | 1337 | 0.9895 | 0.9897 | -0.0002 | [-0.0012, +0.0008] | no (incluye 0) |
+| DistilBERT − BERT-base | 2026 | 0.9889 | 0.9889 | +0.0000 | [-0.0010, +0.0010] | no (incluye 0) |
+| Qwen2.5-0.5B − Qwen2.5-1.5B | 42 | 0.9886 | 0.9884 | +0.0002 | [-0.0016, +0.0020] | no (incluye 0) |
+| Qwen2.5-0.5B − Qwen2.5-1.5B | 1337 | 0.9867 | 0.9900 | -0.0033 | [-0.0048, -0.0017] | sí |
+| Qwen2.5-0.5B − Qwen2.5-1.5B | 2026 | 0.9878 | 0.9877 | +0.0001 | [-0.0016, +0.0016] | no (incluye 0) |
 | Qwen2.5-1.5B − Gemma 4 E2B | 42 | 0.9884 | 0.9507 | +0.0377 | [+0.0346, +0.0413] | sí |
 | Qwen2.5-1.5B − Gemma 4 E2B | 1337 | 0.9900 | 0.9567 | +0.0333 | [+0.0305, +0.0360] | sí |
 | Qwen2.5-1.5B − Gemma 4 E2B | 2026 | 0.9877 | 0.9558 | +0.0319 | [+0.0293, +0.0349] | sí |
@@ -167,13 +172,13 @@ Resumen por par:
 
 | Par (A − B) | Δ medio | Semillas con IC que excluye 0 | Mismo signo en todas |
 |---|---|---|---|
+| DistilBERT − BERT-base | -0.0004 | 0/3 | no |
+| Qwen2.5-0.5B − Qwen2.5-1.5B | -0.0010 | 1/3 | no |
 | Qwen2.5-1.5B − Gemma 4 E2B | +0.0343 | 3/3 | sí |
 | Qwen2.5-1.5B − DeepSeek-R1-Distill-1.5B | +0.0013 | 1/3 | no |
 
 - Bootstrap pareado por id, 1000 remuestreos, IC percentil 95% de la diferencia de Macro-F1 (contrato, sección 10). Una diferencia es informativa si el IC no incluye 0. Se compara la semilla k de A con la semilla k de B.
 - Si el IC excluye 0 con el mismo signo en las tres semillas, hay evidencia de una diferencia sistemática; si el signo cambia entre semillas o el IC incluye 0, no se puede afirmar que un modelo sea mejor.
-
-- Pares pendientes (faltan sus JSON en `results/pairs/`; se calculan con `scripts/compare_pairs.py`): DistilBERT − BERT-base; Qwen2.5-0.5B − Qwen2.5-1.5B.
 
 ## 7. Figuras
 

@@ -1,5 +1,5 @@
 {
-  "qwen2.5-1.5b": {
+  "bert-base": {
     "seeds": [
       42,
       1337,
@@ -7,60 +7,60 @@
     ],
     "n_test": 37153,
     "errors_per_seed": [
-      327,
-      269,
-      342
+      287,
+      273,
+      290
     ],
-    "n_persistent": 130,
-    "n_single_seed": 268,
+    "n_persistent": 144,
+    "n_single_seed": 190,
     "macro_f1_recomputed": [
-      0.9884255425099576,
-      0.9899785187669986,
-      0.9877172802631131
+      0.9897911485345127,
+      0.9897061442436645,
+      0.9888731342993032
     ],
     "per_class": {
       "sadness": {
         "support": 11604,
-        "recall": 0.9948868206365621,
-        "precision": 0.9944012173763244,
-        "pred_over_true": 1.0004883373549351
+        "recall": 0.995691140985867,
+        "precision": 0.9926401099687849,
+        "pred_over_true": 1.003073652763415
       },
       "joy": {
         "support": 12937,
-        "recall": 0.9934296977660972,
-        "precision": 0.9954045541384829,
-        "pred_over_true": 0.9980160263842724
+        "recall": 0.9939450155883641,
+        "precision": 0.9972081480715541,
+        "pred_over_true": 0.9967277318286053
       },
       "love": {
         "support": 2438,
-        "recall": 0.9974022422750889,
-        "precision": 0.9950893466102851,
-        "pred_over_true": 1.0023243095433416
+        "recall": 0.9965818977303801,
+        "precision": 0.9941352973267867,
+        "pred_over_true": 1.0024610336341264
       },
       "anger": {
         "support": 5233,
-        "recall": 0.985986368558507,
-        "precision": 0.984043229497775,
-        "pred_over_true": 1.0019746480667557
+        "recall": 0.9881521115994649,
+        "precision": 0.9860166528951885,
+        "pred_over_true": 1.002165743040958
       },
       "fear": {
         "support": 3958,
-        "recall": 0.980882600640054,
-        "precision": 0.9833671057075313,
-        "pred_over_true": 0.9974734714502274
+        "recall": 0.9831564763348493,
+        "precision": 0.9868966100262068,
+        "pred_over_true": 0.996210207175341
       },
       "surprise": {
         "support": 983,
-        "recall": 0.9867751780264497,
-        "precision": 0.9729187562688064,
-        "pred_over_true": 1.0142421159715158
+        "recall": 0.9816887080366226,
+        "precision": 0.9773801485482781,
+        "pred_over_true": 1.0044082739911835
       }
     },
     "top_pairs": [
       {
-        "true": "joy",
-        "pred": "anger",
-        "count": 96
+        "true": "anger",
+        "pred": "sadness",
+        "count": 107
       },
       {
         "true": "joy",
@@ -68,100 +68,265 @@
         "count": 87
       },
       {
-        "true": "anger",
-        "pred": "fear",
-        "count": 87
+        "true": "sadness",
+        "pred": "anger",
+        "count": 71
       },
       {
         "true": "fear",
         "pred": "anger",
-        "count": 87
+        "count": 70
       },
       {
-        "true": "fear",
-        "pred": "surprise",
-        "count": 72
+        "true": "joy",
+        "pred": "anger",
+        "count": 68
       }
     ],
     "confidence": [
       {
         "bin": "< 0.50",
-        "n": 165,
-        "error_rate": 0.6727272727272727
+        "n": 76,
+        "error_rate": 0.6578947368421053
       },
       {
         "bin": "0.50 - 0.70",
-        "n": 453,
-        "error_rate": 0.5099337748344371
+        "n": 294,
+        "error_rate": 0.5
       },
       {
         "bin": "0.70 - 0.90",
-        "n": 651,
-        "error_rate": 0.391705069124424
+        "n": 341,
+        "error_rate": 0.4604105571847507
       },
       {
         "bin": "0.90 - 0.99",
-        "n": 950,
-        "error_rate": 0.1863157894736842
+        "n": 590,
+        "error_rate": 0.3593220338983051
       },
       {
         "bin": ">= 0.99",
-        "n": 109240,
-        "error_rate": 0.0015012815818381546
+        "n": 110158,
+        "error_rate": 0.0025781150710797217
       }
     ],
-    "share_errors_conf_ge_0.9": 0.36353944562899787,
+    "share_errors_conf_ge_0.9": 0.5835294117647059,
     "length": [
       {
         "words": "<= 11",
         "n": 10536,
-        "error_rate": 0.011009870918754746
+        "error_rate": 0.00983928119463427
       },
       {
         "words": "12 - 17",
         "n": 8680,
-        "error_rate": 0.007642089093701997
+        "error_rate": 0.0065668202764976955
       },
       {
         "words": "18 - 25",
         "n": 8825,
-        "error_rate": 0.0069121813031161475
+        "error_rate": 0.0058545797922568464
       },
       {
         "words": "> 25",
         "n": 9112,
-        "error_rate": 0.007609013754755633
+        "error_rate": 0.0077919227392449514
       }
     ],
     "text_type": [
       {
         "subset": "Contiene feel / feeling / felt",
         "n": 36591,
-        "error_rate": 0.003880735700035528,
-        "share_of_typical_errors": 0.3888888888888889
+        "error_rate": 0.0035527862042578776,
+        "share_of_typical_errors": 0.4069767441860465
       },
       {
         "subset": "No contiene feel",
         "n": 562,
-        "error_rate": 0.3036773428232503,
-        "share_of_typical_errors": 0.6111111111111112
+        "error_rate": 0.27283511269276395,
+        "share_of_typical_errors": 0.5930232558139535
       },
       {
         "subset": "Empieza con \"when\"",
         "n": 168,
-        "error_rate": 0.3551587301587302,
-        "share_of_typical_errors": 0.22592592592592592
+        "error_rate": 0.30952380952380953,
+        "share_of_typical_errors": 0.20930232558139536
       }
     ],
     "high_confidence_persistent_ids": [
       "a7b9b65cc72aa836bab5b9cbb5179a78",
+      "a48ef59767792961902f8fa6b162a50a",
+      "065bed3c70f60192be6e74e597d56b5a",
+      "7876fc5a83423cb8b003ccfee89816ae",
       "94720d50a8b7ccba035a6d5b56a48344",
-      "8e818f18c403677b76bafa0012c1c056",
       "507ee2ee32d01a45ef8b60cf71c2c4f3",
-      "bf295f38e738cdd0a9413b5bef94a355",
-      "cc9ea27a63e8e67ceb3ea6e7b816045c",
-      "ef2f46f788fbaa3e81199b94b109d7e3",
-      "9e4be15156c6028a896f0df2276b16a2"
+      "762775e4b23edb2ef1f7b8e43bed4597",
+      "2b5362d33fc0fac19b7dbea4ac44e050"
+    ]
+  },
+  "bilstm": {
+    "seeds": [
+      42,
+      1337,
+      2026
+    ],
+    "n_test": 37153,
+    "errors_per_seed": [
+      616,
+      621,
+      834
+    ],
+    "n_persistent": 249,
+    "n_single_seed": 796,
+    "macro_f1_recomputed": [
+      0.9811623192998372,
+      0.9792102180328945,
+      0.9755699864334235
+    ],
+    "per_class": {
+      "sadness": {
+        "support": 11604,
+        "recall": 0.9852924278984259,
+        "precision": 0.9813739234928901,
+        "pred_over_true": 1.0039928760197634
+      },
+      "joy": {
+        "support": 12937,
+        "recall": 0.9797222436937981,
+        "precision": 0.9906985227065475,
+        "pred_over_true": 0.988920666821262
+      },
+      "love": {
+        "support": 2438,
+        "recall": 0.989198796828001,
+        "precision": 0.9835508428493747,
+        "pred_over_true": 1.0057424118129614
+      },
+      "anger": {
+        "support": 5233,
+        "recall": 0.9804446143066438,
+        "precision": 0.9653182815929758,
+        "pred_over_true": 1.0156697878845786
+      },
+      "fear": {
+        "support": 3958,
+        "recall": 0.9714502273875695,
+        "precision": 0.9787035465806889,
+        "pred_over_true": 0.9925888495873336
+      },
+      "surprise": {
+        "support": 983,
+        "recall": 0.9840623940318752,
+        "precision": 0.9546052631578947,
+        "pred_over_true": 1.0308579179382842
+      }
+    },
+    "top_pairs": [
+      {
+        "true": "joy",
+        "pred": "sadness",
+        "count": 378
+      },
+      {
+        "true": "joy",
+        "pred": "anger",
+        "count": 213
+      },
+      {
+        "true": "sadness",
+        "pred": "anger",
+        "count": 210
+      },
+      {
+        "true": "sadness",
+        "pred": "joy",
+        "count": 184
+      },
+      {
+        "true": "anger",
+        "pred": "sadness",
+        "count": 143
+      }
+    ],
+    "confidence": [
+      {
+        "bin": "< 0.50",
+        "n": 874,
+        "error_rate": 0.5938215102974829
+      },
+      {
+        "bin": "0.50 - 0.70",
+        "n": 1235,
+        "error_rate": 0.4404858299595142
+      },
+      {
+        "bin": "0.70 - 0.90",
+        "n": 1701,
+        "error_rate": 0.25220458553791886
+      },
+      {
+        "bin": "0.90 - 0.99",
+        "n": 4769,
+        "error_rate": 0.08093940029356259
+      },
+      {
+        "bin": ">= 0.99",
+        "n": 102880,
+        "error_rate": 0.0018759720062208399
+      }
+    ],
+    "share_errors_conf_ge_0.9": 0.27957508450024143,
+    "length": [
+      {
+        "words": "<= 11",
+        "n": 10536,
+        "error_rate": 0.016641356618577574
+      },
+      {
+        "words": "12 - 17",
+        "n": 8680,
+        "error_rate": 0.015245775729646697
+      },
+      {
+        "words": "18 - 25",
+        "n": 8825,
+        "error_rate": 0.01858356940509915
+      },
+      {
+        "words": "> 25",
+        "n": 9112,
+        "error_rate": 0.02399765876499854
+      }
+    ],
+    "text_type": [
+      {
+        "subset": "Contiene feel / feeling / felt",
+        "n": 36591,
+        "error_rate": 0.011751523598699134,
+        "share_of_typical_errors": 0.5029239766081871
+      },
+      {
+        "subset": "No contiene feel",
+        "n": 562,
+        "error_rate": 0.46322657176749704,
+        "share_of_typical_errors": 0.49707602339181284
+      },
+      {
+        "subset": "Empieza con \"when\"",
+        "n": 168,
+        "error_rate": 0.5436507936507936,
+        "share_of_typical_errors": 0.17738791423001948
+      }
+    ],
+    "high_confidence_persistent_ids": [
+      "fcb44e78be33d853017df02137a1b70b",
+      "01fc5c41612a2c391e18534da4d70f3a",
+      "a7b9b65cc72aa836bab5b9cbb5179a78",
+      "26577d324e08fd0c1e6f9ffe1524d748",
+      "fd6dc259ced97a3cf787e0de682de073",
+      "3aebbb8e4764bb958be5968f8980bba5",
+      "11efe6e44a7cf49105e93b4c3cebae64",
+      "09886bddf18067d9d3378e78e45245f2"
     ]
   },
   "deepseek-r1-distill-qwen-1.5b": {
@@ -329,6 +494,171 @@
       "2b5362d33fc0fac19b7dbea4ac44e050"
     ]
   },
+  "distilbert": {
+    "seeds": [
+      42,
+      1337,
+      2026
+    ],
+    "n_test": 37153,
+    "errors_per_seed": [
+      297,
+      294,
+      311
+    ],
+    "n_persistent": 152,
+    "n_single_seed": 190,
+    "macro_f1_recomputed": [
+      0.988925677930894,
+      0.9894631363606085,
+      0.9888773394344414
+    ],
+    "per_class": {
+      "sadness": {
+        "support": 11604,
+        "recall": 0.995174077904171,
+        "precision": 0.9930061912405411,
+        "pred_over_true": 1.0021831552338274
+      },
+      "joy": {
+        "support": 12937,
+        "recall": 0.9941511427172709,
+        "precision": 0.995561977500258,
+        "pred_over_true": 0.998582875988766
+      },
+      "love": {
+        "support": 2438,
+        "recall": 0.9956248290948865,
+        "precision": 0.993993993993994,
+        "pred_over_true": 1.0016406890894176
+      },
+      "anger": {
+        "support": 5233,
+        "recall": 0.9883432065736671,
+        "precision": 0.9842679522963714,
+        "pred_over_true": 1.0041403911077138
+      },
+      "fear": {
+        "support": 3958,
+        "recall": 0.9795351187468418,
+        "precision": 0.9893671316774413,
+        "pred_over_true": 0.9900623210375611
+      },
+      "surprise": {
+        "support": 983,
+        "recall": 0.9833841980332316,
+        "precision": 0.9767598518019536,
+        "pred_over_true": 1.006781959986436
+      }
+    },
+    "top_pairs": [
+      {
+        "true": "joy",
+        "pred": "sadness",
+        "count": 97
+      },
+      {
+        "true": "fear",
+        "pred": "anger",
+        "count": 88
+      },
+      {
+        "true": "anger",
+        "pred": "sadness",
+        "count": 84
+      },
+      {
+        "true": "sadness",
+        "pred": "anger",
+        "count": 78
+      },
+      {
+        "true": "joy",
+        "pred": "anger",
+        "count": 70
+      }
+    ],
+    "confidence": [
+      {
+        "bin": "< 0.50",
+        "n": 90,
+        "error_rate": 0.7333333333333333
+      },
+      {
+        "bin": "0.50 - 0.70",
+        "n": 322,
+        "error_rate": 0.5434782608695652
+      },
+      {
+        "bin": "0.70 - 0.90",
+        "n": 438,
+        "error_rate": 0.4657534246575342
+      },
+      {
+        "bin": "0.90 - 0.99",
+        "n": 670,
+        "error_rate": 0.31343283582089554
+      },
+      {
+        "bin": ">= 0.99",
+        "n": 109939,
+        "error_rate": 0.0022467004429729213
+      }
+    ],
+    "share_errors_conf_ge_0.9": 0.5066518847006651,
+    "length": [
+      {
+        "words": "<= 11",
+        "n": 10536,
+        "error_rate": 0.009649455833966085
+      },
+      {
+        "words": "12 - 17",
+        "n": 8680,
+        "error_rate": 0.0065668202764976955
+      },
+      {
+        "words": "18 - 25",
+        "n": 8825,
+        "error_rate": 0.006798866855524079
+      },
+      {
+        "words": "> 25",
+        "n": 9112,
+        "error_rate": 0.008999122036874451
+      }
+    ],
+    "text_type": [
+      {
+        "subset": "Contiene feel / feeling / felt",
+        "n": 36591,
+        "error_rate": 0.0037349803685787944,
+        "share_of_typical_errors": 0.40714285714285714
+      },
+      {
+        "subset": "No contiene feel",
+        "n": 562,
+        "error_rate": 0.2918149466192171,
+        "share_of_typical_errors": 0.5928571428571429
+      },
+      {
+        "subset": "Empieza con \"when\"",
+        "n": 168,
+        "error_rate": 0.30753968253968256,
+        "share_of_typical_errors": 0.19642857142857142
+      }
+    ],
+    "high_confidence_persistent_ids": [
+      "94720d50a8b7ccba035a6d5b56a48344",
+      "a7b9b65cc72aa836bab5b9cbb5179a78",
+      "507ee2ee32d01a45ef8b60cf71c2c4f3",
+      "bf295f38e738cdd0a9413b5bef94a355",
+      "a48ef59767792961902f8fa6b162a50a",
+      "f3441abb1df14ad6923ff7565336c5e3",
+      "e157bb44d266e2e9f6a6593bba5106d0",
+      "55abbdebe298e6e433ba8a055b4a28e3"
+    ]
+  },
   "gemma-4-e2b": {
     "seeds": [
       42,
@@ -494,30 +824,524 @@
       "a457fd15b47fa53d3470b4c41c34b5df"
     ]
   },
-  "cross_model": {
-    "models": [
-      "qwen2.5-1.5b",
-      "deepseek-r1-distill-qwen-1.5b",
-      "gemma-4-e2b"
+  "qwen2.5-0.5b": {
+    "seeds": [
+      42,
+      1337,
+      2026
     ],
-    "n_common": 37153,
-    "consensus_errors": 132,
-    "unanimous_same_wrong_class": 91,
-    "consensus_by_subset": [
+    "n_test": 37153,
+    "errors_per_seed": [
+      326,
+      393,
+      345
+    ],
+    "n_persistent": 168,
+    "n_single_seed": 246,
+    "macro_f1_recomputed": [
+      0.9885937056964039,
+      0.986661452753118,
+      0.9877830629821677
+    ],
+    "per_class": {
+      "sadness": {
+        "support": 11604,
+        "recall": 0.9940537745604964,
+        "precision": 0.9924003441353599,
+        "pred_over_true": 1.0016660921521314
+      },
+      "joy": {
+        "support": 12937,
+        "recall": 0.9937646543505707,
+        "precision": 0.9927926072743185,
+        "pred_over_true": 1.000979103862307
+      },
+      "love": {
+        "support": 2438,
+        "recall": 0.9961717254580257,
+        "precision": 0.9954911873206722,
+        "pred_over_true": 1.000683620453924
+      },
+      "anger": {
+        "support": 5233,
+        "recall": 0.983948022167017,
+        "precision": 0.9816968541468065,
+        "pred_over_true": 1.0022931396904262
+      },
+      "fear": {
+        "support": 3958,
+        "recall": 0.9786087249452585,
+        "precision": 0.9872557349192863,
+        "pred_over_true": 0.9912413676941216
+      },
+      "surprise": {
+        "support": 983,
+        "recall": 0.9725330620549338,
+        "precision": 0.9835390946502057,
+        "pred_over_true": 0.9888097660223805
+      }
+    },
+    "top_pairs": [
+      {
+        "true": "anger",
+        "pred": "joy",
+        "count": 111
+      },
+      {
+        "true": "joy",
+        "pred": "sadness",
+        "count": 109
+      },
+      {
+        "true": "fear",
+        "pred": "anger",
+        "count": 100
+      },
+      {
+        "true": "sadness",
+        "pred": "anger",
+        "count": 93
+      },
+      {
+        "true": "joy",
+        "pred": "anger",
+        "count": 92
+      }
+    ],
+    "confidence": [
+      {
+        "bin": "< 0.50",
+        "n": 117,
+        "error_rate": 0.6752136752136753
+      },
+      {
+        "bin": "0.50 - 0.70",
+        "n": 424,
+        "error_rate": 0.5754716981132075
+      },
+      {
+        "bin": "0.70 - 0.90",
+        "n": 537,
+        "error_rate": 0.478584729981378
+      },
+      {
+        "bin": "0.90 - 0.99",
+        "n": 868,
+        "error_rate": 0.2707373271889401
+      },
+      {
+        "bin": ">= 0.99",
+        "n": 109513,
+        "error_rate": 0.00227370266543698
+      }
+    ],
+    "share_errors_conf_ge_0.9": 0.4548872180451128,
+    "length": [
+      {
+        "words": "<= 11",
+        "n": 10536,
+        "error_rate": 0.011294608959757023
+      },
+      {
+        "words": "12 - 17",
+        "n": 8680,
+        "error_rate": 0.00944700460829493
+      },
+      {
+        "words": "18 - 25",
+        "n": 8825,
+        "error_rate": 0.008083097261567517
+      },
+      {
+        "words": "> 25",
+        "n": 9112,
+        "error_rate": 0.009035703833772314
+      }
+    ],
+    "text_type": [
       {
         "subset": "Contiene feel / feeling / felt",
         "n": 36591,
-        "consensus_errors": 39
+        "error_rate": 0.0043088919861896825,
+        "share_of_typical_errors": 0.40615384615384614
       },
       {
         "subset": "No contiene feel",
         "n": 562,
-        "consensus_errors": 93
+        "error_rate": 0.3505338078291815,
+        "share_of_typical_errors": 0.5938461538461538
       },
       {
         "subset": "Empieza con \"when\"",
         "n": 168,
-        "consensus_errors": 36
+        "error_rate": 0.40674603174603174,
+        "share_of_typical_errors": 0.20307692307692307
+      }
+    ],
+    "high_confidence_persistent_ids": [
+      "507ee2ee32d01a45ef8b60cf71c2c4f3",
+      "a7b9b65cc72aa836bab5b9cbb5179a78",
+      "7876fc5a83423cb8b003ccfee89816ae",
+      "cdd408199707b89c0482d4a8bd841ff0",
+      "eda4da897644b4281d38efe07e6534f7",
+      "97e43cbfefc5957add618d811fc17fe4",
+      "bf295f38e738cdd0a9413b5bef94a355",
+      "ba21977c3601ed815b89c6fb1d9b5f78"
+    ]
+  },
+  "qwen2.5-1.5b": {
+    "seeds": [
+      42,
+      1337,
+      2026
+    ],
+    "n_test": 37153,
+    "errors_per_seed": [
+      327,
+      269,
+      342
+    ],
+    "n_persistent": 130,
+    "n_single_seed": 268,
+    "macro_f1_recomputed": [
+      0.9884255425099576,
+      0.9899785187669986,
+      0.9877172802631131
+    ],
+    "per_class": {
+      "sadness": {
+        "support": 11604,
+        "recall": 0.9948868206365621,
+        "precision": 0.9944012173763244,
+        "pred_over_true": 1.0004883373549351
+      },
+      "joy": {
+        "support": 12937,
+        "recall": 0.9934296977660972,
+        "precision": 0.9954045541384829,
+        "pred_over_true": 0.9980160263842724
+      },
+      "love": {
+        "support": 2438,
+        "recall": 0.9974022422750889,
+        "precision": 0.9950893466102851,
+        "pred_over_true": 1.0023243095433416
+      },
+      "anger": {
+        "support": 5233,
+        "recall": 0.985986368558507,
+        "precision": 0.984043229497775,
+        "pred_over_true": 1.0019746480667557
+      },
+      "fear": {
+        "support": 3958,
+        "recall": 0.980882600640054,
+        "precision": 0.9833671057075313,
+        "pred_over_true": 0.9974734714502274
+      },
+      "surprise": {
+        "support": 983,
+        "recall": 0.9867751780264497,
+        "precision": 0.9729187562688064,
+        "pred_over_true": 1.0142421159715158
+      }
+    },
+    "top_pairs": [
+      {
+        "true": "joy",
+        "pred": "anger",
+        "count": 96
+      },
+      {
+        "true": "joy",
+        "pred": "sadness",
+        "count": 87
+      },
+      {
+        "true": "anger",
+        "pred": "fear",
+        "count": 87
+      },
+      {
+        "true": "fear",
+        "pred": "anger",
+        "count": 87
+      },
+      {
+        "true": "fear",
+        "pred": "surprise",
+        "count": 72
+      }
+    ],
+    "confidence": [
+      {
+        "bin": "< 0.50",
+        "n": 165,
+        "error_rate": 0.6727272727272727
+      },
+      {
+        "bin": "0.50 - 0.70",
+        "n": 453,
+        "error_rate": 0.5099337748344371
+      },
+      {
+        "bin": "0.70 - 0.90",
+        "n": 651,
+        "error_rate": 0.391705069124424
+      },
+      {
+        "bin": "0.90 - 0.99",
+        "n": 950,
+        "error_rate": 0.1863157894736842
+      },
+      {
+        "bin": ">= 0.99",
+        "n": 109240,
+        "error_rate": 0.0015012815818381546
+      }
+    ],
+    "share_errors_conf_ge_0.9": 0.36353944562899787,
+    "length": [
+      {
+        "words": "<= 11",
+        "n": 10536,
+        "error_rate": 0.011009870918754746
+      },
+      {
+        "words": "12 - 17",
+        "n": 8680,
+        "error_rate": 0.007642089093701997
+      },
+      {
+        "words": "18 - 25",
+        "n": 8825,
+        "error_rate": 0.0069121813031161475
+      },
+      {
+        "words": "> 25",
+        "n": 9112,
+        "error_rate": 0.007609013754755633
+      }
+    ],
+    "text_type": [
+      {
+        "subset": "Contiene feel / feeling / felt",
+        "n": 36591,
+        "error_rate": 0.003880735700035528,
+        "share_of_typical_errors": 0.3888888888888889
+      },
+      {
+        "subset": "No contiene feel",
+        "n": 562,
+        "error_rate": 0.3036773428232503,
+        "share_of_typical_errors": 0.6111111111111112
+      },
+      {
+        "subset": "Empieza con \"when\"",
+        "n": 168,
+        "error_rate": 0.3551587301587302,
+        "share_of_typical_errors": 0.22592592592592592
+      }
+    ],
+    "high_confidence_persistent_ids": [
+      "a7b9b65cc72aa836bab5b9cbb5179a78",
+      "94720d50a8b7ccba035a6d5b56a48344",
+      "8e818f18c403677b76bafa0012c1c056",
+      "507ee2ee32d01a45ef8b60cf71c2c4f3",
+      "bf295f38e738cdd0a9413b5bef94a355",
+      "cc9ea27a63e8e67ceb3ea6e7b816045c",
+      "ef2f46f788fbaa3e81199b94b109d7e3",
+      "9e4be15156c6028a896f0df2276b16a2"
+    ]
+  },
+  "tfidf-logreg": {
+    "seeds": [
+      42
+    ],
+    "n_test": 37153,
+    "errors_per_seed": [
+      1620
+    ],
+    "n_persistent": 1620,
+    "n_single_seed": 0,
+    "macro_f1_recomputed": [
+      0.9492753860536328
+    ],
+    "per_class": {
+      "sadness": {
+        "support": 11604,
+        "recall": 0.9557049293347122,
+        "precision": 0.9656913967258794,
+        "pred_over_true": 0.9896587383660806
+      },
+      "joy": {
+        "support": 12937,
+        "recall": 0.9626652237767643,
+        "precision": 0.9655012016435383,
+        "pred_over_true": 0.9970626884130788
+      },
+      "love": {
+        "support": 2438,
+        "recall": 0.9667760459392944,
+        "precision": 0.9239513916111329,
+        "pred_over_true": 1.046349466776046
+      },
+      "anger": {
+        "support": 5233,
+        "recall": 0.9430536976877508,
+        "precision": 0.9490384615384615,
+        "pred_over_true": 0.9936938658513281
+      },
+      "fear": {
+        "support": 3958,
+        "recall": 0.9431531076301162,
+        "precision": 0.9477024625539477,
+        "pred_over_true": 0.995199595755432
+      },
+      "surprise": {
+        "support": 983,
+        "recall": 0.9806714140386572,
+        "precision": 0.8925925925925926,
+        "pred_over_true": 1.0986775178026449
+      }
+    },
+    "top_pairs": [
+      {
+        "true": "sadness",
+        "pred": "joy",
+        "count": 201
+      },
+      {
+        "true": "joy",
+        "pred": "sadness",
+        "count": 184
+      },
+      {
+        "true": "sadness",
+        "pred": "anger",
+        "count": 130
+      },
+      {
+        "true": "anger",
+        "pred": "sadness",
+        "count": 123
+      },
+      {
+        "true": "anger",
+        "pred": "joy",
+        "count": 107
+      }
+    ],
+    "confidence": [
+      {
+        "bin": "< 0.50",
+        "n": 1785,
+        "error_rate": 0.35182072829131655
+      },
+      {
+        "bin": "0.50 - 0.70",
+        "n": 4767,
+        "error_rate": 0.131319488147682
+      },
+      {
+        "bin": "0.70 - 0.90",
+        "n": 11404,
+        "error_rate": 0.02525429673798667
+      },
+      {
+        "bin": "0.90 - 0.99",
+        "n": 13991,
+        "error_rate": 0.004931741834036166
+      },
+      {
+        "bin": ">= 0.99",
+        "n": 5206,
+        "error_rate": 0.0017287744909719553
+      }
+    ],
+    "share_errors_conf_ge_0.9": 0.04814814814814815,
+    "length": [
+      {
+        "words": "<= 11",
+        "n": 10536,
+        "error_rate": 0.02230447987851177
+      },
+      {
+        "words": "12 - 17",
+        "n": 8680,
+        "error_rate": 0.03064516129032258
+      },
+      {
+        "words": "18 - 25",
+        "n": 8825,
+        "error_rate": 0.04
+      },
+      {
+        "words": "> 25",
+        "n": 9112,
+        "error_rate": 0.0840649692712906
+      }
+    ],
+    "text_type": [
+      {
+        "subset": "Contiene feel / feeling / felt",
+        "n": 36591,
+        "error_rate": 0.03735891339400399,
+        "share_of_typical_errors": 0.8438271604938271
+      },
+      {
+        "subset": "No contiene feel",
+        "n": 562,
+        "error_rate": 0.4501779359430605,
+        "share_of_typical_errors": 0.15617283950617283
+      },
+      {
+        "subset": "Empieza con \"when\"",
+        "n": 168,
+        "error_rate": 0.47619047619047616,
+        "share_of_typical_errors": 0.04938271604938271
+      }
+    ],
+    "high_confidence_persistent_ids": [
+      "9550802942ed6c6bf203a0a94eafc95d",
+      "75ad4b26aec9eabbadef7795563bf87a",
+      "99f193e21be2ed29a1e6e86945cdc829",
+      "898c67dad066d9772a53410482fd9a38",
+      "ce3956f96727aed0a22a1023caba6435",
+      "74914b9d54de1dce9f0a852b06c0733e",
+      "c41afc563e87d064162b08f0977f0607",
+      "43325490cb7d2543d3b91da2dc3924a1"
+    ]
+  },
+  "cross_model": {
+    "models": [
+      "bert-base",
+      "bilstm",
+      "deepseek-r1-distill-qwen-1.5b",
+      "distilbert",
+      "gemma-4-e2b",
+      "qwen2.5-0.5b",
+      "qwen2.5-1.5b",
+      "tfidf-logreg"
+    ],
+    "n_common": 37153,
+    "consensus_errors": 64,
+    "unanimous_same_wrong_class": 22,
+    "consensus_by_subset": [
+      {
+        "subset": "Contiene feel / feeling / felt",
+        "n": 36591,
+        "consensus_errors": 9
+      },
+      {
+        "subset": "No contiene feel",
+        "n": 562,
+        "consensus_errors": 55
+      },
+      {
+        "subset": "Empieza con \"when\"",
+        "n": 168,
+        "consensus_errors": 22
       }
     ]
   }
