@@ -31,7 +31,7 @@ CLEAN = ROOT / "salida" / "cleaned_full_data.csv"
 SPLITS_DIR = ROOT / "splits"
 LABELS_CSV = ROOT / "data" / "labels.csv"
 REFERENCE = ROOT / "data" / "expected_hashes.json"
-SPLIT_FILES = ["train_ids.csv", "val_ids.csv", "test_ids.csv", "val_select_ids.csv"]
+SPLIT_FILES = ["train_ids.csv", "val_ids.csv", "test_ids.csv", "val_select_ids.csv", "train_S_ids.csv"]
 
 
 def run(titulo: str, args: list[str], env_extra: dict[str, str] | None = None) -> None:
