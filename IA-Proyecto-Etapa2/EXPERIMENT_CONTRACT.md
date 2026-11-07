@@ -263,7 +263,7 @@ Nadie entrena un modelo final hasta completar los pasos 1 a 6.
 
 Correcciones pendientes al artículo de la Etapa 1: el dataset (20,000 instancias en el texto, frente a 371,527 filas limpias); "Gemma-2" en el texto, cuando el modelo es Gemma 4; Gemma 4 E4B, que sale del plan; el texto en minúsculas y sin puntuación; los módulos de LoRA de DeepSeek (el artículo los extiende a las capas feed-forward, el contrato usa los mismos que los demás); y la base de DeepSeek.
 
-Estado de la ejecución al 2026-11-06: la búsqueda de hiperparámetros de las cuatro familias y las corridas finales de los ocho modelos están terminadas (secciones 9 y 10; resultados en `results/`). Pendientes: repetir el Dummy con S (Francisco), el XAI sobre BERT-base (Jimmy), los pares que necesitan predicciones de dos máquinas, la revisión manual de los errores compartidos, las verificaciones de literatura y la revisión de los 30 pares de la limpieza.
+Estado de la ejecución al 2026-11-06: la búsqueda de hiperparámetros de las cuatro familias y las corridas finales de los ocho modelos están terminadas (secciones 9 y 10; resultados en `results/`). Pendientes: el XAI sobre BERT-base (Jimmy), la revisión manual de 30 errores de consenso, las verificaciones de literatura y la revisión de los 30 pares de la limpieza. Al 2026-11-07 ya están hechos el Dummy con S (Francisco), los cuatro pares con bootstrap y el análisis de errores con los ocho modelos (`results/pairs/`, `results/errors/`).
 ---
 
 ## 14. Reglas anti-fuga (resumen)
@@ -297,7 +297,7 @@ Estado de la ejecución al 2026-11-06: la búsqueda de hiperparámetros de las c
 | HPO de decoders con 20 % de S y 1 época | HPO completo | Cabe en el tiempo; sesgo hacia lr altos declarado en la sección 9 |
 | XAI sobre BERT-base (y DistilBERT si alcanza el tiempo) | XAI sobre un decoder cuantizado | BERT-base es el mejor en Macro-F1 y se puede explicar en una RTX 2060; los decoders tienen atención causal y pesos NF4, y explicarlos costaría mucho más. Se declara como limitación |
 | Integrated Gradients con verificaciones (completitud, cordura, fidelidad) | Mostrar solo la atención | La atención por sí sola no es una explicación (Jain y Wallace, 2019); IG tiene propiedades que se pueden comprobar |
-| Baseline trivial (Dummy) entrenado con S | Dummy entrenado con el train completo | Debe ver la misma información que el resto. Los primeros Dummy usaron el train completo y se repiten con S |
+| Baseline trivial (Dummy) entrenado con S | Dummy entrenado con el train completo | Debe ver la misma información que el resto. Los primeros Dummy usaron el train completo y se repitieron con S (hecho el 2026-11-07) |
 
 ---
 

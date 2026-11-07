@@ -85,7 +85,7 @@ Pedí que el dataset no se versione y que cualquiera lo regenere con un comando,
 | La velocidad de Gemma E2B salió distinta en dos mediciones (2.11 contra 3.15 segundos por paso) | Cambia entre 7 y 10 horas el tiempo estimado | Comparar mis mediciones | Sin resolver; se usó la cifra conservadora |
 | `prepare_data.py` no incluía `train_S_ids.csv` en la lista de particiones que decide si un paso ya está hecho | Con particiones viejas, sin S, el paso 3 se omitía y el error aparecía después, en la verificación | Revisión de los scripts antes de la entrega | Un archivo nuevo del flujo también va en las listas que deciden si un paso se omite. Corregido en esta entrega |
 | El README no pasaba `--glove` en los comandos del BiLSTM | Sin esa opción el arnés usa vectores aleatorios congelados, que no es lo que describe el contrato | Comparar el README con los `config.yaml` de las corridas de Francisco, que sí usaron GloVe | Los comandos documentados se comprueban contra lo que las corridas guardaron. Corregido en esta entrega |
-| El baseline Dummy se corrió con el train completo y no con S | No veía los mismos datos que el resto de los modelos | El informe agregado lo avisa | Se repite con S (Francisco) |
+| El baseline Dummy se corrió con el train completo y no con S | No veía los mismos datos que el resto de los modelos | El informe agregado lo avisa | Se repitió con S (Francisco) y ya está en el repo |
 
 Dos hallazgos más de la revisión de hoy, que corrigen el artículo de la Etapa 1: el dataset viene sin mayúsculas ni puntuación (ningún texto las tiene), y DeepSeek-R1-Distill-Qwen-1.5B se destiló sobre Qwen2.5-Math-1.5B y no sobre Qwen2.5-1.5B, de modo que su par con Qwen no aísla solo el objetivo de entrenamiento.
 
