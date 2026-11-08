@@ -263,7 +263,7 @@ Nadie entrena un modelo final hasta completar los pasos 1 a 6.
 
 Correcciones pendientes al artículo de la Etapa 1: el dataset (20,000 instancias en el texto, frente a 371,527 filas limpias); "Gemma-2" en el texto, cuando el modelo es Gemma 4; Gemma 4 E4B, que sale del plan; el texto en minúsculas y sin puntuación; los módulos de LoRA de DeepSeek (el artículo los extiende a las capas feed-forward, el contrato usa los mismos que los demás); y la base de DeepSeek.
 
-Estado de la ejecución al 2026-11-06: la búsqueda de hiperparámetros de las cuatro familias y las corridas finales de los ocho modelos están terminadas (secciones 9 y 10; resultados en `results/`). Pendientes: el XAI sobre BERT-base (Jimmy), la revisión manual de 30 errores de consenso, las verificaciones de literatura y la revisión de los 30 pares de la limpieza. Al 2026-11-07 ya están hechos el Dummy con S (Francisco), los cuatro pares con bootstrap y el análisis de errores con los ocho modelos (`results/pairs/`, `results/errors/`).
+Estado de la ejecución al 2026-11-06: la búsqueda de hiperparámetros de las cuatro familias y las corridas finales de los ocho modelos están terminadas (secciones 9 y 10; resultados en `results/`). Pendientes: la revisión manual de 30 errores de consenso, las verificaciones de literatura y la revisión de los 30 pares de la limpieza. Al 2026-11-07 ya están hechos el Dummy con S (Francisco), los cuatro pares con bootstrap, el análisis de errores con los ocho modelos (`results/pairs/`, `results/errors/`) y el XAI sobre BERT-base, semilla 42 (Jimmy, `results/xai/bert-base/seed_42/`); DistilBERT no se explicó y se declara como límite.
 ---
 
 ## 14. Reglas anti-fuga (resumen)
