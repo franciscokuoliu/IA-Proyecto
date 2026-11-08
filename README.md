@@ -80,8 +80,8 @@ Debe terminar con `Listo: tus datos son identicos a la referencia del equipo`.
 ### Qué se versiona y qué no
 
 - Sí: scripts, `labels.json`, `data/DATASET_INFO.md` y `data/expected_hashes.json` (huellas SHA-256 de ids, etiquetas y grupos). También los resultados livianos de cada corrida (`metrics.json`, `config.yaml`, `run.log`, `run_metadata.json`, `model/model_info.json`) y las carpetas `results/hpo/`, `results/report/`, `results/errors/`, `results/pairs/` y `results/xai/`.
-- No: `data/raw/`, `salida/`, `splits/`, `data/labels.csv`, `predictions.csv` y los pesos (`*.pt`, `*.safetensors`). Todos están en `.gitignore`.
-- Ojo: `.gitignore` descarta **todos** los `*.csv`. Por eso las salidas nuevas (pares, XAI) son JSON, Markdown, PNG, PDF o HTML. Un CSV que de verdad quieras versionar necesita `git add -f`.
+- No: `data/raw/`, `salida/`, `splits/`, `data/labels.csv`, los `predictions.csv` de las búsquedas de hiperparámetros y los pesos (`*.pt`, `*.safetensors`). Todos están en `.gitignore`. Los `predictions.csv` de las corridas finales (`results/<modelo>/seed_<n>/`) sí se versionan: son 22 archivos de unos 6 MB.
+- Ojo: `.gitignore` descarta **todos** los `*.csv`, salvo los `predictions.csv` de las corridas finales. Por eso las salidas nuevas (pares, XAI) son JSON, Markdown, PNG, PDF o HTML. Un CSV que de verdad quieras versionar necesita `git add -f`.
 
 ### Partición (determinista)
 
@@ -123,7 +123,7 @@ No cambies `--max-len` (64 para todos). Cada corrida escribe en `IA-Proyecto-Eta
 
 El BiLSTM usa embeddings estáticos GloVe de 300 dimensiones, congelados. El archivo no está en el repo (pesa cerca de 1 GB y `.gitignore` **no** ignora los `.txt`, así que guárdalo fuera de la carpeta del proyecto):
 
-1. Descarga `glove.6B.zip` (Wikipedia 2014 + Gigaword 5, 6 000 M de tokens, vocabulario de 400 000 palabras, minúsculas, 822 MB) desde https://nlp.stanford.edu/projects/glove/ y descomprímelo. De ahí solo se usa `glove.6B.300d.txt`.
+1. Descarga `glove.6B.zip` (Wikipedia 2014 + Gigaword 5, 6 000 M de tokens, vocabulario de 400 000 palabras, minúsculas, 822 MB) desde https://nlp.stanford.edu/projects/glove/ y descomprímelo. De ahí solo se usa `glove.6B.300d.txt`. Francisco usó una copia de ese archivo publicada en Kaggle (https://www.kaggle.com/datasets/thanakomsn/glove6b300dtxt); es el mismo nombre de archivo, pero no es la distribución oficial de Stanford.
 2. Pásalo con `--glove`, tanto en la búsqueda de hiperparámetros como en las corridas finales:
 
 ```powershell
@@ -208,9 +208,9 @@ Nada de esto entrena modelos (el XAI solo necesita una GPU para recalcular gradi
 | Comprobar que el XAI funciona (modelo de juguete, CPU, unos minutos) | `python scripts/test_xai_toy.py` | nada (usa una carpeta temporal) |
 | XAI del modelo real | `python scripts/xai.py --model bert-base --seed 42` | `results/xai/bert-base/seed_42/` |
 
-**Qué necesita cada uno.** `make_report.py` solo lee los archivos livianos que sí están en el repo. El análisis de errores y los pares necesitan los `predictions.csv` de los modelos que comparan (no se versionan), más `salida/cleaned_full_data.csv` (se regenera con `prepare_data.py`). El XAI necesita además los pesos de la corrida (`results/<modelo>/seed_<n>/model/trainable.pt`, solo en la máquina que entrenó), así que lo corre quien entrenó ese modelo. Si se queda sin memoria de GPU: `--ig-chunk 16 --batch-size 4`; para una prueba rápida: `--quick`.
+**Qué necesita cada uno.** `make_report.py` solo lee los archivos livianos que sí están en el repo. El análisis de errores y los pares necesitan los `predictions.csv` de los modelos que comparan (los de las corridas finales ya vienen en el repo), más `salida/cleaned_full_data.csv` (se regenera con `prepare_data.py`). El XAI necesita además los pesos de la corrida (`results/<modelo>/seed_<n>/model/trainable.pt`, solo en la máquina que entrenó), así que lo corre quien entrenó ese modelo. Si se queda sin memoria de GPU: `--ig-chunk 16 --batch-size 4`; para una prueba rápida: `--quick`.
 
-**Intercambiar predicciones.** Cada quien empaqueta las suyas y se las pasa a quien hace el análisis cruzado:
+**Intercambiar predicciones.** Las de las corridas finales ya están en el repo. Para corridas nuevas, cada quien empaqueta las suyas y se las pasa a quien hace el análisis cruzado:
 
 ```bash
 python scripts/share_predictions.py pack --out predicciones_jimmy.zip      # quien las tiene

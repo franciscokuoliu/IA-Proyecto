@@ -66,13 +66,21 @@ Pedí que el dataset no se versione y que cualquiera lo regenere con un comando,
 
 **Alternativas.** Explicar un decoder (Qwen2.5-1.5B) o explicar BERT-base.
 
-**Decisión y razón.** BERT-base (y DistilBERT si alcanza el tiempo), corrido por Jimmy, que tiene los pesos. BERT-base es el mejor modelo en Macro-F1 y cabe en una RTX 2060. Los decoders son cuantizados y de atención causal, y explicarlos costaba más tiempo del que queda. El costo es que el artículo no puede decir nada sobre qué usan los decoders, y lo declara como limitación.
+**Decisión y razón.** BERT-base (semilla 42), corrido por Jimmy, que tiene los pesos. DistilBERT no alcanzó el tiempo. BERT-base es el mejor modelo en Macro-F1 y cabe en una RTX 2060. Los decoders son cuantizados y de atención causal, y explicarlos costaba más tiempo del que queda. El costo es que el artículo no puede decir nada sobre qué usan los decoders, y lo declara como limitación.
 
 ### 7. Recortar la medición de latencia
 
 **Situación.** El plan pedía medir la latencia de todos los modelos en una sola GPU, lo que exige juntar los checkpoints de las tres máquinas.
 
 **Decisión y razón.** Se recorta. El costo se reporta con parámetros, VRAM de entrenamiento y tiempo de entrenamiento, cada uno con su GPU y sin compararlos entre GPUs distintas. No cabía antes del domingo, y el artículo lo declara como limitación.
+
+### 8. Quién califica la auditoría manual de errores
+
+**Situación.** El contrato pide revisar a mano 30 textos que fallan todos los modelos, para ver si hay ruido en las etiquetas.
+
+**Alternativas.** Que la IA califique los 30; que los califique yo solo; o que la IA haga una primera pasada y yo califique después.
+
+**Decisión y razón.** Claude hizo una primera pasada con una razón por texto y yo califiqué los 30 después de verla. Mis calificaciones coinciden con las suyas en los 30 (11 A, 15 B, 4 C). Lo hicimos así por el tiempo que quedaba. El costo es que no hay una segunda opinión independiente, así que no se puede reportar acuerdo entre anotadores, y el artículo lo declara como límite. Los votos quedan en `results/errors/auditoria_manual.md`.
 
 ## Errores encontrados y qué aprendimos
 
