@@ -111,6 +111,79 @@ Dos hallazgos más de la revisión de hoy, que corrigen el artículo de la Etapa
 
 [completar por Francisco]
 
-## Sesiones de Jimmy Feng Liu
+## Cómo trabajé con la IA - Jimmy Feng Liu
+La IA escribió gran parte del script de limpieza: etiquetas contradictorias, detector de cuasi-duplicados (TF-IDF con hashes + coseno, con candidatos por términos raros), modos de salida y reporte. Mi parte fue la carga, la normalización y la eliminación de duplicados exactos. El modelo utilizado fue Claude, para depurar código, plantear la lógica de limpieza, redactar documentación y estructurar ideas.
 
-[completar por Jimmy]
+Mi regla: todo material generado por IA fue revisado a mano antes de pasar a la siguiente etapa de desarrollo, y ninguna cifra del dataset entra al trabajo si no sale de `reporte_limpieza.json`
+
+## Quién hizo qué
+| Parte | Qué hizo la IA | Qué hice yo |
+|---|---|---|
+| Carga, normalización y duplicados exactos | Depuró el código y verificó condiciones que faltaban | Escribí parte del código y revisé los cambios que hizo la IA en la normalización y en la eliminación de duplicados exactos |
+| Detección de cuasi-duplicados (TF-IDF + coseno) | Escribió el detector: hashes de 64 bits en dos pasadas, filtro por términos raros y componentes conexas | Decidí el umbral de 0.90: busco eliminar los registros más emparentados sin comprometer los que parecen similares pero significan algo distinto. Aprobé TF-IDF + coseno por ser un método ligero, que no exige carga extra al equipo físico |
+| Etiquetas contradictorias | Escribió el código | Comprobé los resultados. Este paso elimina todas las copias de un texto que aparece con dos o más etiquetas distintas, y corre antes de los duplicados exactos para que la etiqueta que sobreviva no dependa del orden del CSV |
+| Reporte JSON y huella SHA-256 | Escribió el código | Verifiqué a mano los reportes generados en las limpiezas |
+
+## Decisiones críticas
+### 1. Normalizar solo para comparar
+
+Uso una columna `norm` (minúsculas, espacios colapsados) para detectar duplicados, pero el texto que sale es el original. Así no alteramos los datos que verán los modelos, y la limpieza solo decide qué filas entran.
+
+**Alternativa descartada:** guardar el texto normalizado, que es más simple pero cambia la entrada de los modelos.
+
+### 2. Textos con etiquetas contradictorias: eliminar todas sus copias
+
+Si el mismo texto aparece con dos etiquetas, no hay forma de saber cuál es la correcta, así que lo quito completo en lugar de elegir una. El costo es perder algunos ejemplos legítimos; el beneficio es no meter ruido de etiqueta en train ni en test. El reporte registra cuántas filas y cuántos textos distintos se perdieron por esto.
+
+Este paso va **antes** de los duplicados exactos. Si fuera después, `drop_duplicates` conservaría la primera copia y su etiqueta dependería del orden del CSV.
+
+### 3. TF-IDF + coseno para los cuasi-duplicados
+
+Los cuasi-duplicados son la principal fuente de fuga entre train y test, por eso no basta con eliminar duplicados exactos. Elegí TF-IDF + coseno por su ligereza: no requiere cargar modelos pesados ni sobrecargar el equipo. Para que cupiera en memoria con unos 370K textos, no se guarda el vocabulario: unigramas y bigramas se representan con hashes de 64 bits, en dos pasadas por lotes. Solo se comparan pares que comparten al menos un término raro (aparece en ≤ 0.2 % de los textos), en lugar de las ~7×10¹⁰ comparaciones de todos contra todos.
+
+### 4. Umbral de coseno ≥ 0.90
+
+Decidí 0.90 porque busco eliminar los registros con mayor parentesco sin comprometer los que parecen similares pero tienen significados distintos. Un umbral más bajo arriesga agrupar textos que solo hablan de lo mismo; uno más alto deja pasar copias casi idénticas. 0.90 es el valor por defecto y fue revisado en una muestra pequeña.
+
+### 5. Dos modos: `eliminar` y `agrupar`
+
+`eliminar` deja un texto por grupo; `agrupar` conserva todo y deja la columna group para que la partición mantenga cada grupo completo en un solo lado. Esa columna es lo que permite repartir por grupos sin fugas. En el flujo del equipo, prepare_data.py corre el limpiador con `--modo agrupar` y `PYTHONHASHSEED=0`, y `check_splits.py` comprueba después que ningún grupo de cuasi-duplicados quede partido entre train, val y test, y que ningún texto normalizado aparezca en dos particiones. `make_splits.py` reparte con StratifiedGroupKFold (10 pliegues, semilla 42) usando la columna group: el pliegue 0 es test, el 1 es validación y los otros 8 son train, estratificado por emoción y sin partir ningún grupo. Reemplaza el número de grupo por el menor id del grupo, porque ese número es arbitrario, y así el reparto no depende de cómo lo numeró el limpiador. Esa verificación debe pasar en verde antes de entrenar, y además compara las huellas de los grupos con la referencia del equipo.
+
+Modo usado: agrupar (según reporte_limpieza.json), así que no se eliminó ningún cuasi-duplicado: los 371,527 textos se conservan y la partición reparte los grupos completos. [COMPLETAR: por qué elegiste agrupar en vez de eliminar]
+
+### 6. Reproducibilidad
+
+El `id` es el MD5 del texto normalizado, así que no depende del orden de las filas. El reporte guarda el SHA-256 del CSV de entrada, los parámetros y las cifras de cada paso. Con eso los tres podemos comprobar que partimos de lo mismo.
+
+## Limitaciones y errores a declarar
+
+| Punto | Consecuencia | Qué hacer |
+|---|---|---|
+| `hash()` de Python se aleatoriza en cada proceso (`PYTHONHASHSEED`) | Cambia el orden de columnas y puede alterar los últimos decimales del coseno, así que un par justo en 0.90 podría entrar o no entre corridas | Fijar `PYTHONHASHSEED=0` en el comando, o usar un hash estable (por ejemplo `hashlib.blake2b` de 8 bytes). Verificar que las huellas coincidan entre las tres máquinas |
+| Solo se comparan pares con algún término raro (y se descartan términos con df > 2 %) | Cuasi-duplicados formados solo por palabras comunes no se detectan: el recall es menor al 100 % | Declararlo como limitación |
+| Componentes conexas | Una cadena A~B~C agrupa textos que no son similares entre sí, y en modo `eliminar` se borrarían de más | El reporte da `grupos_multiples`; revisar el tamaño máximo de grupo |
+| El paso de etiquetas contradictorias solo detecta textos idénticos tras normalizar | Dos textos casi iguales con etiquetas distintas pasan este filtro | Los atrapa el detector de cuasi-duplicados; el reporte los cuenta en `grupos_con_etiquetas_mixtas` |
+
+**Errores de la IA que detecté:** 
+Principalmente con los algortitmos de limpieza de cuasi-duplicados, donde algunas de las sugerencias iniciales generaba diferentes reportes de limpieza no reproducibles para el experimento.
+
+## Cifras (de `reporte_limpieza.json`)
+
+| Paso | Cifra | Campo del reporte |
+|---|---|---|
+| Filas originales | 416,809 | `filas_originales` |
+| Eliminadas por etiquetas contradictorias | 44,650 | `filas_eliminadas_etiquetas_contradictorias` |
+| Copias exactas eliminadas | 632 | `copias_exactas_eliminadas` |
+| Pares de cuasi-duplicados detectados | 5,536 | `pares_cuasi_dup` |
+| Cuasi-duplicados eliminados | 0 (fueron agrupados) | `cuasi_duplicados_eliminados` |
+| Registros finales | 371,527 | `registros_finales` |
+
+## Lo que puedo explicar hoy / lo que estoy repasando
+
+**Puedo explicar con mis palabras:** la normalización y la eliminación de duplicados exactos (mi parte del código), por qué elegí el umbral 0.90, por qué TF-IDF + coseno y no un método más pesado, y qué hace el paso de etiquetas contradictorias y por qué va antes de los duplicados exactos.
+
+**Estoy repasando** antes de la defensa, hasta poder explicarlo sin apoyo: el funcionamiento del filtro por términos raros, porqué la columna `group` evita fugas durante la partición y el funcionamiento general del algoritmo de cuasi-duplicados con TF-IDF + Coseno.
+
+
+
+
