@@ -107,9 +107,99 @@ Dos hallazgos más de la revisión de hoy, que corrigen el artículo de la Etapa
 
 > Usamos Claude (Anthropic) como asistente durante todo el proyecto: en la Etapa 1 para estructurar el alcance y redactar borradores de la revisión de literatura, y en la Etapa 2 como agente de programación para el pipeline de datos, la corrección de fallos del arnés, el cálculo del subconjunto de entrenamiento, los scripts de análisis (informe agregado, errores, comparaciones pareadas y explicabilidad) y la redacción de la documentación. Las decisiones críticas (qué modelos entran, el tamaño del subconjunto, el tratamiento de las diferencias de hardware) las tomamos nosotros y se justifican en el contrato experimental. Verificamos por nuestra cuenta cada cifra reportada con las corridas guardadas en el repositorio, comprobamos cada cambio de código en nuestras máquinas y registramos los errores de la IA que detectamos. El detalle de cada integrante está en `docs/ai_usage_log.md`.
 
-## Sesiones de Francisco Kuo Liu
+## Cómo trabajé con la IA — Francisco Kuo Liu
 
-[completar por Francisco]
+Usé la IA para escribir código, armar comandos y contrastar cifras con los PDF. El criterio es mío: qué modelos corro, con qué archivo de entrenamiento, qué hiperparámetros se quedan y qué número puede entrar a un texto. Ninguna cifra entra si no sale de una corrida guardada en `results/` o de una fuente que yo pueda abrir.
+
+**Herramientas.** Cursor, como agente dentro del repositorio, en casi toda la Etapa 2: el script de evaluación, el baseline Dummy, la descarga del dataset, el arnés (commit `b702fd9`), la separación del tiempo de evaluación y los comandos de búsqueda y de corrida final. Claude, en chat, para revisar el aviso al equipo antes de que cada quien lanzara su búsqueda de hiperparámetros. Esta sección la redacté con Cursor a partir de esos commits y de las corridas.
+
+Mi regla fue la misma que la del equipo: la IA propone, yo decido, y si un comando no coincide con el contrato lo paro y lo repito.
+
+## Quién hizo qué
+
+| Parte del trabajo | Qué hizo la IA | Qué hice yo |
+|---|---|---|
+| Evaluación y formato común | Escribió `evaluate.py` a partir del contrato: Macro-F1 como métrica principal, `predictions.csv` con id, etiqueta real, predicción y probabilidades, y el JSON por corrida | Pedí el punto 5 por partes, primero el script y después las pruebas con Dummy. Comprobé el humo: `most_frequent` sobre la distribución de 20,000 textos queda cerca de 0.08, que es el F1 de la clase mayoritaria dividido entre 6 |
+| Dataset | Escribió `download_data.py`, fijó la versión 1 de `nelgiriyewithana/emotions` y calculó el SHA-256 | Decidí no subir el CSV. Pregunté si el hash es del archivo y corrí `prepare_data.py` hasta que la verificación quedó en verde contra la referencia del equipo. El archivo real tiene 416,809 filas, no las 20,000 de la tabla de la Etapa 1 |
+| Arnés | Escribió `scripts/train.py` y `src/harness/` (catálogo, datos, TF-IDF, bucle de entrenamiento e informe) cuando se lo pedí | Exigí un solo camino para todos los modelos, con las reglas del contrato ya metidas: AdamW, lote efectivo 32, paro por paciencia, test solo al final. Corrí el humo de TF-IDF antes de dar el arnés por usable |
+| Velocidad para fijar S | Separó segundos por paso, muestras por segundo y segundos por evaluación, que antes iban mezclados | Pedí esas tres cifras el 2026-11-02, las leí en el log y se las pasé a Danielo. En la corrida final del BiLSTM, semilla 42, quedaron 0.113 s/paso, 284.3 muestras/s y 7.3 s por evaluación |
+| Búsqueda y corridas finales | Armó los comandos de la rejilla y los de las finales con el ganador de cada familia | Lancé y vigilé las 6 pruebas de TF-IDF y las 8 del BiLSTM en mi máquina. Me quedé con lo que ganó en `val_select` y corrí las finales. El reparto me dejó BiLSTM, TF-IDF y el Dummy; DistilBERT y BERT-base los corrió Jimmy en la RTX 2060 |
+| Dummy con S | Cambió el comando que apuntaba a `train_ids.csv` | El 2026-11-07 pedí repetir el Dummy con S, porque es el piso de los demás modelos. `n_train` pasó de 297,220 a 32,000. El 2026-11-08 versioné sus predicciones para el análisis de errores |
+| Literatura de la Etapa 1 | Leyó los PDF de Saravia 2018 y Zhang 2024 y reescribió las cifras que no estaban en esos artículos | Pedí la verificación el 2026-11-07 y acepté el cambio en el commit `9b9ea7b`. El artículo de la Etapa 2 no usa esas cifras. El contrato las deja como pendiente de la Etapa 3, y yo tengo que poder explicar cada una sin el PDF delante |
+
+El limpiador es de Jimmy y el cierre del contrato, el cálculo de S y los scripts de análisis son de Danielo. El fallo del último token de Gemma salió de este arnés; lo detectó y lo corrigió Danielo (commit `a4e0cef`).
+
+## Decisiones críticas
+
+### 1. Un solo arnés, y el test se toca una vez
+
+**Situación.** Sin un script común, cada modelo habría escrito métricas distintas y el Dummy no habría servido de prueba del formato.
+
+**Alternativas.** Un script por familia, o calificar a mano con `sklearn` al final de cada corrida.
+
+**Decisión y razón.** Un solo `train.py` y un solo `evaluate.py`. La búsqueda y el paro temprano miran `val_select`. El test se evalúa al terminar, con el mejor checkpoint. Lo pedí así porque el contrato ya lo exigía y porque el humo del Dummy tenía que ejercer el mismo lector que iban a usar BERT y los decoders. El costo es que un error en el arnés toca a los ocho modelos: el del relleno de Gemma es el ejemplo.
+
+### 2. Parar el BiLSTM y repetirlo con GloVe
+
+**Situación.** El 2026-11-04 el BiLSTM estaba corriendo sin `--glove`. Sin esa opción el arnés congela vectores aleatorios de 300 dimensiones y lo anota como `random-frozen`. Eso no es la línea base del contrato.
+
+**Alternativas.** Dejar terminar esa corrida y declarar los vectores aleatorios, o pararla y repetirla con el archivo.
+
+**Decisión y razón.** La paré y la repetí con `glove.6B.300d.txt`. Los `config.yaml` de la búsqueda y de las tres semillas dicen `embeddings: glove-300d-frozen`. Los vectores quedan congelados: de 7.0 M de parámetros solo se entrenan 442 K (el LSTM y la capa de salida). El vocabulario se arma solo con train. El archivo que usé es una copia de Kaggle del mismo `glove.6B.300d.txt`, no el zip oficial de Stanford, y hay que decirlo.
+
+### 3. Con qué configuración me quedo, y por qué TF-IDF lleva una sola corrida
+
+**Situación.** La rejilla ya estaba fijada en la Fase 0. TF-IDF: `C` en {0.1, 1, 10} y n-gramas (1, 1) o (1, 2), sobre los 32,000 de S. BiLSTM: lr en {1e-3, 3e-3}, hidden en {128, 256}, dropout en {0.3, 0.5}, 8 pruebas sobre el 20 % de S (6,399 textos, 10 épocas), porque el contrato pide un subconjunto reducido y en CPU una rejilla completa con S no cabía holgada.
+
+**Decisión y razón.** Gana quien tenga el mejor Macro-F1 en `val_select`, semilla 42. TF-IDF: `C` 10 y n-gramas (1, 2), 0.9480; el peor intento, `C` 0.1 con (1, 2), dio 0.8525. BiLSTM: lr 3e-3, hidden 128 y dropout 0.3, 0.9475; el peor dio 0.9059. Esos dos ganadores están en el borde de la rejilla, así que no son un óptimo demostrado. No amplié la rejilla: se había congelado y no quedaba tiempo. Las finales del BiLSTM, ya con S completo, dan 0.9786 ± 0.0028 en test; el 0.9475 es de la búsqueda, con menos datos, y no se reporta como resultado final.
+
+TF-IDF y Dummy `most_frequent` llevan una sola corrida porque con solver y semilla fijos no se mueven. El BiLSTM sí lleva 42, 1337 y 2026. Las tres pararon por paciencia y restauraron el mejor checkpoint. En la semilla 42 el mejor `val_select` es 0.9826 en el paso 3250 y el test queda en 0.9812.
+
+### 4. La velocidad no incluye la evaluación
+
+**Situación.** Danielo necesitaba muestras por segundo para calcular S, y el arnés metía el tiempo de `val_select` dentro de esa cifra. Así el modelo parece más lento de lo que entrena.
+
+**Alternativas.** Pasar el tiempo de reloj completo, o separar entrenamiento y evaluación.
+
+**Decisión y razón.** Pedí las tres cifras por separado y acepté el cambio solo después de verlas en el log (commit `b945174`). Si hay GPU, el reloj espera a `cuda.synchronize()` para no contar un paso que todavía no terminó. En mi máquina el BiLSTM corre en CPU, así que esa espera no cambia nada; igual dejé el arreglo porque el mismo bucle lo usan los decoders. S no lo fijé yo: lo limita Gemma 4 E2B en la RTX 3080. Mis números solo decían que el BiLSTM no era el cuello de botella.
+
+### 5. El Dummy ve S, igual que los demás
+
+**Situación.** La primera corrida oficial usó `train_ids.csv` (297,220 textos). Un piso entrenado con todo el train no es comparable con modelos que solo vieron S.
+
+**Alternativas.** Dejar esa corrida y declararla, o repetirla con `train_S_ids.csv`.
+
+**Decisión y razón.** La repetí el 2026-11-07. `most_frequent` predice siempre `joy` y saca Macro-F1 0.0861 (el F1 de joy, 0.5166, partido entre seis clases). `stratified`, con las tres semillas y sin pesos de clase, saca 0.1696 ± 0.0014. No compiten: sirven para ver cuánto hay de marco. Las predicciones quedaron en el repositorio para el análisis de errores.
+
+### 6. BiLSTM y TF-IDF en CPU
+
+**Situación.** Esta máquina tiene una GTX 1650, pero el PyTorch instalado es `2.15.0+cpu`. Los metadatos guardan el nombre de la GPU y `device: cpu`.
+
+**Alternativas.** Instalar un PyTorch con CUDA y pasar el BiLSTM a la 1650, o dejarlo en CPU en fp32.
+
+**Decisión y razón.** Se quedan en CPU. TF-IDF tarda unos 0.2 minutos y el BiLSTM unos 9.5 (entre 9.1 y 10.2). Moverlos de dispositivo a mitad del estudio habría mezclado hardware con modelo. Esos tiempos no se comparan con los de la RTX 2060 ni con los de la 3080, y el artículo los reporta por máquina.
+
+### 7. No dejar en la Etapa 1 una cifra que el PDF no trae
+
+**Situación.** La tabla de baselines de la Etapa 1 citaba a Saravia 2018 y a Zhang 2024 con números que además se contradecían entre sí (un BiLSTM cerca de 84 % y, en otra tabla, Macro-F1 0.647).
+
+**Decisión y razón.** Pedí contrastar los PDF con el paper. Saravia no publica ese BiLSTM ni ese 0.647: su modelo con Bi-LSTM es DeepMoji (F1 promedio 0.59 en ocho clases de Plutchik) y su CARER con CNN llega a F1 promedio 0.79. Zhang 2024 entrena RNN, GRU y LSTM sobre una muestra balanceada del dataset de Kaggle; no entrena BERT ni DistilBERT, y su mejor Bi-LSTM de dos capas imprime accuracy 0.9321 y F1 0.93, que no sirve de techo para nuestro corpus desbalanceado. Acepté reemplazar la tabla de la Etapa 1 con lo que esos PDF sí imprimen. El artículo de la Etapa 2 no cita esas cifras. Sigo repasándolas, porque el contrato no da esta verificación por cerrada.
+
+## Errores encontrados y qué aprendimos
+
+| Error | Consecuencia | Cómo lo detectamos | Lección |
+|---|---|---|---|
+| El arnés base (commit `b702fd9`) tomaba mal el último token cuando el relleno va a la izquierda | En una prueba corta Gemma quedó en Macro-F1 0.354 contra 0.975 de Qwen. Las finales habrían sido inválidas | Lo vio Danielo al comparar los dos decoders. El arreglo está en `a4e0cef`: la posición es el máximo de `mascara * índice`, no `suma(mascara) - 1` | Un resultado muy por debajo de un modelo hermano es una alarma. El que pide el arnés tiene que poder explicar la cabeza, aunque no entrene ese modelo |
+| La primera medición de muestras/s incluía la evaluación | S habría salido más chico de lo que el entrenamiento realmente permite | Al pedir por separado tiempo de paso, muestras/s y tiempo de evaluación | El reloj de entrenar y el reloj de evaluar no se suman. Corregido en `b945174` |
+| El Dummy oficial se entrenó con el train completo | El piso no veía los mismos 32,000 textos que el resto | `n_train: 297220` en el `config.yaml`, y el informe agregado lo avisó | El baseline trivial usa `train_S_ids.csv`. Repetido el 2026-11-07 |
+| Una corrida de BiLSTM iba sin `--glove` | Habría quedado como línea base un modelo de vectores aleatorios congelados | Al revisar el comando contra el contrato, antes de guardar la búsqueda | Si el `config.yaml` no dice `glove-300d-frozen`, esa corrida no entra |
+| Las cifras de Saravia y de Zhang en la Etapa 1 no están en esos PDF | Habrían quedado como techo publicado de un experimento que no es el nuestro | Lectura de los dos PDF el 2026-11-07 | Una cita entra si el PDF la imprime. El 0.69 sin ponderar de Saravia es un cálculo nuestro, no un número suyo, y así hay que decirlo |
+
+## Lo que puedo explicar hoy y lo que estoy repasando
+
+**Puedo explicar con mis palabras** por qué hay un solo arnés y por qué el test no entra a la búsqueda; qué pasa si el BiLSTM no recibe `--glove`; por qué TF-IDF y el Dummy `most_frequent` tienen una corrida y el BiLSTM tres; por qué el ganador de la rejilla no es un óptimo demostrado; por qué el Dummy se repitió con S y por qué su Macro-F1 de 0.0861 es el F1 de `joy` dividido entre seis; y por qué mis tiempos van en CPU y no se comparan con las otras dos GPUs.
+
+**Estoy repasando** antes de la defensa, hasta poder decirlo sin abrir el código ni el PDF: cómo elige el arnés el último token real cuando el relleno es a la izquierda; por qué el 0.9475 de la búsqueda del BiLSTM y el 0.9786 de la final no se contradicen; y qué número de Saravia 2018 y de Zhang 2024 sí está impreso y cuál salió de la tabla de la Etapa 1.
 
 ## Cómo trabajé con la IA - Jimmy Feng Liu
 La IA escribió gran parte del script de limpieza: etiquetas contradictorias, detector de cuasi-duplicados (TF-IDF con hashes + coseno, con candidatos por términos raros), modos de salida y reporte. Mi parte fue la carga, la normalización y la eliminación de duplicados exactos. El modelo utilizado fue Claude, para depurar código, plantear la lógica de limpieza, redactar documentación y estructurar ideas.
