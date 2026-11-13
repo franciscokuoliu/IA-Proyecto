@@ -101,7 +101,7 @@ Table~\ref{tab:perclass} shows that for every neural model the three lowest F1 s
 \end{table*}
 
 \subsection{Cost}
-Fig.~\ref{fig:cost} plots Macro-F1 against training VRAM and parameters. QLoRA trains between 2.2M and 5.4M parameters (below 0.5\% of the base model), and the decoders peak at 1.2 to 2.7~GB of training VRAM, except Gemma 4 E2B, which needs 9.2~GB and 149 minutes per run for the lowest decoder accuracy. Encoders reach the best Macro-F1 at 1.4 to 2.2~GB and under 17 minutes per run. These numbers come from different GPUs, so we report them per model and do not compare them across machines; we did not measure inference latency.
+Fig.~\ref{fig:cost} plots Macro-F1 against training VRAM and parameters. QLoRA trains between 2.2M and 5.4M parameters (below 0.5\% of the base model), and the decoders peak at 1.2 to 2.7~GB of training VRAM, except Gemma 4 E2B, which needs 9.2~GB and 149 minutes per run for the lowest decoder accuracy. Encoders reach the best Macro-F1 at 1.4 to 2.2~GB and under 17 minutes per run. These numbers come from different GPUs, so we report them per model and do not compare them across machines; we did not measure inference latency. The comparison that changes architectural family while holding the machine fixed is DistilBERT against Qwen2.5-0.5B, both on the RTX 2060 (Section~\ref{sec:discussion}).
 
 \begin{figure*}[t]
 \centering
